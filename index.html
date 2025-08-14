@@ -1,106 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI Expert Toolkit — Build Smarter with AI Tools</title>
   <meta name="description" content="Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic." />
 
-  <!-- Canonical + OG -->
+  <!-- Canonical -->
   <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/" />
-  <meta property="og:title" content="AI Expert Toolkit — Build Smarter with AI Tools" />
-  <meta property="og:description" content="Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/" />
 
   <!-- Load site CSS from repo root (cache-busted) -->
-  <link rel="stylesheet" href="/assets/css/base.css?v=6" />
+  <link rel="stylesheet" href="assets/css/base.css?v=7" />
 </head>
 <body>
 
-  <!-- =========================
-       Header (micro-tuned)
-       ========================= -->
-  <header class="site-header" id="siteHeader">
-    <div class="nav container">
-      <a class="brand" href="/aiexperttoolkit/">
+  <!-- ==============================
+       Header (sticky + micro-tuned)
+       ============================== -->
+  <header class="site-header" id="siteHeader" role="banner">
+    <div class="nav container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.75rem 0;">
+      <!-- Brand -->
+      <a href="./" class="brand" style="display:flex;align-items:center;gap:.5rem;text-decoration:none;">
         <span class="brand-mark" aria-hidden="true">AETK</span>
         <span class="brand-text">AI Expert Toolkit</span>
       </a>
 
-      <nav class="nav-links" id="navLinks" aria-label="Primary">
-        <a class="nav-link" href="/aiexperttoolkit/">Home</a>
-        <a class="nav-link" href="/aiexperttoolkit/writesonic-review.html">Writesonic Review</a>
-        <a class="nav-link" href="/aiexperttoolkit/comparisons.html">Comparisons</a>
-        <a class="nav-link" href="/aiexperttoolkit/pricing.html">Pricing</a>
-        <a class="nav-link" href="/blog">Blog</a>
-        <a class="nav-link" href="/guides">Guides</a>
-        <a class="nav-link" href="/about">About</a>
-        <a class="nav-link" href="/contact">Contact</a>
+      <!-- Primary nav -->
+      <nav aria-label="Main" style="display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;">
+        <a href="./" class="nav-link">Home</a>
+        <a href="writesonic-review.html" class="nav-link">Writesonic Review</a>
+        <a href="comparisons.html" class="nav-link">Comparisons</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+        <a href="/blog" class="nav-link">Blog</a>
+        <a href="/guides" class="nav-link">Guides</a>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/contact" class="nav-link">Contact</a>
+
+        <!-- CTA -->
+        <a href="[YOUR_AFF_LINK]" rel="nofollow sponsored" class="btn" style="margin-left:.25rem;">Try Writesonic</a>
       </nav>
-
-      <div class="nav-cta">
-        <a class="btn btn--primary" href="[YOUR_AFF_LINK]" rel="sponsored noopener" target="_blank">Try Writesonic</a>
-
-        <button class="hamburger" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
     </div>
   </header>
 
   <main id="content">
+
     <!-- =========================
          Hero
          ========================= -->
-    <section class="section hero">
+    <section class="section hero" style="padding-top:3.5rem;">
       <div class="container">
-        <p class="eyebrow">Your shortcut to the best AI tools</p>
-        <h1>Build Smarter with AI Tools</h1>
-        <p class="lead">
-          Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.
+        <p class="hero p" style="margin:0 0 .75rem 0;">Your shortcut to the best AI tools</p>
+        <h1 style="margin:0 0 .75rem 0;">Build Smarter with AI Tools</h1>
+        <p style="max-width:760px;">
+          Action-first reviews, comparisons, and guides to help you ship faster — starting with
+          Writesonic.
         </p>
-
-        <div class="btn-row">
-          <a class="btn btn--primary" href="[YOUR_AFF_LINK]" rel="sponsored noopener" target="_blank">Try Writesonic</a>
-          <a class="btn btn--ghost" href="/aiexperttoolkit/writesonic-review.html">Read the full review</a>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem;">
+          <a class="btn" href="[YOUR_AFF_LINK]" rel="nofollow sponsored">Try Writesonic</a>
+          <a class="btn" href="writesonic-review.html" style="background:transparent;border:1px solid rgba(255,255,255,.15);">
+            Read the full review
+          </a>
         </div>
       </div>
     </section>
 
     <!-- =========================
-         Top Picks (kept concise; styles in base.css)
+         Top Picks
          ========================= -->
-    <section class="section">
-      <div class="container stack-lg">
-        <h2 class="section-title">Top Picks</h2>
+    <section class="section" aria-labelledby="top-picks">
+      <div class="container">
+        <h2 id="top-picks" style="margin-bottom:1rem;">Top Picks</h2>
 
         <!-- Best overall -->
-        <article class="panel card-lg">
-          <header class="card-head">
-            <span class="badge">Best overall</span>
-            <h3 class="card-title">Writesonic</h3>
-          </header>
-          <p class="muted">
+        <article style="background:var(--panel);border-radius:var(--radius);padding:1rem 1rem 1.25rem;max-width:1100px;">
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem;">
+            <span style="font-size:.8rem;opacity:.85;">Best overall</span>
+          </div>
+          <h3 style="margin:.25rem 0 .5rem 0;">Writesonic</h3>
+          <p style="margin:.25rem 0 1rem;max-width:900px;">
             Strong long-form, templates, brand voice, and sensible pricing. Great for teams and solo creators.
           </p>
-          <div class="btn-row">
-            <a class="btn btn--primary" href="[YOUR_AFF_LINK]" rel="sponsored noopener" target="_blank">Get Started</a>
-            <a class="btn btn--ghost" href="/aiexperttoolkit/writesonic-review.html">Why we picked it</a>
-          </div>
-        </article>
-
-        <!-- Fast drafting -->
-        <article class="panel card-lg">
-          <header class="card-head">
-            <span class="badge">Fast drafting</span>
-            <h3 class="card-title">Chat-style workflows</h3>
-          </header>
-          <p class="muted">
-            Use prompt frameworks to draft, outline, and refine quickly for blogs, ads, and emails.
-          </p>
-          <div class="btn-row">
-            <a class="btn btn--ghost" href="/aiexperttoolkit/comparisons.html">See frameworks</a>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <a class="btn" href="[YOUR_AFF_LINK]" rel="nofollow sponsored">Get Started</a>
+            <a class="btn" href="writesonic-review.html" style="background:transparent;border:1px solid rgba(255,255,255,.15);">Why we picked it</a>
           </div>
         </article>
       </div>
@@ -109,46 +91,44 @@
     <!-- =========================
          Explore by Category
          ========================= -->
-    <section class="section">
-      <div class="container stack-lg">
-        <h2 class="section-title">Explore by Category</h2>
-        <div class="grid-3 cards">
-          <a class="card" href="/category/content">
-            <h3>Content Creation</h3>
-            <p>Blog posts, copy, and captions in seconds.</p>
+    <section class="section" aria-labelledby="explore">
+      <div class="container">
+        <h2 id="explore" style="margin-bottom:1rem;">Explore by Category</h2>
+
+        <div style="display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:stretch;">
+          <!-- Content Creation -->
+          <a href="/category/content" style="display:block;background:var(--panel);border-radius:var(--radius);padding:1rem;text-decoration:none;">
+            <h3 style="margin:0 0 .25rem 0;">Content Creation</h3>
+            <p style="margin:.25rem 0;opacity:.85;">Blog posts, copy, and captions in seconds.</p>
           </a>
 
-          <a class="card" href="/category/images-design">
-            <h3>Images &amp; Design</h3>
-            <p>Generate brand-ready visuals fast.</p>
+          <!-- Images & Design -->
+          <a href="/category/images-design" style="display:block;background:var(--panel);border-radius:var(--radius);padding:1rem;text-decoration:none;">
+            <h3 style="margin:0 0 .25rem 0;">Images &amp; Design</h3>
+            <p style="margin:.25rem 0;opacity:.85;">Generate brand-ready visuals fast.</p>
           </a>
 
-          <a class="card" href="/category/marketing">
-            <h3>Marketing</h3>
-            <p>Automate campaigns &amp; boost conversions.</p>
+          <!-- Marketing -->
+          <a href="/category/marketing" style="display:block;background:var(--panel);border-radius:var(--radius);padding:1rem;text-decoration:none;">
+            <h3 style="margin:0 0 .25rem 0;">Marketing</h3>
+            <p style="margin:.25rem 0;opacity:.85;">Automate campaigns &amp; boost conversions.</p>
           </a>
         </div>
       </div>
     </section>
+
   </main>
 
   <!-- =========================
-       Footer (clean & minimal)
+       Footer
        ========================= -->
   <footer class="footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <a class="brand" href="/aiexperttoolkit/">
-          <span class="brand-mark" aria-hidden="true">AETK</span>
-          <span class="brand-text">AI Expert Toolkit</span>
-        </a>
-        <p class="footnote">© <span id="y"></span> AI Expert Toolkit. All rights reserved.</p>
-      </div>
-
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="/aiexperttoolkit/writesonic-review.html">Writesonic Review</a>
-        <a href="/aiexperttoolkit/comparisons.html">Comparisons</a>
-        <a href="/aiexperttoolkit/pricing.html">Pricing</a>
+    <div class="container" style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between;">
+      <div>© 2025 AI Expert Toolkit. All rights reserved.</div>
+      <nav aria-label="Footer" style="display:flex;gap:.85rem;flex-wrap:wrap;">
+        <a href="writesonic-review.html">Writesonic Review</a>
+        <a href="comparisons.html">Comparisons</a>
+        <a href="pricing.html">Pricing</a>
         <a href="/blog">Blog</a>
         <a href="/guides">Guides</a>
         <a href="/about">About</a>
@@ -157,47 +137,5 @@
     </div>
   </footer>
 
-  <!-- Micro JS: sticky header, active link, mobile menu -->
-  <script>
-    (function () {
-      const header = document.getElementById('siteHeader');
-      const toggle = document.getElementById('navToggle');
-      const links  = document.getElementById('navLinks');
-
-      // sticky shadow
-      const onScroll = () => {
-        if (window.scrollY > 8) header.classList.add('is-scrolled');
-        else header.classList.remove('is-scrolled');
-      };
-      window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
-
-      // mobile open/close
-      toggle?.addEventListener('click', () => {
-        const open = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!open));
-        links.classList.toggle('is-open');
-      });
-      links?.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          toggle.setAttribute('aria-expanded', 'false');
-          links.classList.remove('is-open');
-        });
-      });
-
-      // highlight active link (works on GitHub Pages)
-      const here = location.pathname.replace(/\/index\.html?$/,'');
-      document.querySelectorAll('.nav-link').forEach(a => {
-        const href = a.getAttribute('href');
-        if (!href) return;
-        // normalize home
-        const norm = href.replace(/\/index\.html?$/,'');
-        if (here === norm) a.classList.add('is-active');
-      });
-
-      // footer year
-      const y = document.getElementById('y');
-      if (y) y.textContent = new Date().getFullYear();
-    })();
-  </script>
 </body>
 </html>
