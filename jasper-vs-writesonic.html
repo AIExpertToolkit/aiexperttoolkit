@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jasper vs Writesonic: Which Should You Use?</title>
+  <meta name="description" content="We tested Jasper and Writesonic across real use cases. See where each tool wins and which to choose.">
+  <link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body>
+<header class="site-header" data-sticky>
+  <div class="nav container">
+    <a class="brand" href="https://aiexperttoolkit.github.io/aiexperttoolkit/"><span class="brand-mark">AETK</span><span class="brand-text">AI Expert Toolkit</span></a>
+    <nav class="nav-links" id="siteNav" aria-label="Primary">
+      <a href="https://aiexperttoolkit.github.io/aiexperttoolkit/" class="nav-link" data-nav>Home</a>
+      <a href="writesonic-review.html" class="nav-link" data-nav>Writesonic Review</a>
+      <a href="comparisons.html" class="nav-link" data-nav>Comparisons</a>
+      <a href="pricing.html" class="nav-link" data-nav>Pricing</a>
+      <a href="https://aiexperttoolkit.com/blog" class="nav-link" data-nav>Blog</a>
+      <a href="https://aiexperttoolkit.com/category/guides/" class="nav-link" data-nav>Guides</a>
+      <a href="about.html" class="nav-link" data-nav>About</a>
+      <a href="contact.html" class="nav-link" data-nav>Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn--primary" href="[YOUR_AFF_LINK]" target="_blank" rel="sponsored noopener">Try Writesonic</a>
+      <button class="hamburger" id="navToggle" aria-label="Toggle menu" aria-controls="siteNav" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="kicker">Head-to-head</span>
+    <h1>Jasper vs Writesonic: Which Should You Use?</h1>
+    <p class="lead">Both are capable AI writers. We ran real prompts to see which wins for long-form, ads, email, and brand voice.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container card" style="overflow:auto">
+    <table class="table">
+      <thead><tr><th>Category</th><th>Writesonic</th><th>Jasper</th><th>Winner</th></tr></thead>
+      <tbody>
+        <tr><td>Long-form SEO</td><td>Strong outline→draft, fast refine</td><td>Strong editor, good control</td><td class="ok">Tie</td></tr>
+        <tr><td>Brand voice</td><td>Easy to set & reuse</td><td>Robust as well</td><td class="ok">Tie</td></tr>
+        <tr><td>Templates</td><td>Large library incl. ads/emails</td><td>Large library</td><td class="ok">Tie</td></tr>
+        <tr><td>Value for price</td><td>Excellent</td><td>Good</td><td class="ok">Writesonic</td></tr>
+        <tr><td>Onboarding speed</td><td>Fast start</td><td>Fast</td><td class="ok">Tie</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="container" style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+    <a class="btn btn--primary" href="[YOUR_AFF_LINK]" target="_blank" rel="sponsored noopener">Start with Writesonic</a>
+    <a class="btn btn--ghost" href="writesonic-review.html">Read our full review</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container cols">
+    <div><a class="brand" href="https://aiexperttoolkit.github.io/aiexperttoolkit/"><span class="brand-mark">AETK</span><span class="brand-text">AI Expert Toolkit</span></a></div>
+    <div><strong>Pages</strong><br><a href="writesonic-review.html">Writesonic Review</a><br><a href="comparisons.html">Comparisons</a></div>
+    <div><strong>Learn</strong><br><a href="https://aiexperttoolkit.com/blog" target="_blank">Blog</a><br><a href="https://aiexperttoolkit.com/category/guides/" target="_blank">Guides</a></div>
+    <div><strong>Company</strong><br><a href="about.html">About</a><br><a href="contact.html">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+(function(){const h=document.querySelector('.site-header'),n=document.getElementById('siteNav'),t=document.getElementById('navToggle');const s=()=>{if(window.scrollY>4)h.classList.add('is-scrolled');else h.classList.remove('is-scrolled')};s();window.addEventListener('scroll',s,{passive:true});t?.addEventListener('click',()=>{const o=t.getAttribute('aria-expanded')==='true';t.setAttribute('aria-expanded',String(!o));n.classList.toggle('is-open',!o)});n?.addEventListener('click',e=>{if(e.target.matches('.nav-link')){t.setAttribute('aria-expanded','false');n.classList.remove('is-open')}});const b='/aiexperttoolkit/',p=location.pathname.replace(/\/$/,'');document.querySelectorAll('.nav-link[data-nav]').forEach(a=>{let href=a.getAttribute('href')||'';if(href.startsWith('http')){try{href=new URL(href).pathname}catch(e){}}href=href.replace(/\/$/,'');const home=(href===''||href==='/'||href===b.slice(0,-1));if((home&&p.endsWith(b.slice(0,-1)))||(href&&p.endsWith(href)))a.classList.add('is-active')});})();
+</script>
+</body>
+</html>
