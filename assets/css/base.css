@@ -121,15 +121,14 @@ h3{font-size:clamp(1.05rem,1.5vw,1.2rem)}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar::before{top:0;transform:rotate(45deg)}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar::after{bottom:0;transform:rotate(-45deg)}
 
-/* SAFETY: keep hidden truly hidden (fixes drawer showing on desktop) */
+/* Keep drawer hidden by default */
+.nav-drawer{display:none;flex-direction:column;gap:.25rem;border-top:1px solid var(--hair);
+  background:color-mix(in oklab, var(--bg) 92%, black 8%);padding:.6rem 1rem 1rem;}
+/* Open state is controlled by a body class */
+body.drawer-open .nav-drawer{display:flex}
+/* Safety: also keep it hidden when [hidden] is present */
 .nav-drawer[hidden]{display:none !important}
 
-.nav-drawer{
-  display:flex;flex-direction:column;gap:.25rem;
-  border-top:1px solid var(--hair);
-  background:color-mix(in oklab, var(--bg) 92%, black 8%);
-  padding:.6rem 1rem 1rem;
-}
 .nav-drawer a{padding:.55rem .35rem;border-radius:10px}
 .nav-drawer a:hover{background:rgba(255,255,255,.05)}
 .no-scroll{overflow:hidden}
