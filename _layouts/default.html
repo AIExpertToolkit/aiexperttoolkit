@@ -1,68 +1,37 @@
 <!doctype html>
-<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<html lang="en">
 <head>
-  <!-- Charset / Viewport -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  {% assign og_title = page.title | default: site.title | default: "AI Expert Toolkit" %}
-  {% assign og_desc  = page.description | default: site.description | default: "Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic." %}
-  {% assign og_url   = site.url | append: site.baseurl | append: page.url | replace: 'index.html','' %}
-  {% assign og_img   = page.og_image | default: site.og_image | default: site.url | append: site.baseurl | append: '/assets/img/og-default.png' %}
+  {%- comment -%}
+    Jekyll SEO Tag will output the <title>, canonical, OG/Twitter, etc.
+    Make sure _config.yml has at least:
+      title: AI Expert Toolkit
+      url: https://aiexperttoolkit.github.io
+      baseurl: /aiexperttoolkit
+    Optionally set a default social image there (see notes below).
+  {%- endcomment -%}
+  {% seo %}
 
-  <title>{{ og_title }}</title>
-  <meta name="description" content="{{ og_desc | strip }}" />
-  {% if page.noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
+  <!-- Favicon (inline SVG so we don't depend on /assets/img files) -->
+  <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2358bcff'/%3E%3Ctext x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='28' font-weight='700' fill='%2300111a'%3EA%3C/text%3E%3C/svg%3E">
 
-  <!-- Canonical -->
-  <link rel="canonical" href="{{ og_url }}" />
+  <!-- Optional theme color for mobile UIs -->
+  <meta name="theme-color" content="#0b0d12" />
 
-  <!-- Favicons & PWA-ish -->
-  <link rel="icon" href="{{ site.baseurl }}/assets/img/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/assets/img/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}/assets/img/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/assets/img/apple-touch-icon.png">
-  <meta name="theme-color" content="#0b0d12">
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/base.css?v=12' | relative_url }}" />
 
-  <!-- Social defaults (pages can still add/override locals) -->
-  <meta property="og:site_name" content="AI Expert Toolkit">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="{{ og_title }}">
-  <meta property="og:description" content="{{ og_desc | strip }}">
-  <meta property="og:url" content="{{ og_url }}">
-  <meta property="og:image" content="{{ og_img }}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ og_title }}">
-  <meta name="twitter:description" content="{{ og_desc | strip }}">
-  <meta name="twitter:image" content="{{ og_img }}">
-
-  <!-- CSS (cache-busted) -->
-  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css?v=12">
-
-  <!-- Inline safety so the page isn't FOUC-y on weird caches (removed on load) -->
-  <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
-
-  <!-- Accessibility: skip link minimal styling -->
-  <style>
-    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
-    .skip-link:focus{left:12px;top:12px;width:auto;height:auto;background:#fff;color:#000;padding:.5rem 1rem;border-radius:8px;z-index:1000;outline:2px solid #58bcff}
+  <!-- Safety net so the page isn’t unstyled for a moment on odd caches -->
+  <style id="sanity-check">
+    body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
   </style>
-
-  <!-- Optional: organization JSON-LD (lightweight + accurate) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "AI Expert Toolkit",
-    "url": "{{ site.url }}{{ site.baseurl }}/",
-    "logo": "{{ site.url }}{{ site.baseurl }}/assets/img/og-default.png"
-  }
-  </script>
 </head>
 <body>
-  <a href="#main" class="skip-link">Skip to content</a>
+  <!-- Accessibility: skip straight to main content -->
+  <a class="sr-only" href="#main">Skip to content</a>
 
   {% include header.html %}
 
@@ -72,13 +41,13 @@
 
   {% include footer.html %}
 
-  <!-- Mobile nav + safety removal -->
+  <!-- Minimal JS for the mobile drawer (with Safari fallback) -->
   <script>
-    (function(){
+    (function () {
       const toggle = document.querySelector('.nav-toggle');
       const drawer = document.getElementById('mobileMenu');
 
-      if (toggle && drawer){
+      if (toggle && drawer) {
         toggle.addEventListener('click', () => {
           const open = toggle.getAttribute('aria-expanded') === 'true';
           toggle.setAttribute('aria-expanded', String(!open));
@@ -87,18 +56,18 @@
           document.body.classList.toggle('drawer-open', !open);
         });
 
-        // Close drawer if we resize to desktop
+        // Close the drawer if resized to desktop
         const mq = window.matchMedia('(min-width: 981px)');
-        (mq.addEventListener ? mq.addEventListener : mq.addListener).call(mq, 'change', e => {
-          if (e.matches) {
-            toggle.setAttribute('aria-expanded','false');
-            drawer.hidden = true;
-            document.body.classList.remove('no-scroll','drawer-open');
-          }
-        });
+        function closeIfDesktop(e){ if (e.matches) {
+          toggle.setAttribute('aria-expanded','false');
+          drawer.hidden = true;
+          document.body.classList.remove('no-scroll','drawer-open');
+        }}
+        if (mq.addEventListener) mq.addEventListener('change', closeIfDesktop);
+        else if (mq.addListener) mq.addListener(closeIfDesktop);
       }
 
-      // Remove inline safety CSS after load
+      // Remove the inline safety style after everything loads
       window.addEventListener('load', () => {
         const sc = document.getElementById('sanity-check');
         if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
