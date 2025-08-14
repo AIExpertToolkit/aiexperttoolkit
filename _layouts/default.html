@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% if page.title %}{{ page.title }}{% else %}AI Expert Toolkit{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.{% endif %}">
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url | replace:'index.html','' }}">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css?v=12">
+  <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
+  {% seo %}
+</head>
+<body>
+  {% include header.html %}
+  <main>
+    {{ content }}
+  </main>
+  {% include footer.html %}
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const drawer = document.getElementById('mobileMenu');
+    if (toggle && drawer){
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded')==='true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        drawer.hidden = open;
+        document.body.classList.toggle('no-scroll', !open);
+        document.body.classList.toggle('drawer-open', !open);
+      });
+      const mq = window.matchMedia('(min-width: 981px)');
+      mq.addEventListener?.('change', e=>{
+        if(e.matches){ toggle.setAttribute('aria-expanded','false'); drawer.hidden=true; document.body.classList.remove('no-scroll','drawer-open'); }
+      });
+    }
+    window.addEventListener('load',()=>{ const sc=document.getElementById('sanity-check'); if(sc&&sc.parentNode) sc.parentNode.removeChild(sc);});
+  </script>
+</body>
+</html>
