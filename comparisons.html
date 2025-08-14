@@ -1,77 +1,371 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Tool Comparisons — AI Expert Toolkit</title>
-  <meta name="description" content="Head-to-head comparisons to help you choose the right AI tool quickly.">
-  <link rel="stylesheet" href="assets/css/base.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Tool Comparisons — Pick the Right Tool by Job | AI Expert Toolkit</title>
+  <meta name="description" content="Hands-on comparisons organized by job-to-be-done. See where each tool wins and choose confidently — content, ads, SEO, and e-commerce." />
+  <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/comparisons.html" />
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="assets/css/base.css?v=12" />
+
+  <!-- Inline safety (removed on load) -->
+  <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
+
+  <!-- Page-local helpers -->
+  <style>
+    .pill{display:inline-block;padding:.2rem .55rem;border:1px solid var(--hair-2);border-radius:999px;color:var(--muted);font-weight:600}
+    .muted{color:var(--muted)}
+    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+    .card .mini{margin:.35rem 0 0;padding-left:1rem}
+    .card .mini li{margin:.2rem 0}
+    @media (max-width: 1100px){ .grid-4{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    @media (max-width: 680px){ .grid-2,.grid-4{grid-template-columns:minmax(0,1fr)} }
+  </style>
+
+  <!-- OG -->
+  <meta property="og:title" content="AI Tool Comparisons — Pick the Right Tool by Job" />
+  <meta property="og:description" content="Quick picks and head-to-head matchups based on real workflows: content, ads, SEO, and e-commerce." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/comparisons.html" />
 </head>
+
 <body>
-<header class="site-header" data-sticky>
-  <div class="nav container">
-    <a class="brand" href="https://aiexperttoolkit.github.io/aiexperttoolkit/"><span class="brand-mark">AETK</span><span class="brand-text">AI Expert Toolkit</span></a>
-    <nav class="nav-links" id="siteNav" aria-label="Primary">
-      <a href="https://aiexperttoolkit.github.io/aiexperttoolkit/" class="nav-link" data-nav>Home</a>
-      <a href="writesonic-review.html" class="nav-link" data-nav>Writesonic Review</a>
-      <a href="comparisons.html" class="nav-link" data-nav>Comparisons</a>
-      <a href="pricing.html" class="nav-link" data-nav>Pricing</a>
-      <a href="https://aiexperttoolkit.com/blog" class="nav-link" data-nav>Blog</a>
-      <a href="https://aiexperttoolkit.com/category/guides/" class="nav-link" data-nav>Guides</a>
-      <a href="about.html" class="nav-link" data-nav>About</a>
-      <a href="contact.html" class="nav-link" data-nav>Contact</a>
-    </nav>
-    <div class="nav-cta">
-      <a class="btn btn-primary"
-   href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
-   target="_blank" rel="sponsored noopener">
-  Try Writesonic
-</a>
+  <!-- ================================
+       Header (consistent with other pages)
+  =================================== -->
+  <header class="site-header">
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">AETK</span>
+        <span class="brand-text">AI Expert Toolkit</span>
+      </a>
 
-      <button class="hamburger" id="navToggle" aria-label="Toggle menu" aria-controls="siteNav" aria-expanded="false"><span></span><span></span><span></span></button>
+      <nav class="nav-primary" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="writesonic-review.html">Writesonic Review</a>
+        <a href="comparisons.html" aria-current="page">Comparisons</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
+        <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
+        <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
+        <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn"
+           href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
+           target="_blank" rel="sponsored noopener"
+           data-cta="nav-cta" data-dest="writesonic">Try Writesonic</a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu">
+        <span class="nav-toggle-bar"></span>
+        <span class="sr-only">Toggle menu</span>
+      </button>
     </div>
-  </div>
-</header>
 
-<section class="hero">
-  <div class="container">
-    <span class="kicker">Compare and choose</span>
-    <h1>AI Tool Comparisons</h1>
-    <p class="lead">See where each tool wins based on our hands-on testing — and pick confidently.</p>
-  </div>
-</section>
+    <!-- Mobile drawer -->
+    <div id="mobileMenu" class="nav-drawer" hidden>
+      <a href="index.html">Home</a>
+      <a href="writesonic-review.html">Writesonic Review</a>
+      <a href="comparisons.html" aria-current="page">Comparisons</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
+      <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
+      <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
+      <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
+      <a class="btn full"
+         href="{% include aff_url.html name='writesonic' content='mobile-cta' %}"
+         target="_blank" rel="sponsored noopener"
+         data-cta="mobile-cta" data-dest="writesonic">Try Writesonic</a>
+    </div>
+  </header>
 
-<section class="section">
-  <div class="container grid grid-3">
-    <a class="card" href="jasper-vs-writesonic.html">
-      <div class="badge">Popular</div>
-      <h3>Jasper vs Writesonic</h3>
-      <p class="muted">Long-form quality, brand voice, and value — which one’s right for you?</p>
-    </a>
-    <a class="card" href="writesonic-review.html">
-      <div class="badge">Deep dive</div>
-      <h3>Writesonic Review</h3>
-      <p class="muted">Our full review, including strengths, watch-outs, and pricing.</p>
-    </a>
-    <a class="card" href="pricing.html">
-      <div class="badge">Save money</div>
-      <h3>Writesonic Pricing</h3>
-      <p class="muted">Plans, limits, and tips to pick the best value.</p>
-    </a>
-  </div>
-</section>
+  <!-- ================================
+       Main
+  =================================== -->
+  <main>
+    <!-- Hero -->
+    <section class="section hero">
+      <div class="wrap">
+        <p class="eyebrow">Compare & choose</p>
+        <h1>AI Tool Comparisons</h1>
+        <p class="lead">We test with real prompts and deliverable checklists. Pick by the job you’re trying to ship — then dive deeper if needed.</p>
 
-<footer class="footer">
-  <div class="container cols">
-    <div><a class="brand" href="https://aiexperttoolkit.github.io/aiexperttoolkit/"><span class="brand-mark">AETK</span><span class="brand-text">AI Expert Toolkit</span></a></div>
-    <div><strong>Pages</strong><br><a href="writesonic-review.html">Writesonic Review</a><br><a href="pricing.html">Pricing</a></div>
-    <div><strong>Learn</strong><br><a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a><br><a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a></div>
-    <div><strong>Company</strong><br><a href="about.html">About</a><br><a href="contact.html">Contact</a></div>
-  </div>
-</footer>
+        <div class="btn-row">
+          <a class="btn"
+             href="{% include aff_url.html name='writesonic' content='comparisons-hero' %}"
+             target="_blank" rel="sponsored noopener"
+             data-cta="comparisons-hero" data-dest="writesonic">Start free with Writesonic</a>
+          <a class="btn btn-ghost" href="#quick-picks">See quick picks</a>
+        </div>
+      </div>
+    </section>
 
-<script>
-(function(){const h=document.querySelector('.site-header'),n=document.getElementById('siteNav'),t=document.getElementById('navToggle');const s=()=>{if(window.scrollY>4)h.classList.add('is-scrolled');else h.classList.remove('is-scrolled')};s();window.addEventListener('scroll',s,{passive:true});t?.addEventListener('click',()=>{const o=t.getAttribute('aria-expanded')==='true';t.setAttribute('aria-expanded',String(!o));n.classList.toggle('is-open',!o)});n?.addEventListener('click',e=>{if(e.target.matches('.nav-link')){t.setAttribute('aria-expanded','false');n.classList.remove('is-open')}});const b='/aiexperttoolkit/',p=location.pathname.replace(/\/$/,'');document.querySelectorAll('.nav-link[data-nav]').forEach(a=>{let href=a.getAttribute('href')||'';if(href.startsWith('http')){try{href=new URL(href).pathname}catch(e){}}href=href.replace(/\/$/,'');const home=(href===''||href==='/'||href===b.slice(0,-1));if((home&&p.endsWith(b.slice(0,-1)))||(href&&p.endsWith(href)))a.classList.add('is-active')});})();
-</script>
+    <!-- Quick picks by job -->
+    <section class="section" id="quick-picks">
+      <div class="wrap">
+        <h2 class="section-title">Quick Picks <span class="pill">By Job-to-Be-Done</span></h2>
+
+        <div class="grid-4">
+          <article class="card">
+            <div class="badge">Best overall</div>
+            <h3>Content & Blogs</h3>
+            <p class="muted">Long-form drafts that stay on brand, with fast outline→draft workflows.</p>
+            <ul class="mini">
+              <li>Outline → section drafts → polish</li>
+              <li>Voice/styling controls for consistency</li>
+              <li>Meta titles/descriptions built-in</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="writesonic-review.html#workflows">See the workflow</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='pick-content' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="pick-content" data-dest="writesonic">Try it</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="badge">E-commerce</div>
+            <h3>Product Pages (PDPs)</h3>
+            <p class="muted">Titles, benefit bullets, descriptions, FAQs, and alt text — CSV-friendly.</p>
+            <ul class="mini">
+              <li>Amazon/Shopify-ready fields</li>
+              <li>Spec→benefit mapping</li>
+              <li>Batch exports</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="writesonic-review.html#workflows">See prompt template</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='pick-pdp' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="pick-pdp" data-dest="writesonic">Generate PDPs</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="badge">Performance</div>
+            <h3>Ads & Variants</h3>
+            <p class="muted">Quick headline/primary text matrices for Meta/Google/TikTok.</p>
+            <ul class="mini">
+              <li>Angle sets (pain/proof/price/luxury/social)</li>
+              <li>Character-limit aware</li>
+              <li>Spreadsheet-ready export</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="writesonic-review.html#workflows">See angles</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='pick-ads' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="pick-ads" data-dest="writesonic">Create variants</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="badge">SEO</div>
+            <h3>Audits & On-Page</h3>
+            <p class="muted">Find issues fast and generate keyword-guided outlines and metas.</p>
+            <ul class="mini">
+              <li>Site audits with page caps per tier</li>
+              <li>Keyword → outline & meta helpers</li>
+              <li>Prioritized fixes</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="pricing.html#plans">See plan limits</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='pick-seo' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="pick-seo" data-dest="writesonic">Run an audit</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Head-to-head matchups -->
+    <section class="section" id="matchups">
+      <div class="wrap">
+        <h2 class="section-title">Head-to-Head Matchups</h2>
+
+        <div class="grid-2">
+          <a class="card" href="jasper-vs-writesonic.html">
+            <div class="badge">Popular</div>
+            <h3>Jasper vs Writesonic</h3>
+            <p class="muted">Long-form quality, brand voice controls, and value for money.</p>
+          </a>
+
+          <a class="card" href="writesonic-review.html">
+            <div class="badge">Deep dive</div>
+            <h3>Writesonic Review</h3>
+            <p class="muted">Strengths, watch-outs, pricing, and our real workflows.</p>
+          </a>
+        </div>
+
+        <div class="btn-row" style="margin-top:1rem">
+          <a class="btn"
+             href="{% include aff_url.html name='writesonic' content='matchups-cta' %}"
+             target="_blank" rel="sponsored noopener"
+             data-cta="matchups-cta" data-dest="writesonic">Try Writesonic free</a>
+          <a class="btn btn-ghost" href="pricing.html">Check pricing</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deeper guidance by use-case -->
+    <section class="section" id="use-cases">
+      <div class="wrap">
+        <h2 class="section-title">Pick by Use-Case</h2>
+
+        <div class="grid-2">
+          <article class="pick">
+            <h3 id="content">Content & Blogs</h3>
+            <p class="muted">Outline → draft → polish with consistent voice. Great for 1,000–2,000-word posts.</p>
+            <ul class="mini">
+              <li>Use voice lines (3–5) to steer tone</li>
+              <li>Add examples + internal links during polish</li>
+              <li>Export to Docs for client review</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="writesonic-review.html#workflows">Our exact prompts</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='use-content' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="use-content" data-dest="writesonic">Draft a post</a>
+            </div>
+          </article>
+
+          <article class="pick">
+            <h3 id="seo">SEO & On-Page</h3>
+            <p class="muted">Audit pages, fix issues, then ship keyword-guided outlines and meta tags.</p>
+            <ul class="mini">
+              <li>Run audits on your main domain first</li>
+              <li>Prioritize high-impact fixes (duplicate titles, slow pages)</li>
+              <li>Pair with steady long-form cadence</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="pricing.html#compare">See plan caps</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='use-seo' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="use-seo" data-dest="writesonic">Run an audit</a>
+            </div>
+          </article>
+
+          <article class="pick">
+            <h3 id="ecommerce">E-commerce PDPs</h3>
+            <p class="muted">Ship titles, bullets, descriptions, FAQs, and alt text in one pass.</p>
+            <ul class="mini">
+              <li>Map specs → benefits; avoid risky claims</li>
+              <li>CSV exports for Shopify/Amazon</li>
+              <li>Use the PDP mini-prompt from our review</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="writesonic-review.html#workflows">See PDP prompt</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='use-pdp' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="use-pdp" data-dest="writesonic">Generate PDPs</a>
+            </div>
+          </article>
+
+          <article class="pick">
+            <h3 id="ads">Ads & Variants</h3>
+            <p class="muted">Angle-based matrices (pain/proof/price/luxury/social) with count-friendly lengths.</p>
+            <ul class="mini">
+              <li>10 headlines + 5 primaries per angle</li>
+              <li>Keep ≤40/≤125 chars for Meta</li>
+              <li>Track winners in a simple sheet</li>
+            </ul>
+            <div class="btn-row" style="margin-top:.6rem">
+              <a class="btn btn-ghost" href="writesonic-review.html#workflows">Use our angle set</a>
+              <a class="btn"
+                 href="{% include aff_url.html name='writesonic' content='use-ads' %}"
+                 target="_blank" rel="sponsored noopener"
+                 data-cta="use-ads" data-dest="writesonic">Create variants</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Soft CTA band -->
+    <section class="section">
+      <div class="wrap">
+        <div class="card">
+          <h3>Ready to try our recommended pick?</h3>
+          <p class="muted">Start free, then follow the workflows in our review to ship real deliverables this week.</p>
+          <div class="btn-row" style="margin-top:.6rem">
+            <a class="btn"
+               href="{% include aff_url.html name='writesonic' content='comparisons-band' %}"
+               target="_blank" rel="sponsored noopener"
+               data-cta="comparisons-band" data-dest="writesonic">Start free</a>
+            <a class="btn btn-ghost" href="writesonic-review.html">Read the review</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================
+       Footer
+  =================================== -->
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <div class="footer-left">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">AETK</span>
+          <span class="brand-text">AI Expert Toolkit</span>
+        </div>
+        <p class="copyright">© 2025 AI Expert Toolkit. All rights reserved.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="writesonic-review.html">Writesonic Review</a>
+        <a href="comparisons.html" aria-current="page">Comparisons</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
+        <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
+        <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
+        <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Drawer JS + CTA tracking + remove inline safety style -->
+  <script>
+    // Mobile drawer
+    const toggle = document.querySelector('.nav-toggle');
+    const drawer = document.getElementById('mobileMenu');
+    if (toggle && drawer) {
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        drawer.hidden = open;
+        document.body.classList.toggle('no-scroll', !open);
+      });
+      const mq = window.matchMedia('(min-width: 981px)');
+      mq.addEventListener?.('change', e => {
+        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll'); }
+      });
+    }
+
+    // CTA click tracker stub (console only; wire to GA/Plausible later)
+    document.querySelectorAll('a[data-cta]').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        console.log('[CTA]', { cta: a.dataset.cta, dest: a.dataset.dest, ts: Date.now() });
+      });
+    });
+
+    // Remove inline safety CSS after load
+    window.addEventListener('load', () => {
+      const sc = document.getElementById('sanity-check');
+      if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
+    });
+  </script>
 </body>
 </html>
