@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Favicon & app icons -->
+<link rel="icon" href="{{ site.baseurl }}/assets/img/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/assets/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/assets/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}/assets/img/favicon-16x16.png">
+
+<!-- Social share defaults -->
+<meta property="og:image" content="{{ site.url }}{{ site.baseurl }}/assets/img/og-default.png">
+<meta property="og:site_name" content="AI Expert Toolkit">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{ site.url }}{{ site.baseurl }}/assets/img/og-default.png">
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>{% if page.title %}{{ page.title }}{% else %}AI Expert Toolkit{% endif %}</title>
