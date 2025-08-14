@@ -1,40 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Expert Toolkit</title>
-<link rel="stylesheet" href="../assets/css/base.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Expert Toolkit</title>
+  <!-- Uses your repo path: aiexperttoolkit/assets/css/base.css -->
+  <link rel="stylesheet" href="assets/css/base.css" />
 </head>
 <body>
 
-<!-- Hero -->
-<section class="hero">
-  <h1>Build Smarter with AI Tools</h1>
-  <p>Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
-  <a href="[YOUR_AFF_LINK]" class="btn">Try Writesonic</a>
-</section>
+  <!-- HEADER -->
+  <header class="section" role="banner" style="padding-top:1.25rem;padding-bottom:1.25rem;">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+      <a href="/" style="display:flex;align-items:center;gap:.75rem;text-decoration:none;">
+        <div class="btn" style="padding:.35rem .6rem;border-radius:10px;background:#2a3552;">AETK</div>
+        <strong>AI Expert Toolkit</strong>
+      </a>
+      <nav aria-label="Primary">
+        <a href="#" style="margin-right:14px;">Writesonic Review</a>
+        <a href="#" style="margin-right:14px;">Comparisons</a>
+        <a href="#" style="margin-right:14px;">Guides</a>
+        <a href="#">About</a>
+      </nav>
+    </div>
+  </header>
 
-<!-- Features -->
-<section class="section">
-  <div class="container">
-    <h2>Why AI Expert Toolkit?</h2>
-    <ul>
-      <li>Hands-on testing with real outputs</li>
-      <li>Clear, actionable comparisons</li>
-      <li>Guides you can copy and paste</li>
-    </ul>
-  </div>
-</section>
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <h1>Build Smarter with AI Tools</h1>
+    <p>Action‑first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
+    <a href="[YOUR_AFF_LINK]" class="btn">Try Writesonic</a>
+  </section>
 
-<!-- Footer -->
-<footer class="footer">
-  © <span id="year"></span> AI Expert Toolkit. All rights reserved.
-</footer>
+  <!-- TRUST BAR -->
+  <section class="section" aria-label="Trust bar">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;">
+        <div class="hero" style="padding:1.5rem;">
+          <strong>Hands‑on testing</strong>
+          <p style="color:var(--muted);margin:.5rem 0 0;">We publish prompts, settings, and outputs.</p>
+        </div>
+        <div class="hero" style="padding:1.5rem;">
+          <strong>Affiliate clarity</strong>
+          <p style="color:var(--muted);margin:.5rem 0 0;">Clear disclosures; no brand‑bidding violations.</p>
+        </div>
+        <div class="hero" style="padding:1.5rem;">
+          <strong>Fast to value</strong>
+          <p style="color:var(--muted);margin:.5rem 0 0;">Copy‑paste frameworks and ready HTML.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  <!-- FEATURES -->
+  <section class="section" aria-label="Features">
+    <div class="container">
+      <h2 style="margin:0 0 1rem;">Why AI Expert Toolkit?</h2>
+      <ul>
+        <li>Hands‑on testing with real outputs</li>
+        <li>Clear, actionable comparisons</li>
+        <li>Guides you can copy and paste</li>
+      </ul>
+    </div>
+  </section>
 
+  <!-- COMPARISON (starter table) -->
+  <section class="section" aria-label="Comparison">
+    <div class="container">
+      <h2 style="margin:0 0 1rem;">Writesonic vs Alternatives</h2>
+      <table style="width:100%;border-collapse:separate;border-spacing:0;border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;">
+        <thead>
+          <tr style="background:rgba(255,255,255,.06);text-align:left;">
+            <th style="padding:14px 16px;">Feature</th>
+            <th style="padding:14px 16px;">Writesonic</th>
+            <th style="padding:14px 16px;">Alternative</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:12px 16px;">SEO tools</td><td style="padding:12px 16px;">Built‑in</td><td style="padding:12px 16px;">Limited</td></tr>
+          <tr><td style="padding:12px 16px;">Templates</td><td style="padding:12px 16px;">90+ presets</td><td style="padding:12px 16px;">Fewer</td></tr>
+          <tr><td style="padding:12px 16px;">Pricing</td><td style="padding:12px 16px;">Budget‑friendly</td><td style="padding:12px 16px;">Higher</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PRICING (starter) -->
+  <section class="section" aria-label="Pricing">
+    <div class="container" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;">
+      <div class="hero" style="padding:1.5rem;">
+        <h3>Starter</h3>
+        <p style="font-size:2rem;margin:.25rem 0 1rem;">$19</p>
+        <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=pricing_starter">Choose Starter</a>
+      </div>
+      <div class="hero" style="padding:1.5rem;">
+        <h3>Growth</h3>
+        <p style="font-size:2rem;margin:.25rem 0 1rem;">$49</p>
+        <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=pricing_growth">Choose Growth</a>
+      </div>
+      <div class="hero" style="padding:1.5rem;">
+        <h3>Scale</h3>
+        <p style="font-size:2rem;margin:.25rem 0 1rem;">$99</p>
+        <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=pricing_scale">Choose Scale</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIMARY CTA -->
+  <section class="section" aria-label="Primary call to action">
+    <div class="container hero" style="padding:2rem;">
+      <h2>Start with Writesonic — our #1 pick to ship value fast</h2>
+      <p style="color:var(--muted);max-width:680px;margin:.5rem auto 1rem;">Spin up content, product pages, and comparisons in minutes. We share our exact prompts.</p>
+      <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=primary">Get Writesonic</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    © <span id="year"></span> AI Expert Toolkit. All rights reserved.
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
