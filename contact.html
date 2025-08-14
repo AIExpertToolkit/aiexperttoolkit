@@ -22,7 +22,12 @@
       <a href="contact.html" class="nav-link" data-nav>Contact</a>
     </nav>
     <div class="nav-cta">
-      <a class="btn btn--primary" href="[YOUR_AFF_LINK]" target="_blank" rel="sponsored noopener">Try Writesonic</a>
+      <a class="btn btn-primary"
+   href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
+   target="_blank" rel="sponsored noopener">
+  Try Writesonic
+</a>
+
       <button class="hamburger" id="navToggle" aria-label="Toggle menu" aria-controls="siteNav" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
