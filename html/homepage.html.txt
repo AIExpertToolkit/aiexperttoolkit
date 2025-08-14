@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Expert Toolkit</title>
+<link rel="stylesheet" href="../assets/css/base.css">
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Build Smarter with AI Tools</h1>
+  <p>Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
+  <a href="[YOUR_AFF_LINK]" class="btn">Try Writesonic</a>
+</section>
+
+<!-- Features -->
+<section class="section">
+  <div class="container">
+    <h2>Why AI Expert Toolkit?</h2>
+    <ul>
+      <li>Hands-on testing with real outputs</li>
+      <li>Clear, actionable comparisons</li>
+      <li>Guides you can copy and paste</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  © <span id="year"></span> AI Expert Toolkit. All rights reserved.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
