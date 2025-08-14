@@ -36,6 +36,8 @@
     .plan li{margin:.25rem 0}
     .plan .btn{margin-top:.75rem}
 
+    .plan-notes{margin-top:.6rem;border-top:1px solid var(--hair);padding-top:.6rem}
+
     .compare{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--hair);border-radius:12px;overflow:hidden;margin-top:1rem}
     .compare th,.compare td{padding:.6rem .7rem;border-bottom:1px solid var(--hair)}
     .compare thead th{background:rgba(255,255,255,.04);text-align:left}
@@ -55,6 +57,9 @@
     .scenario h3{margin-bottom:.25rem}
 
     .sticky-cta{position:fixed;bottom:12px;left:12px;right:12px;display:none;gap:.6rem;justify-content:center;z-index:90}
+
+    /* Responsive */
+    @media (max-width: 1200px){ .plans{grid-template-columns:repeat(2,minmax(0,1fr))} }
     @media (max-width: 980px){ .plans{grid-template-columns:minmax(0,1fr)} .feature-grid,.scenarios{grid-template-columns:minmax(0,1fr)} .sticky-cta{display:flex} }
   </style>
 
@@ -86,12 +91,16 @@
       </nav>
 
       <div class="nav-cta">
-        <a class="btn btn-primary"
-   href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
-   target="_blank" rel="sponsored noopener">
-  Try Writesonic
-</a>
-
+        <a class="btn"
+           href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
+           target="_blank" rel="sponsored noopener"
+           data-cta="nav-cta" data-dest="writesonic">
+          Try Writesonic
+        </a>
+        <!-- Fallback if Liquid isn't processed:
+        <a class="btn" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_content=nav-cta" target="_blank" rel="sponsored noopener">Try Writesonic</a>
+        -->
+      </div>
 
       <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu">
         <span class="nav-toggle-bar"></span>
@@ -108,8 +117,11 @@
       <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
       <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
       <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
-      <a class="btn full" href="{% include aff_url.html name='writesonic' content='mobile-cta' %}" target="_blank" rel="noopener">Try Writesonic</a>
 
+      <a class="btn full"
+         href="{% include aff_url.html name='writesonic' content='mobile-cta' %}"
+         target="_blank" rel="sponsored noopener"
+         data-cta="mobile-cta" data-dest="writesonic">Try Writesonic</a>
     </div>
   </header>
 
@@ -127,7 +139,10 @@
             <button id="bill-annual" aria-pressed="true">Pay annually <span class="pill">Save ~20%</span></button>
             <button id="bill-monthly" aria-pressed="false">Pay monthly</button>
           </div>
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
+          <a class="btn"
+             href="{% include aff_url.html name='writesonic' content='pricing-hero' %}"
+             target="_blank" rel="sponsored noopener"
+             data-cta="pricing-hero" data-dest="writesonic">Start free</a>
           <a class="btn btn-ghost" href="writesonic-review.html">Read our hands-on review</a>
         </div>
 
@@ -138,7 +153,7 @@
     </section>
 
     <!-- Plan cards with prices + deeper detail -->
-    <section class="section">
+    <section class="section" id="plans">
       <div class="wrap">
         <h2 class="section-title">Plans & What You Get</h2>
 
@@ -162,12 +177,16 @@
               </ul>
             </div>
 
-            <ul>
+            <ul class="plan-notes">
               <li><strong>Best for:</strong> trialing workflows and publishing first pieces</li>
-              <li><strong>Watch-outs:</strong> lower throughput; long-form best on higher tiers</li>
+              <li><strong>Weekly output:</strong> 1–2 pages/posts + small audits</li>
+              <li><strong>Upgrade when:</strong> you need long-form drafts at pace or more audits</li>
             </ul>
 
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
+            <a class="btn"
+               href="{% include aff_url.html name='writesonic' content='plan-lite' %}"
+               target="_blank" rel="sponsored noopener"
+               data-cta="plan-lite" data-dest="writesonic">Start free</a>
           </div>
 
           <!-- Standard -->
@@ -190,12 +209,16 @@
               </ul>
             </div>
 
-            <ul>
+            <ul class="plan-notes">
               <li><strong>Best for:</strong> weekly content cadence + on-page optimization</li>
-              <li><strong>Note:</strong> AI search tracking starts on Professional</li>
+              <li><strong>Weekly output:</strong> 2–4 posts + audits + product copy</li>
+              <li><strong>Upgrade when:</strong> you want AI search tracking and more throughput</li>
             </ul>
 
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Choose Standard</a>
+            <a class="btn"
+               href="{% include aff_url.html name='writesonic' content='plan-standard' %}"
+               target="_blank" rel="sponsored noopener"
+               data-cta="plan-standard" data-dest="writesonic">Choose Standard</a>
           </div>
 
           <!-- Professional -->
@@ -220,12 +243,16 @@
               </ul>
             </div>
 
-            <ul>
+            <ul class="plan-notes">
               <li><strong>Best for:</strong> weekly articles + tracking AI search presence</li>
-              <li><strong>Tip:</strong> good balance of throughput and visibility features</li>
+              <li><strong>Weekly output:</strong> 4–8 posts + continuous audits + variant testing</li>
+              <li><strong>Upgrade when:</strong> you need higher volume, more users, or strategist support</li>
             </ul>
 
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Get Professional</a>
+            <a class="btn"
+               href="{% include aff_url.html name='writesonic' content='plan-professional' %}"
+               target="_blank" rel="sponsored noopener"
+               data-cta="plan-professional" data-dest="writesonic">Get Professional</a>
           </div>
 
           <!-- Advanced -->
@@ -249,12 +276,16 @@
               </ul>
             </div>
 
-            <ul>
+            <ul class="plan-notes">
               <li><strong>Best for:</strong> multi-channel campaigns & high-volume content ops</li>
+              <li><strong>Weekly output:</strong> 8–15 posts, deep audits, multi-locale content</li>
               <li><strong>Note:</strong> includes priority support + dedicated Slack</li>
             </ul>
 
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Choose Advanced</a>
+            <a class="btn"
+               href="{% include aff_url.html name='writesonic' content='plan-advanced' %}"
+               target="_blank" rel="sponsored noopener"
+               data-cta="plan-advanced" data-dest="writesonic">Choose Advanced</a>
           </div>
         </div>
 
@@ -265,7 +296,7 @@
     </section>
 
     <!-- Comparison table -->
-    <section class="section">
+    <section class="section" id="compare">
       <div class="wrap">
         <h2 class="section-title">Feature Comparison</h2>
 
@@ -340,14 +371,17 @@
         </table>
 
         <div class="btn-row" style="margin-top:1rem">
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See live plan details</a>
+          <a class="btn"
+             href="{% include aff_url.html name='writesonic' content='compare-see-live' %}"
+             target="_blank" rel="sponsored noopener"
+             data-cta="compare-see-live" data-dest="writesonic">See live plan details</a>
           <a class="btn btn-ghost" href="writesonic-review.html">How we use these features</a>
         </div>
       </div>
     </section>
 
     <!-- Deep dive -->
-    <section class="section">
+    <section class="section" id="deep-dive">
       <div class="wrap">
         <h2 class="section-title">Deep Dive: What These Features Mean</h2>
 
@@ -391,7 +425,7 @@
     </section>
 
     <!-- Scenarios -->
-    <section class="section">
+    <section class="section" id="scenarios">
       <div class="wrap">
         <h2 class="section-title">Pick Based on Your Scenario</h2>
 
@@ -411,14 +445,17 @@
         </div>
 
         <div class="btn-row" style="margin-top:1.25rem">
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
+          <a class="btn"
+             href="{% include aff_url.html name='writesonic' content='scenarios-start' %}"
+             target="_blank" rel="sponsored noopener"
+             data-cta="scenarios-start" data-dest="writesonic">Start free</a>
           <a class="btn btn-ghost" href="comparisons.html">Compare with other tools</a>
         </div>
       </div>
     </section>
 
     <!-- FAQs -->
-    <section class="section">
+    <section class="section" id="faq">
       <div class="wrap">
         <h2 class="section-title">Pricing & Limits — FAQs</h2>
         <div class="stack">
@@ -433,7 +470,10 @@
 
   <!-- Sticky mobile CTA -->
   <div class="sticky-cta">
-    <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic free</a>
+    <a class="btn"
+       href="{% include aff_url.html name='writesonic' content='sticky-mobile' %}"
+       target="_blank" rel="sponsored noopener"
+       data-cta="sticky-mobile" data-dest="writesonic">Try Writesonic free</a>
   </div>
 
   <!-- Footer -->
@@ -459,8 +499,9 @@
     </div>
   </footer>
 
-  <!-- Mobile drawer JS + billing toggle + remove inline safety style -->
+  <!-- Mobile drawer JS + billing toggle + CTA tracking + remove inline safety style -->
   <script>
+    // Mobile drawer
     const toggle = document.querySelector('.nav-toggle');
     const drawer = document.getElementById('mobileMenu');
     if (toggle && drawer) {
@@ -486,10 +527,18 @@
       document.querySelectorAll('.p-monthly').forEach(el => el.hidden = (mode !== 'monthly'));
       btnAnnual.setAttribute('aria-pressed', mode === 'annual');
       btnMonthly.setAttribute('aria-pressed', mode === 'monthly');
+      console.log('[billing]', mode); // hook for analytics
     }
     btnAnnual?.addEventListener('click', () => setBilling('annual'));
     btnMonthly?.addEventListener('click', () => setBilling('monthly'));
     setBilling('annual'); // default
+
+    // CTA click tracker stub (console only; wire to GA4/Plausible/Webhook later)
+    document.querySelectorAll('a[data-cta]').forEach(a=>{
+      a.addEventListener('click', ()=>{
+        console.log('[CTA]', { cta: a.dataset.cta, dest: a.dataset.dest, ts: Date.now() });
+      });
+    });
 
     // Remove inline safety CSS after load
     window.addEventListener('load', () => {
