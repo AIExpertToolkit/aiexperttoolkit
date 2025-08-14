@@ -1,141 +1,224 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI Expert Toolkit – Build Smarter with AI Tools</title>
-  <meta name="description" content="Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic." />
-  <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/" />
-  <link rel="stylesheet" href="assets/css/base.css?v=12" />
-  <!-- Analytics -->
-  <script defer data-domain="aiexperttoolkit.github.io" src="https://plausible.io/js/script.js"></script>
-  <!-- Safety (removed after load) -->
-  <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
-  <meta property="og:title" content="AI Expert Toolkit – Build Smarter with AI Tools" />
-  <meta property="og:description" content="Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="nav">
-      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">AETK</span><span class="brand-text">AI Expert Toolkit</span></a>
-      <nav class="nav-primary" aria-label="Primary">
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="writesonic-review.html">Writesonic Review</a>
-        <a href="comparisons.html">Comparisons</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-        <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-        <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
-        <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
-      </nav>
-      <div class="nav-cta">
-        <a class="btn"
-           href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
-           target="_blank" rel="sponsored noopener"
-           data-cta="nav-cta" data-dest="writesonic">Try Writesonic</a>
-      </div>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu"><span class="nav-toggle-bar"></span><span class="sr-only">Toggle menu</span></button>
+---
+layout: default
+title: Master the Best AI Tools of 2025 | AI Expert Toolkit
+description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
+permalink: /
+---
+
+<!-- Inline page-scoped styles (kept tiny). Broader rules live in assets/css/base.css -->
+<style>
+  .hero {
+    border-radius: 18px;
+    overflow: hidden;
+    margin-block: clamp(12px, 2vw, 18px);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(63,255,172,.10), transparent),
+      linear-gradient(135deg,#0F172A 0%, #114b5e 100%),
+      url('/assets/img/home/hero-1920.jpg') center/cover no-repeat;
+    color: #fff;
+  }
+  .hero .wrap {
+    display: grid;
+    gap: 22px;
+    grid-template-columns: 1.1fr .9fr;
+    align-items: center;
+  }
+  .hero h1 { margin: .2rem 0 .6rem 0; font-size: clamp(2.2rem, 4vw, 3rem); }
+  .badge {
+    display:inline-block; font-size:.85rem; padding:.4rem .6rem; border-radius:999px;
+    background: rgba(63,255,172,.14); color:#A7F3D0; border:1px solid rgba(63,255,172,.35);
+  }
+  .btn { display:inline-block; padding:.8rem 1.1rem; border-radius:10px; text-decoration:none; font-weight:600; }
+  .btn-accent { background:#22d3ee; color:#0f172a; }
+  .section { padding-block: clamp(28px,5vw,56px); }
+  .wrap { max-width: 1100px; margin-inline:auto; padding-inline: 18px; }
+  .divider { height:1px; background:linear-gradient(90deg,transparent,#0ea5e9,transparent); margin: 14px 0 0 0; opacity:.35; }
+
+  /* Cards & grids */
+  .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .card { background:#0b1220; color:#e6f1ff; border:1px solid rgba(255,255,255,.06); border-radius:14px; padding:16px; }
+  .card h3 { margin:8px 0; font-size:1.05rem; }
+  .muted { color:#9fb6d1; }
+  .card img.logo { width:96px; height:auto; object-fit:contain; }
+
+  /* Responsive */
+  @media (max-width: 900px){
+    .hero .wrap { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* Hero media box fallback (if you decide to show a box instead of pure bg) */
+  .hero-media { border-radius:16px; overflow:hidden; box-shadow:0 24px 48px rgba(0,0,0,.18); }
+  .hero-16x9 { width:100%; padding-top:56.25%; background-position:center; background-size:cover; }
+</style>
+
+<section class="hero section" aria-label="AI Expert Toolkit hero">
+  <div class="wrap">
+    <div>
+      <span class="badge">Your Shortcut to the Best AI Tools</span>
+      <h1>Master the Best AI Tools of 2025</h1>
+      <p class="muted">
+        Expert reviews, comparisons, and easy‑to‑follow tutorials — choose the right AI faster and work smarter.
+      </p>
+      <a class="btn btn-accent" href="/comparisons.html">See Our Top Picks</a>
     </div>
-    <div id="mobileMenu" class="nav-drawer" hidden>
-      <a href="index.html" aria-current="page">Home</a>
-      <a href="writesonic-review.html">Writesonic Review</a>
-      <a href="comparisons.html">Comparisons</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-      <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-      <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
-      <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
-      <a class="btn full"
-         href="{% include aff_url.html name='writesonic' content='mobile-cta' %}"
-         target="_blank" rel="sponsored noopener"
-         data-cta="mobile-cta" data-dest="writesonic">Try Writesonic</a>
+
+    <!-- Optional visual box. If you prefer pure background only, you can remove this figure. -->
+    <figure class="hero-media" style="margin:0" aria-hidden="true">
+      <div class="hero-16x9" style="background-image:url('/assets/img/home/hero-1920.jpg');"></div>
+      <noscript>
+        <img src="/assets/img/home/hero-1920.jpg" alt="" width="1920" height="1080" />
+      </noscript>
+    </figure>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" aria-labelledby="why">
+  <div class="wrap">
+    <h2 id="why">Why AI Expert Toolkit?</h2>
+    <p>
+      We cut through the hype with <strong>hands‑on reviews</strong>, <strong>side‑by‑side comparisons</strong>,
+      and <strong>step‑by‑step guides</strong>. Our mission: help you pick the right AI without wasting time or money.
+    </p>
+
+    <div class="grid-3" style="margin-top:14px">
+      <article class="card">
+        <img class="logo" src="/assets/img/icons/icon-reviews-200x200.png" alt="" width="64" height="64" loading="lazy" aria-hidden="true">
+        <h3>Hands‑on Reviews</h3>
+        <p class="muted">We run the same tasks across tools and share real outputs.</p>
+      </article>
+      <article class="card">
+        <img class="logo" src="/assets/img/icons/icon-compare-200x200.png" alt="" width="64" height="64" loading="lazy" aria-hidden="true">
+        <h3>Comparisons</h3>
+        <p class="muted">Clear pros/cons, pricing, and best use‑cases.</p>
+      </article>
+      <article class="card">
+        <img class="logo" src="/assets/img/icons/icon-tutorials-200x200.png" alt="" width="64" height="64" loading="lazy" aria-hidden="true">
+        <h3>Tutorials</h3>
+        <p class="muted">Follow our blueprints to deploy AI in hours, not weeks.</p>
+      </article>
     </div>
-  </header>
+  </div>
+</section>
 
-  <main>
-    <section class="section hero">
-      <div class="wrap">
-        <p class="eyebrow">Your shortcut to the best AI tools</p>
-        <h1>Build Smarter with AI Tools</h1>
-        <p class="lead">Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
-        <div class="btn-row">
-          <a class="btn"
-             href="{% include aff_url.html name='writesonic' content='home-hero' %}"
-             target="_blank" rel="sponsored noopener"
-             data-cta="home-hero" data-dest="writesonic">Try Writesonic</a>
-          <a class="btn btn-ghost" href="writesonic-review.html">Read the full review</a>
-        </div>
-      </div>
-    </section>
+<section class="section" id="top-picks" aria-labelledby="picks">
+  <div class="wrap">
+    <h2 id="picks">Our Top AI Tool Picks for 2025</h2>
+    <p class="muted">Leading tools for content, images, video, SEO, and productivity.</p>
 
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">Top Picks</h2>
-        <div class="stack">
-          <article class="pick">
-            <div class="pick-badge">Best overall</div>
-            <h3 class="pick-title">Writesonic</h3>
-            <p class="pick-desc">Strong long-form, templates, brand voice, and sensible pricing. Great for teams and solo creators.</p>
-            <div class="btn-row">
-              <a class="btn"
-                 href="{% include aff_url.html name='writesonic' content='home-pick' %}"
-                 target="_blank" rel="sponsored noopener"
-                 data-cta="home-pick" data-dest="writesonic">Get Started</a>
-              <a class="btn btn-ghost" href="writesonic-review.html">Why we picked it</a>
-            </div>
-          </article>
+    <div class="grid-3" style="margin-top:12px">
+      <article class="card" style="text-align:left">
+        <img class="logo" src="/assets/img/logos/jasper.png" alt="Jasper AI logo" width="200" height="120" loading="lazy">
+        <h3>Jasper AI</h3>
+        <p>Best for AI copywriting &amp; brand voice.</p>
+        <img src="/assets/img/ui/jasper-ui-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Jasper AI interface"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;margin-top:8px;">
+      </article>
 
-          <article class="pick">
-            <div class="pick-badge muted">Fast drafting</div>
-            <h3 class="pick-title">Chat-style workflows</h3>
-            <p class="pick-desc">Use prompt frameworks to draft, outline, and refine quickly for blogs, ads, and emails.</p>
-            <a class="btn btn-ghost" href="comparisons.html">See frameworks</a>
-          </article>
-        </div>
-      </div>
-    </section>
+      <article class="card" style="text-align:left">
+        <img class="logo" src="/assets/img/logos/chatgpt.png" alt="ChatGPT logo" width="200" height="120" loading="lazy">
+        <h3>ChatGPT Plus</h3>
+        <p>Best all‑purpose assistant.</p>
+        <img src="/assets/img/ui/chatgpt-ui-1200x675.jpg" width="1200" height="675" loading="lazy" alt="ChatGPT chat interface"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;margin-top:8px;">
+      </article>
 
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">Explore by Category</h2>
-        <div class="grid cards-3">
-          <a class="card" href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener"><h3>Content Creation</h3><p>Blog posts, copy, and captions in seconds.</p></a>
-          <a class="card" href="comparisons.html#use-cases"><h3>Images &amp; Design</h3><p>Generate brand-ready visuals fast.</p></a>
-          <a class="card" href="comparisons.html#use-cases"><h3>Marketing</h3><p>Automate campaigns &amp; boost conversions.</p></a>
-        </div>
-      </div>
-    </section>
-  </main>
+      <article class="card" style="text-align:left">
+        <img class="logo" src="/assets/img/logos/midjourney.png" alt="Midjourney logo" width="200" height="120" loading="lazy">
+        <h3>Midjourney</h3>
+        <p>Best for AI art &amp; visuals.</p>
+        <img src="/assets/img/ui/midjourney-grid-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Midjourney image grid"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;margin-top:8px;">
+      </article>
 
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <div class="footer-left">
-        <div class="brand"><span class="brand-mark" aria-hidden="true">AETK</span><span class="brand-text">AI Expert Toolkit</span></div>
-        <p class="copyright">© 2025 AI Expert Toolkit. All rights reserved.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="writesonic-review.html">Writesonic Review</a>
-        <a href="comparisons.html">Comparisons</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-        <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-        <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
-        <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
-      </nav>
+      <article class="card" style="text-align:left">
+        <img class="logo" src="/assets/img/logos/synthesia.png" alt="Synthesia logo" width="200" height="120" loading="lazy">
+        <h3>Synthesia</h3>
+        <p>Best for AI video creation.</p>
+        <img src="/assets/img/ui/synthesia-studio-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Synthesia studio interface"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;margin-top:8px;">
+      </article>
+
+      <article class="card" style="text-align:left">
+        <img class="logo" src="/assets/img/logos/surfer.png" alt="Surfer SEO logo" width="200" height="120" loading="lazy">
+        <h3>Surfer SEO</h3>
+        <p>Best for on‑page SEO.</p>
+        <img src="/assets/img/ui/surfer-content-editor-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Surfer SEO content editor"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;margin-top:8px;">
+      </article>
+
+      <article class="card" style="text-align:left">
+        <img class="logo" src="/assets/img/logos/writesonic.png" alt="Writesonic logo" width="200" height="120" loading="lazy">
+        <h3>Writesonic</h3>
+        <p>Best budget long‑form.</p>
+        <img src="/assets/img/ui/writesonic-doc-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Writesonic document editor"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;margin-top:8px;">
+      </article>
     </div>
-  </footer>
 
-  <script>
-    // Mobile drawer
-    const toggle=document.querySelector('.nav-toggle'); const drawer=document.getElementById('mobileMenu');
-    if(toggle&&drawer){toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));drawer.hidden=open;document.body.classList.toggle('no-scroll',!open);});const mq=window.matchMedia('(min-width: 981px)');mq.addEventListener?.('change',e=>{if(e.matches){toggle.setAttribute('aria-expanded','false');drawer.hidden=true;document.body.classList.remove('no-scroll');}});}
-    // CTA → Plausible
-    const track=(n,p)=>{if(window.plausible)window.plausible(n,{props:p});};
-    document.querySelectorAll('a[data-cta]').forEach(a=>a.addEventListener('click',()=>track('CTA Click',{cta:a.dataset.cta||'',dest:a.dataset.dest||'',page:location.pathname})));
-    // Remove safety CSS
-    window.addEventListener('load',()=>{const sc=document.getElementById('sanity-check');if(sc&&sc.parentNode)sc.parentNode.removeChild(sc);});
-  </script>
-</body>
-</html>
+    <a class="btn" href="/comparisons.html" style="margin-top:14px;display:inline-block">Read Full Reviews</a>
+  </div>
+</section>
+
+<section class="section" id="categories" aria-labelledby="cats">
+  <div class="wrap">
+    <h2 id="cats">Explore by Category</h2>
+    <div class="grid-3" style="margin-top:12px">
+      <article class="card">
+        <img src="/assets/img/cat/cat-content-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Content creation with AI"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;">
+        <h3>Content Creation</h3><p>Blog posts, copy, and captions in seconds.</p>
+      </article>
+      <article class="card">
+        <img src="/assets/img/cat/cat-images-1200x675.jpg" width="1200" height="675" loading="lazy" alt="AI image generation grid"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;">
+        <h3>Images &amp; Design</h3><p>Generate brand‑ready visuals fast.</p>
+      </article>
+      <article class="card">
+        <img src="/assets/img/cat/cat-marketing-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Marketing analytics dashboard"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;">
+        <h3>Marketing</h3><p>Automate campaigns &amp; boost conversions.</p>
+      </article>
+      <article class="card">
+        <img src="/assets/img/cat/cat-research-1200x675.jpg" width="1200" height="675" loading="lazy" alt="AI research and data visualization"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;">
+        <h3>Research &amp; Data</h3><p>From raw data to insights.</p>
+      </article>
+      <article class="card">
+        <img src="/assets/img/cat/cat-ops-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Team collaboration and automation"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;">
+        <h3>Business Ops</h3><p>Automation &amp; collaboration tools.</p>
+      </article>
+      <article class="card">
+        <img src="/assets/img/cat/cat-tutorials-1200x675.jpg" width="1200" height="675" loading="lazy" alt="Step-by-step tutorial screenshots"
+             style="border-radius:12px;aspect-ratio:16/9;object-fit:cover;">
+        <h3>Tutorials</h3><p>Step‑by‑step how‑tos.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="Call to action">
+  <div class="wrap">
+    <h2>Start Exploring the Best AI Tools Today</h2>
+    <p class="muted">See which tools are worth your time (and which to skip).</p>
+    <a class="btn btn-accent" href="/comparisons.html">See the Best AI Tools for 2025</a>
+  </div>
+</section>
+
+<!-- Minimal structured data to boost SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "AI Expert Toolkit",
+  "url": "https://aiexperttoolkit.github.io/aiexperttoolkit/",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://aiexperttoolkit.github.io/aiexperttoolkit/search?q={query}",
+    "query-input": "required name=query"
+  }
+}
+</script>
