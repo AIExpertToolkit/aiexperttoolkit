@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Writesonic Pricing — Plans, Features, and What You Actually Get</title>
-  <meta name="description" content="A practical breakdown of Writesonic plans: what each tier unlocks, who it's for, and how to choose. Deep-dive on limits, features, and workflows." />
+  <meta name="description" content="A practical breakdown of Writesonic plans with real prices: what each tier unlocks, who it's for, and how to choose. Deep dive on limits, features, and workflows." />
   <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/pricing.html" />
 
   <!-- Site CSS -->
@@ -13,21 +13,30 @@
   <!-- Inline safety (removed on load) -->
   <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
 
-  <!-- Page-local polish (no layout changes to your system) -->
+  <!-- Page-local polish (keeps your system intact) -->
   <style>
     .subtle{color:var(--muted)}
     .pill{display:inline-block;padding:.2rem .55rem;border:1px solid var(--hair-2);border-radius:999px;color:var(--muted);font-weight:600}
-    .plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+
+    /* Toggle */
+    .billing-toggle{display:inline-flex;gap:.35rem;align-items:center;border:1px solid var(--hair);border-radius:999px;padding:.2rem}
+    .billing-toggle button{background:transparent;border:0;color:var(--text);padding:.35rem .65rem;border-radius:999px;cursor:pointer}
+    .billing-toggle button[aria-pressed="true"]{background:rgba(255,255,255,.08);border:1px solid var(--hair-2);font-weight:800}
+
+    .plans{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:1rem}
     .plan{background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:1rem;box-shadow:var(--shadow);position:relative;overflow:hidden}
     .plan .badge{position:absolute;top:.75rem;right:.75rem;background:rgba(255,255,255,.08);border:1px solid var(--hair-2);padding:.15rem .5rem;border-radius:999px;font-weight:800;color:var(--text);font-size:.78rem}
     .plan h3{margin-bottom:.15rem}
     .plan .who{color:var(--muted);margin:.2rem 0 .55rem}
-    .plan .unlock{background:rgba(255,255,255,.04);border:1px solid var(--hair);border-radius:12px;padding:.6rem .7rem;margin:.5rem 0}
+    .plan .price{font-weight:900;font-size:1.25rem;margin:.2rem 0}
+    .price .per{font-weight:600;opacity:.85;margin-left:.2rem}
+    .plan .save{font-size:.9rem;color:var(--muted)}
+    .plan .unlock{background:rgba(255,255,255,.04);border:1px solid var(--hair);border-radius:12px;padding:.6rem .7rem;margin:.6rem 0}
     .plan ul{margin:.25rem 0 0;padding-left:1.1rem}
     .plan li{margin:.25rem 0}
     .plan .btn{margin-top:.75rem}
 
-    .compare{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--hair);border-radius:12px;overflow:hidden}
+    .compare{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--hair);border-radius:12px;overflow:hidden;margin-top:1rem}
     .compare th,.compare td{padding:.6rem .7rem;border-bottom:1px solid var(--hair)}
     .compare thead th{background:rgba(255,255,255,.04);text-align:left}
     .compare tbody tr:last-child td{border-bottom:none}
@@ -45,16 +54,13 @@
     .scenario{background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:1rem}
     .scenario h3{margin-bottom:.25rem}
 
-    .faq .card h3{margin-bottom:.15rem}
-
-    @media (max-width: 980px){
-      .plans,.feature-grid,.scenarios{grid-template-columns:minmax(0,1fr)}
-    }
+    .sticky-cta{position:fixed;bottom:12px;left:12px;right:12px;display:none;gap:.6rem;justify-content:center;z-index:90}
+    @media (max-width: 980px){ .plans{grid-template-columns:minmax(0,1fr)} .feature-grid,.scenarios{grid-template-columns:minmax(0,1fr)} .sticky-cta{display:flex} }
   </style>
 
   <!-- OG -->
   <meta property="og:title" content="Writesonic Pricing — Plans, Features, and What You Actually Get" />
-  <meta property="og:description" content="A practical breakdown of Writesonic plans: what each tier unlocks, who it's for, and how to choose." />
+  <meta property="og:description" content="Real prices with an annual/monthly toggle, deeper limits, and clear advice on which plan to choose." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/pricing.html" />
 </head>
@@ -108,99 +114,148 @@
     <section class="section hero">
       <div class="wrap">
         <p class="eyebrow">Choose with confidence</p>
-        <h1>Writesonic Pricing — What Each Plan Actually Unlocks</h1>
-        <p class="lead">We’ll keep this practical: who each tier is for, what you gain, and how to decide.</p>
+        <h1>Writesonic Pricing — Real Plans, Real Limits</h1>
+        <p class="lead">Use the toggle to view annual savings vs. monthly. We’ll show exactly what each tier unlocks, who it’s for, and how to decide.</p>
 
-        <div class="btn-row">
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See plans</a>
+        <div class="btn-row" style="align-items:center;flex-wrap:wrap">
+          <div class="billing-toggle" role="group" aria-label="Billing period">
+            <button id="bill-annual" aria-pressed="true">Pay annually <span class="pill">Save ~20%</span></button>
+            <button id="bill-monthly" aria-pressed="false">Pay monthly</button>
+          </div>
+          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
           <a class="btn btn-ghost" href="writesonic-review.html">Read our hands-on review</a>
         </div>
 
         <p class="subtle" style="margin-top:.6rem">
-          Note: specific prices/limits can change — click through to confirm before buying.
+          Prices/limits change occasionally — confirm on checkout before purchasing.
         </p>
       </div>
     </section>
 
-    <!-- Plan cards with deeper detail -->
+    <!-- Plan cards with prices + deeper detail -->
     <section class="section">
       <div class="wrap">
-        <h2 class="section-title">Popular Plans & What You Get</h2>
+        <h2 class="section-title">Plans & What You Get</h2>
 
-        <div class="plans">
-          <!-- Starter -->
+        <div class="plans" data-billing="annual">
+          <!-- Lite -->
           <div class="plan">
-            <h3>Starter</h3>
-            <p class="who">Best for testing and light personal use.</p>
+            <h3>Lite</h3>
+            <p class="who">For freelancers getting started with SEO + content.</p>
+            <div class="price">
+              <span class="p-annual">$39</span><span class="p-monthly" hidden>$49</span><span class="per">/mo</span>
+            </div>
+            <div class="save subtle">Annual saves vs. $49/mo monthly</div>
 
             <div class="unlock">
-              <strong>What you unlock</strong>
+              <strong>Unlocks</strong>
               <ul>
-                <li>Core templates (blog intro/outline, ads, product copy)</li>
-                <li>AI article/blog writer (basic usage)</li>
-                <li>Basic brand voice controls</li>
-                <li>Exports to Google Docs/CSV</li>
+                <li>SEO site audits: <strong>6/month</strong> (up to <strong>200 pages</strong> each)</li>
+                <li>Templates + basic content tools</li>
+                <li>Writing styles: <strong>2</strong></li>
+                <li>Included users: <strong>1</strong> · Projects: <strong>1</strong></li>
               </ul>
             </div>
 
             <ul>
-              <li><strong>Typical output:</strong> 2–4 posts or product pages/week</li>
-              <li><strong>Strength:</strong> learn workflows without commitment</li>
-              <li><strong>Watch-outs:</strong> lower usage caps; manual polish still required</li>
+              <li><strong>Best for:</strong> trialing workflows and publishing first pieces</li>
+              <li><strong>Watch-outs:</strong> lower throughput; long-form best on higher tiers</li>
             </ul>
 
             <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
           </div>
 
-          <!-- Pro -->
+          <!-- Standard -->
+          <div class="plan">
+            <h3>Standard</h3>
+            <p class="who">For small teams growing content & SEO.</p>
+            <div class="price">
+              <span class="p-annual">$79</span><span class="p-monthly" hidden>$99</span><span class="per">/mo</span>
+            </div>
+            <div class="save subtle">Annual saves vs. $99/mo monthly</div>
+
+            <div class="unlock">
+              <strong>Unlocks</strong>
+              <ul>
+                <li>AI Article Writer: <strong>30 articles/month</strong></li>
+                <li>SEO site audits: <strong>15/month</strong> (up to <strong>750 pages</strong> each)</li>
+                <li>Writing styles: <strong>5</strong></li>
+                <li>Users: <strong>1 included</strong> (add 1 more at <strong>$40/user</strong>)</li>
+                <li>Projects: <strong>2 total</strong> (add 2 more at <strong>$49/project</strong>)</li>
+              </ul>
+            </div>
+
+            <ul>
+              <li><strong>Best for:</strong> weekly content cadence + on-page optimization</li>
+              <li><strong>Note:</strong> AI search tracking starts on Professional</li>
+            </ul>
+
+            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Choose Standard</a>
+          </div>
+
+          <!-- Professional -->
           <div class="plan">
             <div class="badge">Most popular</div>
-            <h3>Pro</h3>
-            <p class="who">Best value for solo creators & small teams.</p>
+            <h3>Professional</h3>
+            <p class="who">For growing brands needing full SEO + AI search visibility.</p>
+            <div class="price">
+              <span class="p-annual">$199</span><span class="p-monthly" hidden>$249</span><span class="per">/mo</span>
+            </div>
+            <div class="save subtle">Annual saves vs. $249/mo monthly</div>
 
             <div class="unlock">
-              <strong>What you unlock</strong>
+              <strong>Unlocks</strong>
               <ul>
-                <li>Long-form editor + structured outlines</li>
-                <li>Expanded templates library (ads, PDPs, emails, meta)</li>
-                <li>Brand voice with tighter tone guidance</li>
-                <li>Workflows for blogs/ads/pages (repeatable steps)</li>
+                <li>AI Article Writer: <strong>100 articles/month</strong></li>
+                <li>AI Search Tracking (GEO): track <strong>~300 queries</strong>, daily, <strong>1 region & 1 language</strong></li>
+                <li>SEO site audits: <strong>40/month</strong> (up to <strong>1,200 pages</strong>)</li>
+                <li>Writing styles: <strong>Unlimited*</strong></li>
+                <li>Users: <strong>2 included</strong> (add 1 more at <strong>$50/user</strong>)</li>
+                <li>Projects: <strong>3 total</strong> (add 3 more at <strong>$99/project</strong>)</li>
               </ul>
             </div>
 
             <ul>
-              <li><strong>Typical output:</strong> 1–3 posts + 5–15 PDPs + ad variants/week</li>
-              <li><strong>Strength:</strong> speed + consistency for production work</li>
-              <li><strong>Watch-outs:</strong> still plan on a light editorial pass</li>
+              <li><strong>Best for:</strong> weekly articles + tracking AI search presence</li>
+              <li><strong>Tip:</strong> good balance of throughput and visibility features</li>
             </ul>
 
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Get Pro</a>
+            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Get Professional</a>
           </div>
 
-          <!-- Business -->
+          <!-- Advanced -->
           <div class="plan">
-            <h3>Business</h3>
-            <p class="who">For growing teams with approvals & higher volume.</p>
+            <h3>Advanced</h3>
+            <p class="who">For scaling teams improving AI search visibility & SEO.</p>
+            <div class="price">
+              <span class="p-annual">$399</span><span class="p-monthly" hidden>$499</span><span class="per">/mo</span>
+            </div>
+            <div class="save subtle">Annual saves vs. $499/mo monthly</div>
 
             <div class="unlock">
-              <strong>What you unlock</strong>
+              <strong>Unlocks</strong>
               <ul>
-                <li>Team collaboration & approvals</li>
-                <li>Higher usage/throughput for batching</li>
-                <li>Export & integrations for scaled publishing</li>
-                <li>Priority support & governance options</li>
+                <li>AI Article Writer: <strong>200 articles/month</strong> (+ add 40 for <strong>$100</strong>)</li>
+                <li>AI Search Tracking (GEO): expanded tracking + strategist support</li>
+                <li>SEO site audits: <strong>60/month</strong> (up to <strong>2,500 pages</strong>)</li>
+                <li>Writing styles: <strong>Unlimited*</strong></li>
+                <li>Users: <strong>5 included</strong> (add up to 5 more at <strong>$60/user</strong>)</li>
+                <li>Projects: <strong>4 total</strong> (add 4 more at <strong>$149/project</strong>)</li>
               </ul>
             </div>
 
             <ul>
-              <li><strong>Typical output:</strong> weekly batches (multi-channel campaigns)</li>
-              <li><strong>Strength:</strong> process + scale without adding headcount</li>
-              <li><strong>Watch-outs:</strong> set a clear review policy to maintain quality</li>
+              <li><strong>Best for:</strong> multi-channel campaigns & high-volume content ops</li>
+              <li><strong>Note:</strong> includes priority support + dedicated Slack</li>
             </ul>
 
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Choose Business</a>
+            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Choose Advanced</a>
           </div>
         </div>
+
+        <p class="subtle" style="margin-top:.6rem">
+          * Unlimited writing styles subject to fair usage. Some details summarized for clarity; check the pricing page for the latest specifics.
+        </p>
       </div>
     </section>
 
@@ -213,82 +268,71 @@
           <thead>
             <tr>
               <th>Feature</th>
-              <th>Starter</th>
-              <th>Pro</th>
-              <th>Business</th>
+              <th>Lite</th>
+              <th>Standard</th>
+              <th>Professional</th>
+              <th>Advanced</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Templates library (blogs, ads, PDPs, emails, meta)</td>
+              <td>Templates library & content tools</td>
               <td class="tick">✓ (core)</td>
               <td class="tick">✓ (expanded)</td>
               <td class="tick">✓ (full)</td>
-            </tr>
-            <tr>
-              <td>AI article & blog writer</td>
-              <td class="tick">✓ (basic)</td>
-              <td class="tick">✓ (full)</td>
               <td class="tick">✓ (full)</td>
             </tr>
             <tr>
-              <td>Long-form editor + outlines</td>
+              <td>AI Article Writer (articles/mo)</td>
+              <td class="dim">—</td>
+              <td class="tick">30</td>
+              <td class="tick">100</td>
+              <td class="tick">200</td>
+            </tr>
+            <tr>
+              <td>Writing styles</td>
+              <td class="tick">2</td>
+              <td class="tick">5</td>
+              <td class="tick">Unlimited*</td>
+              <td class="tick">Unlimited*</td>
+            </tr>
+            <tr>
+              <td>SEO Site Audits (per month · pages per audit)</td>
+              <td class="tick">6 · 200</td>
+              <td class="tick">15 · 750</td>
+              <td class="tick">40 · 1200</td>
+              <td class="tick">60 · 2500</td>
+            </tr>
+            <tr>
+              <td>AI Search Tracking (GEO)</td>
               <td>—</td>
-              <td class="tick">✓</td>
-              <td class="tick">✓</td>
-            </tr>
-            <tr>
-              <td>Brand voice controls</td>
-              <td class="tick">✓ (basic)</td>
-              <td class="tick">✓ (advanced)</td>
-              <td class="tick">✓ (advanced)</td>
-            </tr>
-            <tr>
-              <td>Workflows (repeatable multi-step)</td>
               <td>—</td>
-              <td class="tick">✓</td>
-              <td class="tick">✓</td>
+              <td class="tick">✓ (daily · ~300 queries · 1 region/language)</td>
+              <td class="tick">✓ (expanded + strategist)</td>
             </tr>
             <tr>
-              <td>BotSonic (chatbot builder)</td>
-              <td>—</td>
-              <td class="dim">Optional</td>
-              <td class="tick">✓</td>
+              <td>Included users · cost for extra</td>
+              <td>1 · —</td>
+              <td>1 · $40/user</td>
+              <td>2 · $50/user</td>
+              <td>5 · $60/user</td>
             </tr>
             <tr>
-              <td>Multilingual drafting</td>
-              <td class="dim">Limited</td>
-              <td class="tick">✓</td>
-              <td class="tick">✓</td>
-            </tr>
-            <tr>
-              <td>Exports & integrations (Docs/Sheets, CSV)</td>
-              <td class="tick">✓</td>
-              <td class="tick">✓</td>
-              <td class="tick">✓</td>
-            </tr>
-            <tr>
-              <td>Collaboration & approvals</td>
-              <td>—</td>
-              <td class="dim">Light</td>
-              <td class="tick">✓</td>
-            </tr>
-            <tr>
-              <td>Throughput / usage caps</td>
-              <td>Basic</td>
-              <td>Higher</td>
-              <td>Highest</td>
+              <td>Included projects · cost for extra</td>
+              <td>1 · —</td>
+              <td>2 · $49/project</td>
+              <td>3 · $99/project</td>
+              <td>4 · $149/project</td>
             </tr>
             <tr>
               <td>Support level</td>
-              <td>Standard</td>
-              <td>Priority (faster)</td>
-              <td>Priority + account options</td>
+              <td>Standard email</td>
+              <td>Standard email</td>
+              <td>Priority email</td>
+              <td>Priority + dedicated Slack</td>
             </tr>
           </tbody>
         </table>
-
-        <p class="subtle" style="margin-top:.6rem">Exact limits vary by plan and change occasionally — confirm on the checkout page.</p>
 
         <div class="btn-row" style="margin-top:1rem">
           <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See live plan details</a>
@@ -297,7 +341,7 @@
       </div>
     </section>
 
-    <!-- Feature deep dive -->
+    <!-- Deep dive -->
     <section class="section">
       <div class="wrap">
         <h2 class="section-title">Deep Dive: What These Features Mean</h2>
@@ -306,79 +350,37 @@
           <div class="feature">
             <h3>Long-form editor</h3>
             <p>Outline → section drafting → refine. Ideal for 1,000–2,500 words with a consistent structure.</p>
-            <div class="avail">
-              <span class="tag">Pro</span><span class="tag">Business</span>
-            </div>
+            <div class="avail"><span class="tag">Standard (basic)</span><span class="tag">Professional</span><span class="tag">Advanced</span></div>
           </div>
-
           <div class="feature">
-            <h3>Templates library</h3>
-            <p>Blog intros/outlines, ad variants, PDPs, emails, meta tags — choose a pattern and go.</p>
-            <div class="avail">
-              <span class="tag">Starter (core)</span><span class="tag">Pro (expanded)</span><span class="tag">Business (full)</span>
-            </div>
+            <h3>AI Search Tracking</h3>
+            <p>See how your brand appears in ChatGPT & other AI surfaces; track queries, regions, and act on gaps.</p>
+            <div class="avail"><span class="tag">Professional</span><span class="tag">Advanced</span></div>
           </div>
-
           <div class="feature">
-            <h3>Brand voice</h3>
-            <p>Feed example lines; keep tone, POV, and phrasing consistent across deliverables.</p>
-            <div class="avail">
-              <span class="tag">Starter (basic)</span><span class="tag">Pro (advanced)</span><span class="tag">Business (advanced)</span>
-            </div>
+            <h3>SEO site audits</h3>
+            <p>Find and fix technical/content issues across pages. Higher tiers audit more pages, more often.</p>
+            <div class="avail"><span class="tag">All tiers (limits vary)</span></div>
           </div>
-
           <div class="feature">
-            <h3>Workflows</h3>
-            <p>Repeatable steps for blogs/ads/pages: prompt, draft, refine, export — faster batching.</p>
-            <div class="avail">
-              <span class="tag">Pro</span><span class="tag">Business</span>
-            </div>
+            <h3>Writing styles</h3>
+            <p>Define tone/voice once and keep output consistent across channels and writers.</p>
+            <div class="avail"><span class="tag">Lite: 2</span><span class="tag">Standard: 5</span><span class="tag">Pro/Adv: Unlimited*</span></div>
           </div>
-
           <div class="feature">
-            <h3>BotSonic (chatbot)</h3>
-            <p>Train on your pages/FAQ to deflect tickets and boost conversions with on-site Q&A.</p>
-            <div class="avail">
-              <span class="tag">Business</span><span class="tag">Pro (optional)</span>
-            </div>
+            <h3>Users & projects</h3>
+            <p>Collaborate safely and map features to specific domains (projects). Add capacity as you grow.</p>
+            <div class="avail"><span class="tag">See per-tier details</span></div>
           </div>
-
-          <div class="feature">
-            <h3>Multilingual</h3>
-            <p>Create EN→ES/FR/DE versions of top pages when expanding into new markets.</p>
-            <div class="avail">
-              <span class="tag">Pro</span><span class="tag">Business</span>
-            </div>
-          </div>
-
-          <div class="feature">
-            <h3>Exports & integrations</h3>
-            <p>Docs/Sheets and CSV to move content into Shopify/Amazon or your CMS quickly.</p>
-            <div class="avail">
-              <span class="tag">Starter</span><span class="tag">Pro</span><span class="tag">Business</span>
-            </div>
-          </div>
-
-          <div class="feature">
-            <h3>Collaboration & approvals</h3>
-            <p>Assign work, comment, and approve so teams ship faster without losing quality.</p>
-            <div class="avail">
-              <span class="tag">Business</span><span class="tag">Pro (light)</span>
-            </div>
-          </div>
-
           <div class="feature">
             <h3>Throughput</h3>
-            <p>How much you can realistically produce in a week. Higher tiers = more consistent volume.</p>
-            <div class="avail">
-              <span class="tag">Starter: basic</span><span class="tag">Pro: higher</span><span class="tag">Business: highest</span>
-            </div>
+            <p>How much you can reliably produce weekly. Higher tiers = steadier volume + tracking.</p>
+            <div class="avail"><span class="tag">Lite→Advanced: scaling</span></div>
           </div>
         </div>
 
         <div class="callout" style="margin-top:1rem">
-          <strong>Tip:</strong> If you’re delivering client work weekly, Pro usually pays for itself within the first batch.
-          Move to Business once you need approvals, shared guidelines, and sustained volume.
+          <strong>Tip:</strong> If you’re delivering client work weekly, <em>Professional</em> usually pays for itself within the first batch. Move to <em>Advanced</em> once you need higher volume, AI search tracking depth, and team governance.
         </div>
       </div>
     </section>
@@ -391,71 +393,43 @@
         <div class="scenarios">
           <div class="scenario">
             <h3>“I’m just getting started.”</h3>
-            <p>Choose <strong>Starter</strong>. Publish a few PDPs or 1–2 posts, learn the workflow, validate results.</p>
+            <p>Choose <strong>Lite</strong>. Publish a few pages or posts, learn the workflow, validate results.</p>
           </div>
           <div class="scenario">
-            <h3>“I’m a solo creator serving clients.”</h3>
-            <p>Choose <strong>Pro</strong>. Long-form + workflows keep you fast and consistent for paid projects.</p>
+            <h3>“I’m a solo creator / small team.”</h3>
+            <p>Choose <strong>Standard</strong> or <strong>Professional</strong> for long-form + audits; add tracking on Pro.</p>
           </div>
           <div class="scenario">
             <h3>“We’re a team shipping weekly.”</h3>
-            <p>Choose <strong>Business</strong>. Collaboration, approvals, and higher throughput for smooth scaling.</p>
+            <p>Choose <strong>Advanced</strong>. Collaboration, higher throughput, tracking depth, and priority support.</p>
           </div>
         </div>
 
         <div class="btn-row" style="margin-top:1.25rem">
           <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
-          <a class="btn btn-ghost" href="writesonic-review.html">Why we recommend Writesonic</a>
+          <a class="btn btn-ghost" href="comparisons.html">Compare with other tools</a>
         </div>
       </div>
     </section>
 
-    <!-- FAQs about limits -->
-    <section class="section faq">
-      <div class="wrap">
-        <h2 class="section-title">Pricing & Limits — FAQs</h2>
-
-        <div class="stack">
-          <div class="card">
-            <h3>Are there usage caps?</h3>
-            <p>Yes. Starter is best for light use; Pro increases throughput; Business is best for sustained volume. Always check the checkout page for current specifics.</p>
-          </div>
-          <div class="card">
-            <h3>Can I change plans later?</h3>
-            <p>Yes — upgrade or switch tiers as output and team needs grow.</p>
-          </div>
-          <div class="card">
-            <h3>Does the free option include long-form?</h3>
-            <p>Expect limited access on Starter; Pro and Business unlock the full long-form experience.</p>
-          </div>
-          <div class="card">
-            <h3>Is BotSonic included?</h3>
-            <p>It’s available on Business and sometimes as an add-on for Pro. Verify availability on the pricing page.</p>
-          </div>
-          <div class="card">
-            <h3>What about yearly discounts?</h3>
-            <p>Annual billing is often discounted. Click through to confirm the latest offer.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Final CTA -->
+    <!-- FAQs -->
     <section class="section">
       <div class="wrap">
-        <div class="pick" style="text-align:center">
-          <h2 style="margin:0 0 .35rem">Ready to choose a plan?</h2>
-          <p class="lead" style="margin:0 auto 1rem;max-width:720px">
-            Start free, validate your workflow on real deliverables, then upgrade when volume and approvals increase.
-          </p>
-          <div class="btn-row" style="justify-content:center">
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See current pricing</a>
-            <a class="btn btn-ghost" href="comparisons.html">Compare with other tools</a>
-          </div>
+        <h2 class="section-title">Pricing & Limits — FAQs</h2>
+        <div class="stack">
+          <div class="card"><h3>Annual vs. monthly?</h3><p>Annual typically saves ~20% vs. month-to-month. Pay upfront; switch tiers anytime. Refund policy is usually 7 days.</p></div>
+          <div class="card"><h3>Can I add more users/projects?</h3><p>Yes. Standard: +1 user at $40; Pro: +1 at $50; Advanced: +up to 5 at $60 each. Extra projects: $49/$99/$149 respectively.</p></div>
+          <div class="card"><h3>Do credits/articles roll over?</h3><p>No — quotas reset each billing cycle. Plan your content calendar to use them.</p></div>
+          <div class="card"><h3>What’s a “project”?</h3><p>A unique domain/website. You’ll need separate projects to run audits & tracking per domain.</p></div>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta">
+    <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic free</a>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
@@ -480,26 +454,39 @@
     </div>
   </footer>
 
-  <!-- Mobile drawer JS + remove inline safety style when loaded -->
+  <!-- Mobile drawer JS + billing toggle + remove inline safety style -->
   <script>
     const toggle = document.querySelector('.nav-toggle');
     const drawer = document.getElementById('mobileMenu');
-
     if (toggle && drawer) {
       toggle.addEventListener('click', () => {
         const open = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!open));
         drawer.hidden = open;
         document.body.classList.toggle('no-scroll', !open);
-        document.body.classList.toggle('drawer-open', !open);
       });
-
       const mq = window.matchMedia('(min-width: 981px)');
       mq.addEventListener?.('change', e => {
-        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll','drawer-open'); }
+        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll'); }
       });
     }
 
+    // Billing toggle (annual/monthly)
+    const plans = document.querySelector('.plans');
+    const btnAnnual = document.getElementById('bill-annual');
+    const btnMonthly = document.getElementById('bill-monthly');
+    function setBilling(mode){
+      plans?.setAttribute('data-billing', mode);
+      document.querySelectorAll('.p-annual').forEach(el => el.hidden = (mode !== 'annual'));
+      document.querySelectorAll('.p-monthly').forEach(el => el.hidden = (mode !== 'monthly'));
+      btnAnnual.setAttribute('aria-pressed', mode === 'annual');
+      btnMonthly.setAttribute('aria-pressed', mode === 'monthly');
+    }
+    btnAnnual?.addEventListener('click', () => setBilling('annual'));
+    btnMonthly?.addEventListener('click', () => setBilling('monthly'));
+    setBilling('annual'); // default
+
+    // Remove inline safety CSS after load
     window.addEventListener('load', () => {
       const sc = document.getElementById('sanity-check');
       if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
