@@ -3,46 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Writesonic Pricing — Pick a Plan and Start Shipping Faster</title>
-  <meta name="description" content="See a simple overview of Writesonic pricing tiers and what you get. Choose a plan that fits your workflow and start creating faster today." />
+  <title>Writesonic Pricing — Plans, Features, and What You Actually Get</title>
+  <meta name="description" content="A practical breakdown of Writesonic plans: what each tier unlocks, who it's for, and how to choose. Deep-dive on limits, features, and workflows." />
   <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/pricing.html" />
 
-  <!-- Load site CSS (same design system as your homepage) -->
+  <!-- Site CSS -->
   <link rel="stylesheet" href="assets/css/base.css?v=12" />
 
-  <!-- Safety net so page isn't unstyled for a moment on weird caches -->
+  <!-- Inline safety (removed on load) -->
   <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
 
-  <!-- Page-local tiny helpers (no layout changes) -->
+  <!-- Page-local polish (no layout changes to your system) -->
   <style>
-    .price-note{color:var(--muted);font-size:.95rem}
+    .subtle{color:var(--muted)}
+    .pill{display:inline-block;padding:.2rem .55rem;border:1px solid var(--hair-2);border-radius:999px;color:var(--muted);font-weight:600}
     .plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-    .plan{background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:1rem;box-shadow:var(--shadow)}
+    .plan{background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:1rem;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .plan .badge{position:absolute;top:.75rem;right:.75rem;background:rgba(255,255,255,.08);border:1px solid var(--hair-2);padding:.15rem .5rem;border-radius:999px;font-weight:800;color:var(--text);font-size:.78rem}
     .plan h3{margin-bottom:.15rem}
-    .plan .cost{font-size:1.2rem;font-weight:800;margin:.25rem 0 .5rem}
+    .plan .who{color:var(--muted);margin:.2rem 0 .55rem}
+    .plan .unlock{background:rgba(255,255,255,.04);border:1px solid var(--hair);border-radius:12px;padding:.6rem .7rem;margin:.5rem 0}
     .plan ul{margin:.25rem 0 0;padding-left:1.1rem}
     .plan li{margin:.25rem 0}
     .plan .btn{margin-top:.75rem}
+
     .compare{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--hair);border-radius:12px;overflow:hidden}
     .compare th,.compare td{padding:.6rem .7rem;border-bottom:1px solid var(--hair)}
     .compare thead th{background:rgba(255,255,255,.04);text-align:left}
     .compare tbody tr:last-child td{border-bottom:none}
     .tick{font-weight:900}
-    @media (max-width: 980px){ .plans{grid-template-columns:minmax(0,1fr)} }
-    @media (max-width: 640px){ .compare{font-size:.95rem} }
+    .dim{opacity:.65}
+
+    .feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .feature{background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:1rem}
+    .feature h3{margin-bottom:.25rem}
+    .avail{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem}
+    .avail .tag{border:1px solid var(--hair-2);border-radius:999px;padding:.15rem .5rem;font-size:.78rem}
+    .callout{border:1px solid var(--hair);border-radius:12px;padding:.75rem;background:rgba(255,255,255,.04)}
+
+    .scenarios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .scenario{background:var(--panel);border:1px solid var(--hair);border-radius:16px;padding:1rem}
+    .scenario h3{margin-bottom:.25rem}
+
+    .faq .card h3{margin-bottom:.15rem}
+
+    @media (max-width: 980px){
+      .plans,.feature-grid,.scenarios{grid-template-columns:minmax(0,1fr)}
+    }
   </style>
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Writesonic Pricing — Pick a Plan and Start Shipping Faster" />
-  <meta property="og:description" content="Simple overview of Writesonic tiers and what you get. Choose a plan that fits your workflow and start creating faster today." />
+  <!-- OG -->
+  <meta property="og:title" content="Writesonic Pricing — Plans, Features, and What You Actually Get" />
+  <meta property="og:description" content="A practical breakdown of Writesonic plans: what each tier unlocks, who it's for, and how to choose." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/pricing.html" />
 </head>
 
 <body>
-  <!-- ================================
-       Header (same as other pages)
-  =================================== -->
+  <!-- Header -->
   <header class="site-header">
     <div class="nav">
       <a class="brand" href="index.html">
@@ -65,14 +83,12 @@
         <a class="btn btn-ghost" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic</a>
       </div>
 
-      <!-- Mobile toggle -->
       <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu">
         <span class="nav-toggle-bar"></span>
         <span class="sr-only">Toggle menu</span>
       </button>
     </div>
 
-    <!-- Mobile drawer -->
     <div id="mobileMenu" class="nav-drawer" hidden>
       <a href="index.html">Home</a>
       <a href="writesonic-review.html">Writesonic Review</a>
@@ -86,69 +102,102 @@
     </div>
   </header>
 
-  <!-- ================================
-       Main
-  =================================== -->
+  <!-- Main -->
   <main>
     <!-- Hero -->
     <section class="section hero">
       <div class="wrap">
-        <p class="eyebrow">Simple overview</p>
-        <h1>Writesonic Pricing</h1>
-        <p class="lead">
-          Pick a plan that fits your workflow. Start free, then scale when output and approvals increase.
-        </p>
+        <p class="eyebrow">Choose with confidence</p>
+        <h1>Writesonic Pricing — What Each Plan Actually Unlocks</h1>
+        <p class="lead">We’ll keep this practical: who each tier is for, what you gain, and how to decide.</p>
 
         <div class="btn-row">
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
+          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See plans</a>
           <a class="btn btn-ghost" href="writesonic-review.html">Read our hands-on review</a>
         </div>
 
-        <p class="price-note" style="margin-top:.6rem">
-          Heads up: pricing changes occasionally — click through to confirm current rates before purchase.
+        <p class="subtle" style="margin-top:.6rem">
+          Note: specific prices/limits can change — click through to confirm before buying.
         </p>
       </div>
     </section>
 
-    <!-- Plans snapshot -->
+    <!-- Plan cards with deeper detail -->
     <section class="section">
       <div class="wrap">
-        <h2 class="section-title">Popular Plans</h2>
+        <h2 class="section-title">Popular Plans & What You Get</h2>
 
         <div class="plans">
+          <!-- Starter -->
           <div class="plan">
             <h3>Starter</h3>
-            <div class="cost">Good for testing & personal use</div>
+            <p class="who">Best for testing and light personal use.</p>
+
+            <div class="unlock">
+              <strong>What you unlock</strong>
+              <ul>
+                <li>Core templates (blog intro/outline, ads, product copy)</li>
+                <li>AI article/blog writer (basic usage)</li>
+                <li>Basic brand voice controls</li>
+                <li>Exports to Google Docs/CSV</li>
+              </ul>
+            </div>
+
             <ul>
-              <li>Core templates</li>
-              <li>AI article/blog writer (light usage)</li>
-              <li>Basic brand voice</li>
-              <li>Exports to Docs/CSV</li>
+              <li><strong>Typical output:</strong> 2–4 posts or product pages/week</li>
+              <li><strong>Strength:</strong> learn workflows without commitment</li>
+              <li><strong>Watch-outs:</strong> lower usage caps; manual polish still required</li>
             </ul>
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try free</a>
+
+            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
           </div>
 
+          <!-- Pro -->
           <div class="plan">
+            <div class="badge">Most popular</div>
             <h3>Pro</h3>
-            <div class="cost">Best value for creators & small teams</div>
+            <p class="who">Best value for solo creators & small teams.</p>
+
+            <div class="unlock">
+              <strong>What you unlock</strong>
+              <ul>
+                <li>Long-form editor + structured outlines</li>
+                <li>Expanded templates library (ads, PDPs, emails, meta)</li>
+                <li>Brand voice with tighter tone guidance</li>
+                <li>Workflows for blogs/ads/pages (repeatable steps)</li>
+              </ul>
+            </div>
+
             <ul>
-              <li>Long-form editor + outlines</li>
-              <li>Expanded templates library</li>
-              <li>Brand voice controls</li>
-              <li>Workflows for blogs/ads/pages</li>
+              <li><strong>Typical output:</strong> 1–3 posts + 5–15 PDPs + ad variants/week</li>
+              <li><strong>Strength:</strong> speed + consistency for production work</li>
+              <li><strong>Watch-outs:</strong> still plan on a light editorial pass</li>
             </ul>
+
             <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Get Pro</a>
           </div>
 
+          <!-- Business -->
           <div class="plan">
             <h3>Business</h3>
-            <div class="cost">Team features & higher throughput</div>
+            <p class="who">For growing teams with approvals & higher volume.</p>
+
+            <div class="unlock">
+              <strong>What you unlock</strong>
+              <ul>
+                <li>Team collaboration & approvals</li>
+                <li>Higher usage/throughput for batching</li>
+                <li>Export & integrations for scaled publishing</li>
+                <li>Priority support & governance options</li>
+              </ul>
+            </div>
+
             <ul>
-              <li>Approvals & collaboration</li>
-              <li>Higher usage limits</li>
-              <li>Export & integrations</li>
-              <li>Priority support</li>
+              <li><strong>Typical output:</strong> weekly batches (multi-channel campaigns)</li>
+              <li><strong>Strength:</strong> process + scale without adding headcount</li>
+              <li><strong>Watch-outs:</strong> set a clear review policy to maintain quality</li>
             </ul>
+
             <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Choose Business</a>
           </div>
         </div>
@@ -158,7 +207,7 @@
     <!-- Comparison table -->
     <section class="section">
       <div class="wrap">
-        <h2 class="section-title">What’s Included</h2>
+        <h2 class="section-title">Feature Comparison</h2>
 
         <table class="compare" aria-label="Writesonic plan comparison">
           <thead>
@@ -171,99 +220,221 @@
           </thead>
           <tbody>
             <tr>
-              <td>Templates library</td>
-              <td class="tick">✓</td>
-              <td class="tick">✓</td>
-              <td class="tick">✓</td>
+              <td>Templates library (blogs, ads, PDPs, emails, meta)</td>
+              <td class="tick">✓ (core)</td>
+              <td class="tick">✓ (expanded)</td>
+              <td class="tick">✓ (full)</td>
             </tr>
             <tr>
               <td>AI article & blog writer</td>
               <td class="tick">✓ (basic)</td>
+              <td class="tick">✓ (full)</td>
+              <td class="tick">✓ (full)</td>
+            </tr>
+            <tr>
+              <td>Long-form editor + outlines</td>
+              <td>—</td>
               <td class="tick">✓</td>
               <td class="tick">✓</td>
             </tr>
             <tr>
-              <td>Brand voice</td>
+              <td>Brand voice controls</td>
               <td class="tick">✓ (basic)</td>
+              <td class="tick">✓ (advanced)</td>
+              <td class="tick">✓ (advanced)</td>
+            </tr>
+            <tr>
+              <td>Workflows (repeatable multi-step)</td>
+              <td>—</td>
               <td class="tick">✓</td>
               <td class="tick">✓</td>
             </tr>
             <tr>
-              <td>Workflows (blogs/ads/pages)</td>
+              <td>BotSonic (chatbot builder)</td>
               <td>—</td>
+              <td class="dim">Optional</td>
+              <td class="tick">✓</td>
+            </tr>
+            <tr>
+              <td>Multilingual drafting</td>
+              <td class="dim">Limited</td>
               <td class="tick">✓</td>
               <td class="tick">✓</td>
             </tr>
             <tr>
-              <td>Exports (Docs/CSV)</td>
+              <td>Exports & integrations (Docs/Sheets, CSV)</td>
               <td class="tick">✓</td>
               <td class="tick">✓</td>
               <td class="tick">✓</td>
             </tr>
             <tr>
-              <td>Approvals & collaboration</td>
+              <td>Collaboration & approvals</td>
               <td>—</td>
-              <td>—</td>
+              <td class="dim">Light</td>
               <td class="tick">✓</td>
             </tr>
             <tr>
-              <td>Higher usage / throughput</td>
-              <td>—</td>
-              <td>—</td>
-              <td class="tick">✓</td>
+              <td>Throughput / usage caps</td>
+              <td>Basic</td>
+              <td>Higher</td>
+              <td>Highest</td>
+            </tr>
+            <tr>
+              <td>Support level</td>
+              <td>Standard</td>
+              <td>Priority (faster)</td>
+              <td>Priority + account options</td>
             </tr>
           </tbody>
         </table>
 
+        <p class="subtle" style="margin-top:.6rem">Exact limits vary by plan and change occasionally — confirm on the checkout page.</p>
+
         <div class="btn-row" style="margin-top:1rem">
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See latest pricing</a>
-          <a class="btn btn-ghost" href="writesonic-review.html">How we use it</a>
+          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See live plan details</a>
+          <a class="btn btn-ghost" href="writesonic-review.html">How we use these features</a>
         </div>
       </div>
     </section>
 
-    <!-- Guidance -->
+    <!-- Feature deep dive -->
     <section class="section">
       <div class="wrap">
-        <h2 class="section-title">Which Plan Should You Choose?</h2>
-        <div class="grid cards-3">
-          <div class="card">
-            <h3>Just getting started</h3>
-            <p>Use <strong>Starter</strong> to learn the workflows and publish a few pages or posts.</p>
+        <h2 class="section-title">Deep Dive: What These Features Mean</h2>
+
+        <div class="feature-grid">
+          <div class="feature">
+            <h3>Long-form editor</h3>
+            <p>Outline → section drafting → refine. Ideal for 1,000–2,500 words with a consistent structure.</p>
+            <div class="avail">
+              <span class="tag">Pro</span><span class="tag">Business</span>
+            </div>
           </div>
-          <div class="card">
-            <h3>Solo creator / small team</h3>
-            <p>Go <strong>Pro</strong> for brand voice + long-form + workflows. Best overall value.</p>
+
+          <div class="feature">
+            <h3>Templates library</h3>
+            <p>Blog intros/outlines, ad variants, PDPs, emails, meta tags — choose a pattern and go.</p>
+            <div class="avail">
+              <span class="tag">Starter (core)</span><span class="tag">Pro (expanded)</span><span class="tag">Business (full)</span>
+            </div>
           </div>
-          <div class="card">
-            <h3>Growing team</h3>
-            <p>Choose <strong>Business</strong> for collaboration, approvals, and higher throughput.</p>
+
+          <div class="feature">
+            <h3>Brand voice</h3>
+            <p>Feed example lines; keep tone, POV, and phrasing consistent across deliverables.</p>
+            <div class="avail">
+              <span class="tag">Starter (basic)</span><span class="tag">Pro (advanced)</span><span class="tag">Business (advanced)</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <h3>Workflows</h3>
+            <p>Repeatable steps for blogs/ads/pages: prompt, draft, refine, export — faster batching.</p>
+            <div class="avail">
+              <span class="tag">Pro</span><span class="tag">Business</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <h3>BotSonic (chatbot)</h3>
+            <p>Train on your pages/FAQ to deflect tickets and boost conversions with on-site Q&A.</p>
+            <div class="avail">
+              <span class="tag">Business</span><span class="tag">Pro (optional)</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <h3>Multilingual</h3>
+            <p>Create EN→ES/FR/DE versions of top pages when expanding into new markets.</p>
+            <div class="avail">
+              <span class="tag">Pro</span><span class="tag">Business</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <h3>Exports & integrations</h3>
+            <p>Docs/Sheets and CSV to move content into Shopify/Amazon or your CMS quickly.</p>
+            <div class="avail">
+              <span class="tag">Starter</span><span class="tag">Pro</span><span class="tag">Business</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <h3>Collaboration & approvals</h3>
+            <p>Assign work, comment, and approve so teams ship faster without losing quality.</p>
+            <div class="avail">
+              <span class="tag">Business</span><span class="tag">Pro (light)</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <h3>Throughput</h3>
+            <p>How much you can realistically produce in a week. Higher tiers = more consistent volume.</p>
+            <div class="avail">
+              <span class="tag">Starter: basic</span><span class="tag">Pro: higher</span><span class="tag">Business: highest</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top:1rem">
+          <strong>Tip:</strong> If you’re delivering client work weekly, Pro usually pays for itself within the first batch.
+          Move to Business once you need approvals, shared guidelines, and sustained volume.
+        </div>
+      </div>
+    </section>
+
+    <!-- Scenarios -->
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">Pick Based on Your Scenario</h2>
+
+        <div class="scenarios">
+          <div class="scenario">
+            <h3>“I’m just getting started.”</h3>
+            <p>Choose <strong>Starter</strong>. Publish a few PDPs or 1–2 posts, learn the workflow, validate results.</p>
+          </div>
+          <div class="scenario">
+            <h3>“I’m a solo creator serving clients.”</h3>
+            <p>Choose <strong>Pro</strong>. Long-form + workflows keep you fast and consistent for paid projects.</p>
+          </div>
+          <div class="scenario">
+            <h3>“We’re a team shipping weekly.”</h3>
+            <p>Choose <strong>Business</strong>. Collaboration, approvals, and higher throughput for smooth scaling.</p>
           </div>
         </div>
 
         <div class="btn-row" style="margin-top:1.25rem">
           <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Start free</a>
-          <a class="btn btn-ghost" href="comparisons.html">Compare with other tools</a>
+          <a class="btn btn-ghost" href="writesonic-review.html">Why we recommend Writesonic</a>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="section">
+    <!-- FAQs about limits -->
+    <section class="section faq">
       <div class="wrap">
-        <h2 class="section-title">Pricing FAQs</h2>
+        <h2 class="section-title">Pricing & Limits — FAQs</h2>
+
         <div class="stack">
           <div class="card">
-            <h3>Is there a free plan or trial?</h3>
-            <p>Yes — you can try Writesonic to evaluate the editor, templates, and workflows before upgrading.</p>
+            <h3>Are there usage caps?</h3>
+            <p>Yes. Starter is best for light use; Pro increases throughput; Business is best for sustained volume. Always check the checkout page for current specifics.</p>
           </div>
           <div class="card">
-            <h3>Can I switch plans later?</h3>
-            <p>Yes — upgrade or change tiers as your content volume and team size grow.</p>
+            <h3>Can I change plans later?</h3>
+            <p>Yes — upgrade or switch tiers as output and team needs grow.</p>
+          </div>
+          <div class="card">
+            <h3>Does the free option include long-form?</h3>
+            <p>Expect limited access on Starter; Pro and Business unlock the full long-form experience.</p>
+          </div>
+          <div class="card">
+            <h3>Is BotSonic included?</h3>
+            <p>It’s available on Business and sometimes as an add-on for Pro. Verify availability on the pricing page.</p>
           </div>
           <div class="card">
             <h3>What about yearly discounts?</h3>
-            <p>Annual options are typically available; click through to confirm current offers.</p>
+            <p>Annual billing is often discounted. Click through to confirm the latest offer.</p>
           </div>
         </div>
       </div>
@@ -273,22 +444,20 @@
     <section class="section">
       <div class="wrap">
         <div class="pick" style="text-align:center">
-          <h2 style="margin:0 0 .35rem">Ready to pick a plan?</h2>
+          <h2 style="margin:0 0 .35rem">Ready to choose a plan?</h2>
           <p class="lead" style="margin:0 auto 1rem;max-width:720px">
-            Start free, validate your workflow, then upgrade when output and approvals increase.
+            Start free, validate your workflow on real deliverables, then upgrade when volume and approvals increase.
           </p>
           <div class="btn-row" style="justify-content:center">
-            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See plans</a>
-            <a class="btn btn-ghost" href="writesonic-review.html">Why we recommend Writesonic</a>
+            <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">See current pricing</a>
+            <a class="btn btn-ghost" href="comparisons.html">Compare with other tools</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ================================
-       Footer (same as other pages)
-  =================================== -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="wrap footer-inner">
       <div class="footer-left">
@@ -322,16 +491,15 @@
         toggle.setAttribute('aria-expanded', String(!open));
         drawer.hidden = open;
         document.body.classList.toggle('no-scroll', !open);
+        document.body.classList.toggle('drawer-open', !open);
       });
 
-      // Close drawer if resized to desktop
       const mq = window.matchMedia('(min-width: 981px)');
       mq.addEventListener?.('change', e => {
-        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll'); }
+        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll','drawer-open'); }
       });
     }
 
-    // Remove inline safety CSS after load
     window.addEventListener('load', () => {
       const sc = document.getElementById('sanity-check');
       if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
