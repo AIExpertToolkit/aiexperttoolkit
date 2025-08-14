@@ -25,50 +25,70 @@
 
 <body>
   <!-- ================================
-       Header (polished, sticky)
-  =================================== -->
-  <header class="site-header">
-    <div class="nav">
-      <a class="brand" href="index.html">
-        <span class="brand-mark" aria-hidden="true">AETK</span>
-        <span class="brand-text">AI Expert Toolkit</span>
+  ---
+layout: default
+title: AI Expert Toolkit – Build Smarter with AI Tools
+description: Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.
+permalink: /index.html
+---
+
+<!-- Hero -->
+<section class="section hero">
+  <div class="wrap">
+    <p class="eyebrow">Your shortcut to the best AI tools</p>
+    <h1>Build Smarter with AI Tools</h1>
+    <p class="lead">Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
+
+    <div class="btn-row">
+      <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic</a>
+      <a class="btn btn-ghost" href="{{ site.baseurl }}/writesonic-review.html">Read the full review</a>
+    </div>
+  </div>
+</section>
+
+<!-- Top Picks -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="section-title">Top Picks</h2>
+
+    <div class="stack">
+      <article class="pick">
+        <div class="pick-badge">Best overall</div>
+        <h3 class="pick-title">Writesonic</h3>
+        <p class="pick-desc">Strong long-form, templates, brand voice, and sensible pricing. Great for teams and solo creators.</p>
+        <div class="btn-row">
+          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Get Started</a>
+          <a class="btn btn-ghost" href="{{ site.baseurl }}/writesonic-review.html">Why we picked it</a>
+        </div>
+      </article>
+
+      <article class="pick">
+        <div class="pick-badge muted">Fast drafting</div>
+        <h3 class="pick-title">Chat-style workflows</h3>
+        <p class="pick-desc">Use prompt frameworks to draft, outline, and refine quickly for blogs, ads, and emails.</p>
+        <a class="btn btn-ghost" href="{{ site.baseurl }}/comparisons.html">See frameworks</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Explore -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="section-title">Explore by Category</h2>
+    <div class="grid cards-3">
+      <a class="card" href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">
+        <h3>Content Creation</h3><p>Blog posts, copy, and captions in seconds.</p>
       </a>
-
-      <nav class="nav-primary" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="writesonic-review.html">Writesonic Review</a>
-        <a href="comparisons.html">Comparisons</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-        <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-        <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
-        <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
-      </nav>
-
-      <div class="nav-cta">
-        <a class="btn btn-ghost" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic</a>
-      </div>
-
-      <!-- Mobile toggle -->
-      <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu">
-        <span class="nav-toggle-bar"></span>
-        <span class="sr-only">Toggle menu</span>
-      </button>
+      <a class="card" href="{{ site.baseurl }}/comparisons.html#design">
+        <h3>Images &amp; Design</h3><p>Generate brand-ready visuals fast.</p>
+      </a>
+      <a class="card" href="{{ site.baseurl }}/comparisons.html#marketing">
+        <h3>Marketing</h3><p>Automate campaigns &amp; boost conversions.</p>
+      </a>
     </div>
-
-    <!-- Mobile drawer -->
-    <div id="mobileMenu" class="nav-drawer" hidden>
-      <a href="index.html">Home</a>
-      <a href="writesonic-review.html">Writesonic Review</a>
-      <a href="comparisons.html">Comparisons</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-      <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-      <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
-      <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
-      <a class="btn full" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic</a>
-    </div>
-  </header>
+  </div>
+</section>
 
   <!-- ================================
        Main
@@ -143,62 +163,4 @@
     </section>
   </main>
 
-  <!-- ================================
-       Footer
-  =================================== -->
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <div class="footer-left">
-        <div class="brand">
-          <span class="brand-mark" aria-hidden="true">AETK</span>
-          <span class="brand-text">AI Expert Toolkit</span>
-        </div>
-        <p class="copyright">© 2025 AI Expert Toolkit. All rights reserved.</p>
-      </div>
 
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="writesonic-review.html">Writesonic Review</a>
-        <a href="comparisons.html">Comparisons</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-        <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-        <a href="https://aiexperttoolkit.com/about" target="_blank" rel="noopener">About</a>
-        <a href="https://aiexperttoolkit.com/contact" target="_blank" rel="noopener">Contact</a>
-      </nav>
-    </div>
-  </footer>
-
-  <!-- Minimal JS for the mobile drawer + remove inline safety style when loaded -->
-  <script>
-  const toggle = document.querySelector('.nav-toggle');
-  const drawer = document.getElementById('mobileMenu');
-
-  if (toggle && drawer) {
-    toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!open));
-      drawer.hidden = open;                              // keep semantics
-      document.body.classList.toggle('no-scroll', !open);
-      document.body.classList.toggle('drawer-open', !open); // <— show/hide drawer
-    });
-
-    // Close the drawer if resized to desktop
-    const mq = window.matchMedia('(min-width: 981px)');
-    mq.addEventListener?.('change', e => {
-      if (e.matches) {
-        toggle.setAttribute('aria-expanded','false');
-        drawer.hidden = true;
-        document.body.classList.remove('no-scroll','drawer-open');
-      }
-    });
-  }
-
-  // Remove the inline safety style after everything loads
-  window.addEventListener('load', () => {
-    const sc = document.getElementById('sanity-check');
-    if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
-  });
-</script>
-
-</body>
-</html>
