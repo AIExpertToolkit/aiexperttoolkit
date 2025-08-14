@@ -32,6 +32,7 @@ body{
 img{max-width:100%;display:block;border-radius:var(--radius)}
 a{color:var(--text);text-decoration:none}
 a:hover{opacity:.95}
+a:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:8px}
 p{margin:.75rem 0 0}
 h1,h2,h3{margin:0 0 .5rem;line-height:1.2}
 h1{font-size:clamp(1.9rem,3.5vw,2.6rem);letter-spacing:.2px}
@@ -63,8 +64,8 @@ h3{font-size:clamp(1.05rem,1.5vw,1.2rem)}
 }
 .btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(88,188,255,.25)}
 .btn-ghost{
-  background:transparent;color:var(--text);border-color:var(--hair-2);
-  border:1px solid var(--hair-2);box-shadow:none;
+  background:transparent;color:var(--text);border:1px solid var(--hair-2);
+  box-shadow:none;
 }
 .btn-ghost:hover{background:rgba(255,255,255,.05);transform:translateY(-1px)}
 
@@ -120,12 +121,17 @@ h3{font-size:clamp(1.05rem,1.5vw,1.2rem)}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar::before{top:0;transform:rotate(45deg)}
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar::after{bottom:0;transform:rotate(-45deg)}
 
+/* SAFETY: keep hidden truly hidden (fixes drawer showing on desktop) */
+.nav-drawer[hidden]{display:none !important}
+
 .nav-drawer{
   display:flex;flex-direction:column;gap:.25rem;
   border-top:1px solid var(--hair);
   background:color-mix(in oklab, var(--bg) 92%, black 8%);
   padding:.6rem 1rem 1rem;
 }
+.nav-drawer a{padding:.55rem .35rem;border-radius:10px}
+.nav-drawer a:hover{background:rgba(255,255,255,.05)}
 .no-scroll{overflow:hidden}
 
 /* Hero */
@@ -144,7 +150,7 @@ h3{font-size:clamp(1.05rem,1.5vw,1.2rem)}
 .pick-badge{
   display:inline-block;background:rgba(255,255,255,.08);border:1px solid var(--hair-2);
   color:var(--muted);font-size:.78rem;font-weight:700;padding:.2rem .5rem;border-radius:999px;
-  margin-bottom:.4rem;letter-spacing:.2px;text-transform:none;
+  margin-bottom:.4rem;letter-spacing:.2px;
 }
 .pick-badge.muted{background:transparent}
 .pick-title{font-size:1.1rem;margin-bottom:.25rem}
@@ -181,6 +187,11 @@ h3{font-size:clamp(1.05rem,1.5vw,1.2rem)}
   .section{padding:2.4rem 0}
   .cards-3{grid-template-columns:minmax(0,1fr)}
   .footer-inner{flex-direction:column;align-items:flex-start}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
 }
 
 /* Accessibility helpers */
