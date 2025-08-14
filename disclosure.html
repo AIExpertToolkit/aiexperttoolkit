@@ -4,11 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Affiliate Disclosure — AI Expert Toolkit</title>
-  <meta name="description" content="Our affiliate disclosure: how we fund the site, how links work, and our commitment to testing tools honestly." />
+  <meta name="description" content="Our affiliate disclosure: how we fund the site, how links work, and our commitment to honest, hands-on testing." />
   <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/disclosure.html" />
 
   <!-- Site CSS -->
   <link rel="stylesheet" href="assets/css/base.css?v=12" />
+
+  <!-- Page-local polish -->
+  <style>
+    .summary {border:1px solid var(--hair); background:rgba(255,255,255,.04); border-radius:12px; padding:.9rem}
+    .mini {color:var(--muted); font-size:.95rem}
+    .at-a-glance {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-top:1rem}
+    .glance {background:var(--panel); border:1px solid var(--hair); border-radius:12px; padding:.9rem}
+    .glance h3{margin-bottom:.25rem; font-size:1rem}
+    @media (max-width: 840px){ .at-a-glance{grid-template-columns:minmax(0,1fr)} }
+  </style>
 
   <!-- Inline safety (removed on load) -->
   <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
@@ -18,6 +28,17 @@
   <meta property="og:description" content="We use affiliate links to support this site. We only recommend tools we test and use ourselves." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/disclosure.html" />
+
+  <!-- JSON-LD (helps clarity for search engines) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Affiliate Disclosure",
+    "url": "https://aiexperttoolkit.github.io/aiexperttoolkit/disclosure.html",
+    "description": "Affiliate disclosure for AI Expert Toolkit describing how affiliate links fund the site and our testing standards."
+  }
+  </script>
 </head>
 
 <body>
@@ -72,6 +93,26 @@
         <p class="eyebrow">Transparency</p>
         <h1>Affiliate Disclosure</h1>
         <p class="lead">We fund this site with affiliate links. If you purchase through a link, we may earn a commission — at no extra cost to you.</p>
+        <p class="mini">Last updated: <time datetime="2025-08-14">August 14, 2025</time></p>
+
+        <div class="summary" style="margin-top:.75rem">
+          <strong>At a glance:</strong> We use affiliate links on some pages. Partners don’t review our content. We test tools with real prompts and only recommend software that helps you ship faster with better quality.
+        </div>
+
+        <div class="at-a-glance">
+          <div class="glance">
+            <h3>How links work</h3>
+            <p>When you click and later purchase, the merchant may pay us a referral fee.</p>
+          </div>
+          <div class="glance">
+            <h3>Independence</h3>
+            <p>We don’t sell placement. Reviews and picks are based on hands-on testing.</p>
+          </div>
+          <div class="glance">
+            <h3>Cost to you</h3>
+            <p>Never extra — sometimes better. Deals are the same or improved through our links.</p>
+          </div>
+        </div>
       </div>
     </section>
 
