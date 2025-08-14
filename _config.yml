@@ -1,1 +1,6 @@
-
+title: AI Expert Toolkit
+url: https://aiexperttoolkit.github.io
+baseurl: /aiexperttoolkit
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
