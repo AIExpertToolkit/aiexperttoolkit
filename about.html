@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — AI Expert Toolkit</title>
-  <meta name="description" content="What AI Expert Toolkit is, our mission, and exactly how we evaluate tools. Research-based today, hands-on badges rolling out." />
-  <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/about.html" />
+  <title>Contact — AI Expert Toolkit</title>
+  <meta name="description" content="Get in touch with AI Expert Toolkit. Questions, corrections, or partnerships — we’d love to hear from you." />
+  <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/contact.html" />
 
   <!-- Site CSS -->
   <link rel="stylesheet" href="assets/css/base.css?v=12" />
@@ -15,32 +15,32 @@
 
   <!-- Page-local polish -->
   <style>
-    .mini{color:var(--muted);font-size:.95rem}
-    .pill{display:inline-block;padding:.2rem .55rem;border:1px solid var(--hair-2);border-radius:999px;color:var(--muted);font-weight:600}
-    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-    .legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin-top:.5rem}
-    .legend .card{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:.75rem}
-    .steps{counter-reset: s}
-    .steps .pick h3::before{counter-increment:s;content: counter(s) ") ";opacity:.85}
-    @media (max-width: 840px){
-      .grid-2,.legend{grid-template-columns:minmax(0,1fr)}
-    }
+    .form-shell{background:var(--panel);border:1px solid var(--hair);border-radius:16px;box-shadow:var(--shadow);padding:1rem}
+    .iframe-wrap{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--hair)}
+    .iframe-wrap iframe{width:100%;height:1200px;border:0}
+    .alt{margin-top:.75rem;color:var(--muted)}
+    @media(max-width:560px){.iframe-wrap iframe{height:1350px}}
   </style>
 
   <!-- OG -->
-  <meta property="og:title" content="About — AI Expert Toolkit" />
-  <meta property="og:description" content="Mission and methodology: how we evaluate AI tools and keep recommendations practical and fair." />
+  <meta property="og:title" content="Contact — AI Expert Toolkit" />
+  <meta property="og:description" content="Questions, corrections, or partnerships — contact AI Expert Toolkit." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/about.html" />
+  <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/contact.html" />
 
-  <!-- JSON-LD (AboutPage helps search clarity) -->
+  <!-- JSON-LD ContactPage -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "About — AI Expert Toolkit",
-    "url": "https://aiexperttoolkit.github.io/aiexperttoolkit/about.html",
-    "description": "Mission and methodology for AI Expert Toolkit, including research-based and hands-on testing badges."
+    "@context":"https://schema.org",
+    "@type":"ContactPage",
+    "name":"Contact — AI Expert Toolkit",
+    "url":"https://aiexperttoolkit.github.io/aiexperttoolkit/contact.html",
+    "contactPoint":{
+      "@type":"ContactPoint",
+      "contactType":"customer support",
+      "email":"hello@aiexperttoolkit.com",
+      "availableLanguage":["English"]
+    }
   }
   </script>
 </head>
@@ -61,8 +61,8 @@
         <a href="pricing.html">Pricing</a>
         <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
         <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-        <a href="about.html" aria-current="page">About</a>
-        <a href="contact.html">Contact</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" aria-current="page">Contact</a>
       </nav>
 
       <div class="nav-cta">
@@ -84,102 +84,31 @@
       <a href="pricing.html">Pricing</a>
       <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
       <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-      <a href="about.html" aria-current="page">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
       <a class="btn full" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=mobile-cta" target="_blank" rel="sponsored noopener">Try Writesonic</a>
     </div>
   </header>
 
   <!-- Main -->
   <main>
-    <!-- Hero -->
     <section class="section hero">
       <div class="wrap">
-        <p class="eyebrow">Who we are</p>
-        <h1>About AI Expert Toolkit</h1>
-        <p class="lead">We help entrepreneurs ship faster with practical guidance on AI tools — clear picks, clean workflows, and prompts that actually work.</p>
-        <p class="mini">Last updated: <time datetime="2025-08-14">August 14, 2025</time></p>
+        <p class="eyebrow">Say hello</p>
+        <h1>Contact</h1>
+        <p class="lead">Questions, corrections, partnerships, or press — we’ll get back within 1–2 business days.</p>
       </div>
     </section>
 
-    <!-- Mission + Methodology -->
     <section class="section">
-      <div class="wrap grid-2">
-        <article class="pick">
-          <h3>Mission</h3>
-          <p>Cut through noise and show what actually works — with realistic processes you can deploy in under an hour. We prioritize speed-to-value, clarity, and repeatability.</p>
-          <p>Our north star: <em>make it easy to start, and even easier to scale.</em></p>
-        </article>
-
-        <article class="pick">
-          <h3>Methodology</h3>
-          <p>Right now, many pages are <span class="pill">Research-based</span> (docs, changelogs, public demos, and user feedback). As we complete end-to-end runs, we add a <span class="pill">Hands-on tested</span> badge and link supporting notes.</p>
-          <p>We fund the site with affiliate links. Partners don’t review our content. See our <a href="disclosure.html">Affiliate Disclosure</a> for details.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Badges legend -->
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">What our badges mean</h2>
-        <div class="legend">
-          <div class="card">
-            <strong class="pill">Research-based</strong>
-            <p class="mini" style="margin-top:.35rem">Coverage compiled from official docs, public demos, and credible user reports. Great for a fast overview and deciding what to try.</p>
-          </div>
-          <div class="card">
-            <strong class="pill">Hands-on tested</strong>
-            <p class="mini" style="margin-top:.35rem">We ran the workflow end-to-end, documented prompts/settings, and compared output against realistic acceptance criteria.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How we evaluate -->
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">How we evaluate a tool</h2>
-        <div class="steps stack">
-          <article class="pick">
-            <h3>Define the job to be done</h3>
-            <p>We scope a concrete outcome (e.g., “20 PDPs with bullets, descriptions, and alt text”) and list non-negotiables like tone, accuracy, and safe claims.</p>
-          </article>
-          <article class="pick">
-            <h3>Set baseline prompts & inputs</h3>
-            <p>We use short, reusable prompts + a one-page voice guide and a basic intake (specs, audience, claims to avoid, competitors) to mimic real client work.</p>
-          </article>
-          <article class="pick">
-            <h3>Run and record</h3>
-            <p>We capture steps, settings, and time-to-result. We log any post-edits needed and note friction (rate limits, confusing UI, hallucinations).</p>
-          </article>
-          <article class="pick">
-            <h3>Score what matters</h3>
-            <p>We score clarity, speed, consistency (voice/style), and risk controls. If a tool wins on a niche job (e.g., Amazon bullets), we’ll call that out.</p>
-          </article>
-          <article class="pick">
-            <h3>Publish practical takeaways</h3>
-            <p>We share prompts, checklists, and package ideas so you can ship this week — not after a course.</p>
-          </article>
+      <div class="wrap form-shell">
+        <!-- Replace the src below with your live Google Forms embed URL -->
+        <div class="iframe-wrap">
+          <iframe src="https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/viewform?embedded=true" loading="lazy">Loading…</iframe>
         </div>
 
-        <div class="pick" style="margin-top:1rem">
-          <h3>Editorial independence</h3>
-          <p>Vendors don’t approve our content. If we use affiliate links, it’s clearly disclosed, and there’s no extra cost to you. More in our <a href="disclosure.html">disclosure</a>.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact / CTA -->
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">Contact & suggestions</h2>
-        <p>Have a correction, request, or a tool we should test next? <a href="contact.html">Contact us</a> — we read every note.</p>
-
-        <div class="btn-row" style="margin-top:.75rem">
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=about-cta" target="_blank" rel="sponsored noopener">Try Writesonic</a>
-          <a class="btn btn-ghost" href="comparisons.html">See comparisons</a>
-        </div>
+        <p class="alt">Prefer email? <a href="mailto:hello@aiexperttoolkit.com">hello@aiexperttoolkit.com</a></p>
+        <p class="mini">By contacting us, you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
       </div>
     </section>
   </main>
@@ -202,32 +131,20 @@
         <a href="disclosure.html">Disclosure</a>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html" aria-current="page">Contact</a>
       </nav>
     </div>
   </footer>
 
   <!-- Mobile drawer JS + remove inline safety style -->
   <script>
-    const toggle = document.querySelector('.nav-toggle');
-    const drawer = document.getElementById('mobileMenu');
-    if (toggle && drawer) {
-      toggle.addEventListener('click', () => {
-        const open = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!open));
-        drawer.hidden = open;
-        document.body.classList.toggle('no-scroll', !open);
-      });
-      const mq = window.matchMedia('(min-width: 981px)');
-      mq.addEventListener?.('change', e => {
-        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll'); }
-      });
+    const toggle=document.querySelector('.nav-toggle'), drawer=document.getElementById('mobileMenu');
+    if(toggle&&drawer){
+      toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));drawer.hidden=open;document.body.classList.toggle('no-scroll',!open)});
+      const mq=window.matchMedia('(min-width: 981px)');
+      mq.addEventListener?.('change',e=>{if(e.matches){toggle.setAttribute('aria-expanded','false');drawer.hidden=true;document.body.classList.remove('no-scroll')}})
     }
-    window.addEventListener('load', () => {
-      const sc = document.getElementById('sanity-check');
-      if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
-    });
+    window.addEventListener('load',()=>{const sc=document.getElementById('sanity-check');if(sc&&sc.parentNode)sc.parentNode.removeChild(sc);});
   </script>
 </body>
 </html>
-
