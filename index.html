@@ -45,9 +45,7 @@
       </nav>
 
       <div class="nav-cta">
-        <a class="btn btn-ghost" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">
-          Try Writesonic
-        </a>
+        <a class="btn btn-ghost" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic</a>
       </div>
 
       <!-- Mobile toggle -->
@@ -80,9 +78,7 @@
       <div class="wrap">
         <p class="eyebrow">Your shortcut to the best AI tools</p>
         <h1>Build Smarter with AI Tools</h1>
-        <p class="lead">
-          Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.
-        </p>
+        <p class="lead">Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
 
         <div class="btn-row">
           <a class="btn" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic</a>
@@ -114,9 +110,7 @@
           <article class="pick">
             <div class="pick-badge muted">Fast drafting</div>
             <h3 class="pick-title">Chat-style workflows</h3>
-            <p class="pick-desc">
-              Use prompt frameworks to draft, outline, and refine quickly for blogs, ads, and emails.
-            </p>
+            <p class="pick-desc">Use prompt frameworks to draft, outline, and refine quickly for blogs, ads, and emails.</p>
             <a class="btn btn-ghost" href="comparisons.html">See frameworks</a>
           </article>
         </div>
@@ -173,18 +167,31 @@
     </div>
   </footer>
 
-  <!-- Minimal JS for the mobile drawer -->
+  <!-- Minimal JS for the mobile drawer + remove inline safety style when loaded -->
   <script>
     const toggle = document.querySelector('.nav-toggle');
     const drawer = document.getElementById('mobileMenu');
+
     if (toggle && drawer) {
       toggle.addEventListener('click', () => {
         const open = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!open));
-        drawer.hidden = open;
+        drawer.hidden = open;                 // respects CSS .nav-drawer[hidden]
         document.body.classList.toggle('no-scroll', !open);
       });
+
+      // Close the drawer if resized to desktop
+      const mq = window.matchMedia('(min-width: 981px)');
+      mq.addEventListener?.('change', e => {
+        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll'); }
+      });
     }
+
+    // Remove the inline safety style after everything loads
+    window.addEventListener('load', () => {
+      const sc = document.getElementById('sanity-check');
+      if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
+    });
   </script>
 </body>
 </html>
