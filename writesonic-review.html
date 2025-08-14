@@ -51,8 +51,12 @@
       </nav>
 
       <div class="nav-cta">
-        <a class="btn btn-ghost" href="https://writesonic.com?via=AIExpertToolkit" target="_blank" rel="noopener">Try Writesonic</a>
-      </div>
+        <a class="btn btn-primary"
+   href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
+   target="_blank" rel="sponsored noopener">
+  Try Writesonic
+</a>
+
 
       <!-- Mobile toggle -->
       <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu">
