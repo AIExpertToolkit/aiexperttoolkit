@@ -197,3 +197,10 @@ body.drawer-open .nav-drawer{display:flex}
 .sr-only{
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
 }
+/* Coming-soon card (optional) */
+.card.is-soon { opacity:.7; position:relative; }
+.card.is-soon::after{
+  content:"Coming soon"; position:absolute; top:.75rem; right:.75rem;
+  font-size:.78rem; font-weight:800; border:1px solid var(--hair-2);
+  padding:.15rem .5rem; border-radius:999px; background:rgba(255,255,255,.04);
+}
