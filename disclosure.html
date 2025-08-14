@@ -4,39 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Affiliate Disclosure — AI Expert Toolkit</title>
-  <meta name="description" content="Our affiliate disclosure: how we fund the site, how links work, and our commitment to honest, hands-on testing." />
+  <meta name="description" content="Our affiliate disclosure: how links work, how we fund the site, and our current editorial methodology (research-based). We label hands-on tests when available." />
   <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/disclosure.html" />
 
   <!-- Site CSS -->
   <link rel="stylesheet" href="assets/css/base.css?v=12" />
 
-  <!-- Page-local polish -->
+  <!-- Page-local polish (small, self-contained) -->
   <style>
-    .summary {border:1px solid var(--hair); background:rgba(255,255,255,.04); border-radius:12px; padding:.9rem}
-    .mini {color:var(--muted); font-size:.95rem}
-    .at-a-glance {display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-top:1rem}
-    .glance {background:var(--panel); border:1px solid var(--hair); border-radius:12px; padding:.9rem}
-    .glance h3{margin-bottom:.25rem; font-size:1rem}
+    .mini{color:var(--muted);font-size:.95rem}
+    .summary{border:1px solid var(--hair);background:rgba(255,255,255,.04);border-radius:12px;padding:.9rem}
+    .at-a-glance{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1rem}
+    .glance{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:.9rem}
+    .glance h3{margin-bottom:.25rem;font-size:1rem}
+    .legend{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem}
+    .pill{display:inline-block;padding:.2rem .55rem;border:1px solid var(--hair-2);border-radius:999px;color:var(--muted);font-weight:600;white-space:nowrap}
+    .note{border:1px dashed var(--hair-2);border-radius:10px;padding:.7rem;background:rgba(255,255,255,.03);margin-top:.75rem}
     @media (max-width: 840px){ .at-a-glance{grid-template-columns:minmax(0,1fr)} }
   </style>
 
   <!-- Inline safety (removed on load) -->
   <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
 
-  <!-- OG -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Affiliate Disclosure — AI Expert Toolkit" />
-  <meta property="og:description" content="We use affiliate links to support this site. We only recommend tools we test and use ourselves." />
+  <meta property="og:description" content="We use affiliate links to support this site. Our pages are research-based today; we label hands-on testing when available." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/disclosure.html" />
 
-  <!-- JSON-LD (helps clarity for search engines) -->
+  <!-- JSON-LD (clarity for search) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "Affiliate Disclosure",
     "url": "https://aiexperttoolkit.github.io/aiexperttoolkit/disclosure.html",
-    "description": "Affiliate disclosure for AI Expert Toolkit describing how affiliate links fund the site and our testing standards."
+    "description": "Affiliate disclosure for AI Expert Toolkit describing how affiliate links fund the site and current editorial methodology (research-based)."
   }
   </script>
 </head>
@@ -82,7 +85,7 @@
       <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
-      <a class="btn full" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=mobile-cta" target="_blank" rel="noopener">Try Writesonic</a>
+      <a class="btn full" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=mobile-cta" target="_blank" rel="sponsored noopener">Try Writesonic</a>
     </div>
   </header>
 
@@ -96,54 +99,63 @@
         <p class="mini">Last updated: <time datetime="2025-08-14">August 14, 2025</time></p>
 
         <div class="summary" style="margin-top:.75rem">
-          <strong>At a glance:</strong> We use affiliate links on some pages. Partners don’t review our content. We test tools with real prompts and only recommend software that helps you ship faster with better quality.
+          <strong>At a glance:</strong> Some pages contain affiliate links. Partners don’t review or approve our content. Our recommendations are based on independent <em>editorial research</em> (vendor documentation, public demos, changelogs, user feedback). <strong>When we run hands-on tests, we label those pages clearly.</strong>
+        </div>
+
+        <div class="legend">
+          <span class="pill">Research-based</span>
+          <span class="pill">Hands-on tested</span>
         </div>
 
         <div class="at-a-glance">
           <div class="glance">
             <h3>How links work</h3>
-            <p>When you click and later purchase, the merchant may pay us a referral fee.</p>
+            <p>When you click and later purchase, the merchant may pay us a referral fee. We mark outbound affiliate CTAs as <code>rel="sponsored"</code>.</p>
           </div>
           <div class="glance">
             <h3>Independence</h3>
-            <p>We don’t sell placement. Reviews and picks are based on hands-on testing.</p>
+            <p>Advertisers do not buy placement. We decide coverage and picks. Editorial and business functions are separate.</p>
           </div>
           <div class="glance">
             <h3>Cost to you</h3>
-            <p>Never extra — sometimes better. Deals are the same or improved through our links.</p>
+            <p>There’s no extra cost. Sometimes you’ll get a better deal via our link.</p>
           </div>
+        </div>
+
+        <div class="note">
+          <strong>Methodology note:</strong> Today our pages are primarily research-based. We’re rolling out hands-on testing and will add the “Hands-on tested” badge when a page includes our own run-throughs and artifacts.
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="wrap">
-        <h2 class="section-title">How it works</h2>
+        <h2 class="section-title">Details</h2>
         <div class="stack">
           <article class="pick">
             <h3>What are affiliate links?</h3>
-            <p>Some links on AI Expert Toolkit are affiliate links. When you click and later make a purchase, the merchant may pay us a small commission for the referral. This helps us keep content free.</p>
+            <p>Some links on AI Expert Toolkit are affiliate links. If you click and later make a purchase, we may receive a small commission from the merchant. This supports our work and helps us keep content free.</p>
           </article>
 
           <article class="pick">
-            <h3>Editorial independence</h3>
-            <p>Partners do <strong>not</strong> approve or edit our articles. We test tools with real prompts, document the results, and only recommend software we believe helps readers ship faster and with higher quality.</p>
+            <h3>Editorial standards</h3>
+            <p>Partners do <strong>not</strong> approve or edit our articles. We base recommendations on independent research (official docs, feature change logs, public demos, and aggregated user feedback). Where we’ve performed hands-on tests, we note that explicitly on the page.</p>
           </article>
 
           <article class="pick">
-            <h3>Cost to you</h3>
-            <p>There is no extra cost to you. In some cases, you may even get a better deal via our links.</p>
+            <h3>Corrections & updates</h3>
+            <p>Pricing and features change. If you spot an error, please <a href="contact.html">contact us</a>. We aim to correct inaccuracies quickly and timestamp material changes.</p>
           </article>
 
           <article class="pick">
-            <h3>Questions?</h3>
-            <p>If you have any concerns about a recommendation, <a href="contact.html">contact us</a>. We’re happy to explain our process or update content if something changes.</p>
+            <h3>Privacy note</h3>
+            <p>Clicking an affiliate link may take you to a merchant that uses cookies or similar technologies to attribute referrals. Review each merchant’s privacy policy to learn more.</p>
           </article>
         </div>
 
         <div class="btn-row" style="margin-top:1rem">
           <a class="btn" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=disclosure-cta" target="_blank" rel="sponsored noopener">Try Writesonic</a>
-          <a class="btn btn-ghost" href="writesonic-review.html">Read our hands-on review</a>
+          <a class="btn btn-ghost" href="writesonic-review.html">Read our review</a>
         </div>
       </div>
     </section>
