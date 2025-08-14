@@ -2,124 +2,420 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Expert Toolkit</title>
-  <!-- Uses your repo path: aiexperttoolkit/assets/css/base.css -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Expert Toolkit — Build Smarter with AI Tools (Writesonic First)</title>
+  <meta name="description" content="Hands-on reviews, comparisons, and copy-and-paste guides to help you ship faster — starting with Writesonic." />
+  <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/" />
+
+  <!-- Base styles (your token file) -->
   <link rel="stylesheet" href="assets/css/base.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AI Expert Toolkit — Build Smarter with AI Tools" />
+  <meta property="og:description" content="Hands-on reviews, comparisons, and guides that help you choose the right AI tool — fast." />
+  <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/" />
+  <meta property="og:site_name" content="AI Expert Toolkit" />
+
+  <!-- Minimal component CSS (uses your tokens) -->
+  <style>
+    :root {
+      --gap: 18px;
+      --shadow: 0 8px 24px rgba(0,0,0,.15);
+      --border: 1px solid rgba(255,255,255,.08);
+    }
+    /* Layout */
+    .container { max-width: var(--maxw, 1200px); margin: 0 auto; padding: 0 20px; }
+    .section { padding: 64px 0; }
+    .section--tight { padding: 44px 0; }
+    .mb-0{margin-bottom:0}.mb-1{margin-bottom:.5rem}.mb-2{margin-bottom:1rem}.mb-3{margin-bottom:1.5rem}
+    .mt-2{margin-top:.75rem}.mt-3{margin-top:1.25rem}
+    .grid{display:grid; gap:var(--gap)}
+    .grid--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (max-width:900px){.grid--3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:640px){.grid--3,.grid--2{grid-template-columns:1fr}}
+    /* Header */
+    header.site-header{position:sticky;top:0;z-index:1000;background:var(--bg);border-bottom:var(--border);backdrop-filter:saturate(140%) blur(8px)}
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:700}
+    .badge{display:inline-block;font-size:.75rem;padding:.15rem .5rem;border-radius:999px;background:rgba(133,188,255,.15);border:1px solid rgba(133,188,255,.35);color:#a3c8ff}
+    nav.primary{display:flex;align-items:center;gap:18px}
+    .nav-link{color:var(--muted);text-decoration:none}
+    .nav-link:hover,.nav-link[aria-current="page"]{color:#fff}
+    .spacer{flex:1}
+    .menu-btn{display:none}
+    @media (max-width:860px){
+      nav.primary{display:none}
+      .menu-btn{display:inline-flex;background:var(--panel);border:var(--border);padding:.5rem .75rem;border-radius:10px}
+      .mobile-nav{display:none;position:absolute;top:60px;left:0;right:0;background:var(--panel);border-bottom:var(--border)}
+      .mobile-nav a{display:block;padding:12px 20px;border-top:var(--border);text-decoration:none;color:#fff}
+    }
+    /* Hero */
+    .hero{padding:86px 0;background:linear-gradient(180deg,rgba(133,188,255,.08),transparent);}
+    .hero h1{font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin:0 0 .75rem}
+    .hero p{font-size:clamp(1rem,1.5vw,1.125rem);color:var(--muted);max-width:760px}
+    /* Cards / feature blocks */
+    .card{background:var(--panel);border:var(--border);border-radius:var(--radius,10px)}
+    .card--soft{background:rgba(133,188,255,.05)}
+    .feature{background:var(--panel);border:var(--border);border-radius:var(--radius);padding:18px}
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;border-radius:10px;padding:.7rem 1rem;text-decoration:none;border:1px solid transparent;transition:.15s}
+    .btn--pill{border-radius:999px}
+    .btn--primary{background:var(--brand,#8db2ff);color:#0b1120;border-color:transparent}
+    .btn--primary:hover{transform:translateY(-1px)}
+    .btn--ghost{background:transparent;border-color:rgba(255,255,255,.18);color:#fff}
+    .btn--ghost:hover{border-color:rgba(255,255,255,.35)}
+    .muted{color:var(--muted)}
+    /* Deal strip */
+    #deal-strip{background:linear-gradient(90deg,#12152e,rgba(133,188,255,.12));border-bottom:var(--border)}
+    /* Footer */
+    footer{border-top:var(--border);padding:38px 0 64px}
+    footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:28px}
+    @media (max-width:860px){footer .cols{grid-template-columns:1fr}}
+    footer a{color:var(--muted);text-decoration:none}
+    footer a:hover{color:#fff}
+  </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="section" role="banner" style="padding-top:1.25rem;padding-bottom:1.25rem;">
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-      <a href="/" style="display:flex;align-items:center;gap:.75rem;text-decoration:none;">
-        <div class="btn" style="padding:.35rem .6rem;border-radius:10px;background:#2a3552;">AETK</div>
-        <strong>AI Expert Toolkit</strong>
+  <!-- Deal Strip -->
+  <div id="deal-strip">
+    <div class="container" style="display:flex;gap:12px;align-items:center;justify-content:space-between;padding:10px 0;">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <span class="badge">Limited</span>
+        <span class="muted">Try Writesonic free — upgrade anytime.</span>
+      </div>
+      <a class="btn btn--primary btn--pill" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=dealbar&utm_campaign=writesonic">Claim free plan</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container" style="display:flex;align-items:center;height:60px;gap:18px;">
+      <a class="brand" href="index.html">
+        <span class="badge">AETK</span> <span>AI Expert Toolkit</span>
       </a>
-      <nav aria-label="Primary">
-        <a href="#" style="margin-right:14px;">Writesonic Review</a>
-        <a href="#" style="margin-right:14px;">Comparisons</a>
-        <a href="#" style="margin-right:14px;">Guides</a>
-        <a href="#">About</a>
+      <div class="spacer"></div>
+      <nav class="primary" aria-label="Primary">
+        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+        <a class="nav-link" href="writesonic-review.html">Writesonic Review</a>
+        <a class="nav-link" href="comparisons.html">Comparisons</a>
+        <a class="nav-link" href="pricing.html">Pricing</a>
+        <a class="nav-link" href="https://aiexperttoolkit.com/category/guides/">Guides</a>
+        <a class="nav-link" href="https://aiexperttoolkit.com/blog/">Blog</a>
+        <a class="nav-link" href="about.html">About</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+        <a class="btn btn--primary btn--pill" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=nav&utm_campaign=writesonic">Try Writesonic</a>
       </nav>
+      <button class="menu-btn" id="menu-btn" aria-label="Open menu">☰</button>
+    </div>
+    <div class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="writesonic-review.html">Writesonic Review</a>
+      <a href="comparisons.html">Comparisons</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="https://aiexperttoolkit.com/category/guides/">Guides</a>
+      <a href="https://aiexperttoolkit.com/blog/">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn--primary btn--pill" style="margin:12px 20px" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=nav-mobile&utm_campaign=writesonic">Try Writesonic</a>
     </div>
   </header>
 
   <!-- HERO -->
-  <section class="hero" aria-label="Hero">
-    <h1>Build Smarter with AI Tools</h1>
-    <p>Action‑first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
-    <a href="[YOUR_AFF_LINK]" class="btn">Try Writesonic</a>
-  </section>
-
-  <!-- TRUST BAR -->
-  <section class="section" aria-label="Trust bar">
+  <section class="hero">
     <div class="container">
-      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;">
-        <div class="hero" style="padding:1.5rem;">
-          <strong>Hands‑on testing</strong>
-          <p style="color:var(--muted);margin:.5rem 0 0;">We publish prompts, settings, and outputs.</p>
-        </div>
-        <div class="hero" style="padding:1.5rem;">
-          <strong>Affiliate clarity</strong>
-          <p style="color:var(--muted);margin:.5rem 0 0;">Clear disclosures; no brand‑bidding violations.</p>
-        </div>
-        <div class="hero" style="padding:1.5rem;">
-          <strong>Fast to value</strong>
-          <p style="color:var(--muted);margin:.5rem 0 0;">Copy‑paste frameworks and ready HTML.</p>
-        </div>
+      <h1>Build Smarter with AI Tools</h1>
+      <p>Action-first reviews, comparisons, and guides to help you ship faster — starting with Writesonic.</p>
+      <div class="mt-3" style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn--primary btn--pill" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=hero&utm_campaign=writesonic">Try Writesonic free</a>
+        <a class="btn btn--ghost btn--pill" href="writesonic-review.html">Read our review</a>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES -->
-  <section class="section" aria-label="Features">
+  <main>
+
+    <!-- Top Picks -->
+    <section class="section">
+      <div class="container">
+        <h2 class="mb-2">Top picks to get started</h2>
+        <div class="grid grid--3">
+          <!-- Card 1 -->
+          <article class="card" style="padding:18px">
+            <h3 class="mb-1">Writesonic (Editor’s pick)</h3>
+            <p class="mb-2">Fast long-form drafts, brand voice, and solid SEO helpers out of the box.</p>
+            <ul class="mb-2" style="padding-left:18px;color:var(--muted)">
+              <li>Blog & landing page writer</li>
+              <li>Brand voice + templates</li>
+              <li>Good balance of speed/quality</li>
+            </ul>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn btn--primary" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=top-picks&utm_campaign=writesonic">Start free</a>
+              <a class="btn btn--ghost" href="writesonic-review.html">See tests</a>
+            </div>
+          </article>
+          <!-- Card 2 -->
+          <article class="card" style="padding:18px">
+            <h3 class="mb-1">Compare top AI writers</h3>
+            <p class="mb-2">See where each tool wins for your use case before you buy.</p>
+            <ul class="mb-2" style="padding-left:18px;color:var(--muted)">
+              <li>Blog vs. ads vs. product copy</li>
+              <li>Speed, accuracy, and cost</li>
+              <li>Our hands-on results</li>
+            </ul>
+            <a class="btn btn--ghost" href="comparisons.html">Open comparisons</a>
+          </article>
+          <!-- Card 3 -->
+          <article class="card" style="padding:18px">
+            <h3 class="mb-1">Guides you can copy</h3>
+            <p class="mb-2">Step-by-step prompts, settings, and frameworks that just work.</p>
+            <ul class="mb-2" style="padding-left:18px;color:var(--muted)">
+              <li>Blog post framework</li>
+              <li>Ad copy swipe file</li>
+              <li>Product description kit</li>
+            </ul>
+            <a class="btn btn--ghost" href="https://aiexperttoolkit.com/category/guides/">See guides</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Writesonic -->
+    <section class="section">
+      <div class="container">
+        <h2 class="mb-2">Why we recommend Writesonic first</h2>
+        <div class="grid grid--3">
+          <article class="feature">
+            <h3>Quality vs. speed</h3>
+            <p class="mb-0">Consistently good drafts without tons of hand-holding. Great for “first draft fast,” then polish.</p>
+          </article>
+          <article class="feature">
+            <h3>Brand voice</h3>
+            <p class="mb-0">Train a voice and apply it across templates so your copy feels on-brand by default.</p>
+          </article>
+          <article class="feature">
+            <h3>SEO helpers</h3>
+            <p class="mb-0">Outline, headings, and on-page prompts that keep you aligned with search intent.</p>
+          </article>
+        </div>
+
+        <!-- Mini comparison table -->
+        <div class="card mt-3" style="overflow:auto">
+          <table style="width:100%;border-collapse:collapse">
+            <thead>
+              <tr style="background:rgba(133,188,255,.08)">
+                <th style="text-align:left;padding:12px;border-bottom:var(--border)">Feature</th>
+                <th style="text-align:left;padding:12px;border-bottom:var(--border)">Writesonic</th>
+                <th style="text-align:left;padding:12px;border-bottom:var(--border)">Generic AI Writer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:12px;border-top:var(--border)">Long-form editor</td>
+                <td style="padding:12px;border-top:var(--border)">✔ Built-in</td>
+                <td style="padding:12px;border-top:var(--border)">~ Partial</td>
+              </tr>
+              <tr>
+                <td style="padding:12px;border-top:var(--border)">Brand voice</td>
+                <td style="padding:12px;border-top:var(--border)">✔ Yes</td>
+                <td style="padding:12px;border-top:var(--border)">✖ No / basic</td>
+              </tr>
+              <tr>
+                <td style="padding:12px;border-top:var(--border)">SEO helpers</td>
+                <td style="padding:12px;border-top:var(--border)">✔ Outline & headings</td>
+                <td style="padding:12px;border-top:var(--border)">~ Limited</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <a class="btn btn--primary btn--pill" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=why-block&utm_campaign=writesonic">Start free</a>
+          <a class="btn btn--ghost btn--pill" href="writesonic-review.html">See our tests</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use-cases -->
+    <section class="section">
+      <div class="container">
+        <h2 class="mb-2">Get results in 3 steps</h2>
+        <div class="grid grid--3">
+          <article class="feature">
+            <h3>Blog post in 5 minutes</h3>
+            <ol class="mb-2" style="margin:0 0 12px 18px;color:var(--muted)">
+              <li>Pick “Blog Writer.”</li>
+              <li>Paste outline + target keyword.</li>
+              <li>Generate, then refine voice.</li>
+            </ol>
+            <a class="btn btn--ghost" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=use-cases&utm_campaign=writesonic">Try it</a>
+          </article>
+
+          <article class="feature">
+            <h3>Product description</h3>
+            <ol class="mb-2" style="margin:0 0 12px 18px;color:var(--muted)">
+              <li>Choose “Product Description.”</li>
+              <li>Add features & benefit bullets.</li>
+              <li>Generate variants, pick the best.</li>
+            </ol>
+            <a class="btn btn--ghost" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=use-cases&utm_campaign=writesonic">Generate copy</a>
+          </article>
+
+          <article class="feature">
+            <h3>Ad copy that converts</h3>
+            <ol class="mb-2" style="margin:0 0 12px 18px;color:var(--muted)">
+              <li>Select your ad platform.</li>
+              <li>Paste offer + audience.</li>
+              <li>Test 3 variants in minutes.</li>
+            </ol>
+            <a class="btn btn--ghost" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=use-cases&utm_campaign=writesonic">Spin variants</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing highlight -->
+    <section class="section">
+      <div class="container">
+        <h2 class="mb-2">Pick a plan that fits</h2>
+        <div class="grid grid--3">
+          <article class="card card--soft" style="padding:18px">
+            <h3 class="mb-1">Free</h3>
+            <p class="muted mb-2">Test the writer and workflows.</p>
+            <ul class="mb-2" style="padding-left:18px;color:var(--muted)">
+              <li>Core templates</li>
+              <li>Basic brand voice</li>
+              <li>Limited credits</li>
+            </ul>
+            <a class="btn btn--ghost" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=pricing&utm_campaign=writesonic">Get free plan</a>
+          </article>
+
+          <article class="card" style="padding:18px;outline:2px solid rgba(133,188,255,.35)">
+            <h3 class="mb-1">Pro (most popular)</h3>
+            <p class="muted mb-2">For creators and solo teams who publish weekly.</p>
+            <ul class="mb-2" style="padding-left:18px;color:var(--muted)">
+              <li>Long-form editor</li>
+              <li>Advanced brand voice</li>
+              <li>Higher limits</li>
+            </ul>
+            <a class="btn btn--primary" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=pricing&utm_campaign=writesonic">Start Pro</a>
+          </article>
+
+          <article class="card card--soft" style="padding:18px">
+            <h3 class="mb-1">Teams</h3>
+            <p class="muted mb-2">For multi-brand, multi-user workflows.</p>
+            <ul class="mb-2" style="padding-left:18px;color:var(--muted)">
+              <li>Seats & permissions</li>
+              <li>Brand kits</li>
+              <li>Shared templates</li>
+            </ul>
+            <a class="btn btn--ghost" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=pricing&utm_campaign=writesonic">View options</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="section section--tight">
+      <div class="container">
+        <h2 class="mb-2">FAQs</h2>
+
+        <details class="card" style="padding:16px;margin-bottom:12px">
+          <summary><strong>Is there a free plan?</strong></summary>
+          <p class="mt-2">Yes. You can start free to test templates and workflows before upgrading.</p>
+        </details>
+
+        <details class="card" style="padding:16px;margin-bottom:12px">
+          <summary><strong>What content is it best for?</strong></summary>
+          <p class="mt-2">Blog posts, landing pages, product descriptions, and ad copy. We publish guides to help you dial in prompts.</p>
+        </details>
+
+        <details class="card" style="padding:16px;margin-bottom:12px">
+          <summary><strong>How does this site make money?</strong></summary>
+          <p class="mt-2">We may earn affiliate commissions if you purchase through our links—at no extra cost to you. We only recommend tools we test.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
     <div class="container">
-      <h2 style="margin:0 0 1rem;">Why AI Expert Toolkit?</h2>
-      <ul>
-        <li>Hands‑on testing with real outputs</li>
-        <li>Clear, actionable comparisons</li>
-        <li>Guides you can copy and paste</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- COMPARISON (starter table) -->
-  <section class="section" aria-label="Comparison">
-    <div class="container">
-      <h2 style="margin:0 0 1rem;">Writesonic vs Alternatives</h2>
-      <table style="width:100%;border-collapse:separate;border-spacing:0;border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;">
-        <thead>
-          <tr style="background:rgba(255,255,255,.06);text-align:left;">
-            <th style="padding:14px 16px;">Feature</th>
-            <th style="padding:14px 16px;">Writesonic</th>
-            <th style="padding:14px 16px;">Alternative</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td style="padding:12px 16px;">SEO tools</td><td style="padding:12px 16px;">Built‑in</td><td style="padding:12px 16px;">Limited</td></tr>
-          <tr><td style="padding:12px 16px;">Templates</td><td style="padding:12px 16px;">90+ presets</td><td style="padding:12px 16px;">Fewer</td></tr>
-          <tr><td style="padding:12px 16px;">Pricing</td><td style="padding:12px 16px;">Budget‑friendly</td><td style="padding:12px 16px;">Higher</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- PRICING (starter) -->
-  <section class="section" aria-label="Pricing">
-    <div class="container" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;">
-      <div class="hero" style="padding:1.5rem;">
-        <h3>Starter</h3>
-        <p style="font-size:2rem;margin:.25rem 0 1rem;">$19</p>
-        <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=pricing_starter">Choose Starter</a>
+      <div class="cols">
+        <div>
+          <div class="brand mb-1"><span class="badge">AETK</span><span>AI Expert Toolkit</span></div>
+          <p class="muted">Hands-on testing with real outputs. Clear comparisons. Copy-and-paste frameworks.</p>
+        </div>
+        <div>
+          <h4 class="mb-1">Explore</h4>
+          <nav>
+            <a href="writesonic-review.html">Writesonic Review</a><br />
+            <a href="comparisons.html">Comparisons</a><br />
+            <a href="pricing.html">Pricing</a><br />
+            <a href="https://aiexperttoolkit.com/category/guides/">Guides</a><br />
+            <a href="https://aiexperttoolkit.com/blog/">Blog</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="mb-1">Company</h4>
+          <nav>
+            <a href="about.html">About</a><br />
+            <a href="contact.html">Contact</a><br />
+            <a href="privacy.html">Privacy Policy</a><br />
+            <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
+          </nav>
+        </div>
       </div>
-      <div class="hero" style="padding:1.5rem;">
-        <h3>Growth</h3>
-        <p style="font-size:2rem;margin:.25rem 0 1rem;">$49</p>
-        <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=pricing_growth">Choose Growth</a>
-      </div>
-      <div class="hero" style="padding:1.5rem;">
-        <h3>Scale</h3>
-        <p style="font-size:2rem;margin:.25rem 0 1rem;">$99</p>
-        <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=pricing_scale">Choose Scale</a>
-      </div>
+      <p class="muted" style="margin-top:28px">© <span id="year"></span> AI Expert Toolkit. All rights reserved.</p>
     </div>
-  </section>
-
-  <!-- PRIMARY CTA -->
-  <section class="section" aria-label="Primary call to action">
-    <div class="container hero" style="padding:2rem;">
-      <h2>Start with Writesonic — our #1 pick to ship value fast</h2>
-      <p style="color:var(--muted);max-width:680px;margin:.5rem auto 1rem;">Spin up content, product pages, and comparisons in minutes. We share our exact prompts.</p>
-      <a class="btn" href="[YOUR_AFF_LINK]?utm_source=aetk&utm_medium=cta&utm_campaign=primary">Get Writesonic</a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer" role="contentinfo">
-    © <span id="year"></span> AI Expert Toolkit. All rights reserved.
   </footer>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <!-- Sticky CTA -->
+  <div id="sticky-cta" style="position:fixed;left:0;right:0;bottom:12px;display:flex;justify-content:center;z-index:99999;">
+    <div class="card" style="display:flex;gap:14px;align-items:center;background:var(--panel);border:var(--border);padding:10px 14px;border-radius:999px;box-shadow:var(--shadow)">
+      <span class="muted">Ready to try Writesonic?</span>
+      <a class="btn btn--primary btn--pill" href="[YOUR_AFF_LINK]?utm_source=homepage&utm_medium=sticky&utm_campaign=writesonic">Start free</a>
+      <button id="sticky-close" class="btn btn--ghost btn--pill" style="padding:8px 12px">×</button>
+    </div>
+  </div>
+
+  <!-- Scripts (tiny, no dependencies) -->
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // mobile menu
+    (function(){var b=document.getElementById('menu-btn'),m=document.getElementById('mobile-nav');if(b&&m){b.addEventListener('click',()=>{m.style.display=m.style.display==='block'?'none':'block';});}})();
+    // sticky CTA dismiss
+    (function(){var c=document.getElementById('sticky-close');var b=document.getElementById('sticky-cta');if(c&&b){c.addEventListener('click',()=>b.remove());}})();
+  </script>
+
+  <!-- JSON-LD: WebSite + FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"AI Expert Toolkit",
+    "url":"https://aiexperttoolkit.github.io/aiexperttoolkit/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://aiexperttoolkit.com/?s={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Is there a free plan?","acceptedAnswer":{"@type":"Answer","text":"Yes. You can start free to test templates and workflows before upgrading."}},
+      {"@type":"Question","name":"What content is it best for?","acceptedAnswer":{"@type":"Answer","text":"Blog posts, landing pages, product descriptions, and ad copy. We publish guides to help you dial in prompts."}},
+      {"@type":"Question","name":"How does this site make money?","acceptedAnswer":{"@type":"Answer","text":"We may earn affiliate commissions if you purchase through our links—at no extra cost to you. We only recommend tools we test."}}
+    ]
+  }
+  </script>
 </body>
 </html>
+
