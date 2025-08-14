@@ -8,7 +8,8 @@
   <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/" />
 
   <!-- Load site CSS from repo root (cache-busted) -->
-  <link rel="stylesheet" href="assets/css/base.css?v=11" />
+  <link rel="stylesheet" href="assets/css/base.css?v=12" />
+
 
   <!-- Minimal safety net so the page isn’t un-styled for a moment if CSS is cached oddly -->
   <style id="sanity-check">
@@ -169,29 +170,35 @@
 
   <!-- Minimal JS for the mobile drawer + remove inline safety style when loaded -->
   <script>
-    const toggle = document.querySelector('.nav-toggle');
-    const drawer = document.getElementById('mobileMenu');
+  const toggle = document.querySelector('.nav-toggle');
+  const drawer = document.getElementById('mobileMenu');
 
-    if (toggle && drawer) {
-      toggle.addEventListener('click', () => {
-        const open = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!open));
-        drawer.hidden = open;                 // respects CSS .nav-drawer[hidden]
-        document.body.classList.toggle('no-scroll', !open);
-      });
-
-      // Close the drawer if resized to desktop
-      const mq = window.matchMedia('(min-width: 981px)');
-      mq.addEventListener?.('change', e => {
-        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll'); }
-      });
-    }
-
-    // Remove the inline safety style after everything loads
-    window.addEventListener('load', () => {
-      const sc = document.getElementById('sanity-check');
-      if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
+  if (toggle && drawer) {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      drawer.hidden = open;                              // keep semantics
+      document.body.classList.toggle('no-scroll', !open);
+      document.body.classList.toggle('drawer-open', !open); // <— show/hide drawer
     });
-  </script>
+
+    // Close the drawer if resized to desktop
+    const mq = window.matchMedia('(min-width: 981px)');
+    mq.addEventListener?.('change', e => {
+      if (e.matches) {
+        toggle.setAttribute('aria-expanded','false');
+        drawer.hidden = true;
+        document.body.classList.remove('no-scroll','drawer-open');
+      }
+    });
+  }
+
+  // Remove the inline safety style after everything loads
+  window.addEventListener('load', () => {
+    const sc = document.getElementById('sanity-check');
+    if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
+  });
+</script>
+
 </body>
 </html>
