@@ -1,2 +1,16 @@
-{%- assign a = site.data.affiliates[include.name] -%}
-{{ a.base }}?via={{ a.via }}{% if a.utm %}&{{ a.utm }}{% endif %}{% if include.content %}&utm_content={{ include.content | url_encode }}{% endif %}
+{%- comment -%}
+Usage: {% include aff_url.html name='writesonic' content='nav-cta' %}
+- name    : vendor key (only 'writesonic' for now)
+- content : placement (e.g., nav-cta, hero, mobile-cta, pricing-card, etc.)
+{%- endcomment -%}
+
+{%- assign vendor = include.name | downcase -%}
+{%- if vendor == 'writesonic' -%}
+  {%- assign base = 'https://writesonic.com' -%}
+{%- else -%}
+  {%- assign base = '' -%}
+{%- endif -%}
+
+{%- assign via = 'AIExpertToolkit' -%}
+{%- assign campaign = page.url | default: 'static' | replace:'/','-' | replace:'.html','' -%}
+{{ base }}?via={{ via }}&utm_source=aetk&utm_medium=site&utm_campaign={{ campaign }}&utm_content={{ include.content }}
