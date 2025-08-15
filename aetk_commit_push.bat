@@ -1,23 +1,29 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal ENABLEEXTENSIONS
+setlocal ENABLEDELAYEDEXPANSION
 
-REM Collect the whole commit message (all args)
+:: Collect the whole commit message (all args)
 set "MSG=%*"
 if "%MSG%"=="" set "MSG=chore: site update"
 
-REM Always stay in repo root (script lives here)
+:: Always run from repo root (this script lives in repo root)
 pushd "%~dp0"
 
-REM Fast-forward local first
+:: Fast-forward local first (safer history)
 git pull --rebase
 
-REM Stage everything
+:: Stage everything
 git add -A
 
-REM Commit (if nothing to commit, keep going)
-git commit -m "%MSG%" || echo No changes to commit.
+:: Commit; if nothing to commit, continue without error
+git commit -m "%MSG%"
+if errorlevel 1 (
+  echo No changes to commit or commit failed. Continuing to push...
+) else (
+  echo Commit created successfully.
+)
 
-REM Push
+:: Push to default upstream (origin/main)
 git push
 
 popd
