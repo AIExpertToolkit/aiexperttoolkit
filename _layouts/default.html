@@ -3,46 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if page.title %}{{ page.title }} | {% endif %}AI Expert Toolkit</title>
 
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title | default: "AI Expert Toolkit" }}{% endif %}</title>
-  {% if page.description %}
-  <meta name="description" content="{{ page.description }}">
-  {% endif %}
+  <!-- CSS (prefix with baseurl) -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css">
 
-  <!-- Canonical -->
-  {% assign canonical = page.url | replace:'index.html','' | absolute_url %}
-  <link rel="canonical" href="{{ canonical }}">
-
-  <!-- Base stylesheet (path-safe for GitHub Pages project sites) -->
-  <link rel="stylesheet" href="{{ '/assets/css/base.css' | relative_url }}">
-
-  <!-- Favicons (optional) -->
-  <link rel="icon" href="{{ '/assets/img/favicon.png' | relative_url }}">
-
-  <!-- Social (optional, safe defaults) -->
-  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title | default: 'AI Expert Toolkit' }}{% endif %}">
-  <meta property="og:description" content="{{ page.description | default: 'Expert reviews, comparisons, and tutorials to help you choose the right AI faster.' }}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ canonical }}">
+  <!-- Optional: favicon/logo -->
+  <link rel="icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" type="image/svg+xml">
 </head>
-<body class="theme-dark">
-
+<body>
   {% include header.html %}
-
-  <main id="content">
+  <main class="wrap">
     {{ content }}
   </main>
-
   {% include footer.html %}
-  
-  <!-- Small JS (optional) -->
-  <script>
-    // Mobile menu toggle (if your header includes a button with data-toggle)
-    document.querySelectorAll('[data-toggle]').forEach(btn=>{
-      btn.addEventListener('click', ()=> {
-        document.documentElement.classList.toggle('nav-open');
-      });
-    });
-  </script>
 </body>
 </html>
