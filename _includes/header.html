@@ -1,17 +1,10 @@
-<header class="site-header" role="banner">
-  <div class="wrap header-row">
-    <a class="brand" href="{{ site.baseurl }}/" aria-label="AI Expert Toolkit home">
-      AI Expert Toolkit
-    </a>
-
-    <nav class="primary-nav" aria-label="Primary">
-      {% assign here = page.url | replace:'index.html','' %}
-      <a href="{{ site.baseurl }}/comparisons.html"
-         {% if here == '/comparisons.html' %}aria-current="page"{% endif %}>Comparisons</a>
-      <a href="{{ site.baseurl }}/about.html"
-         {% if here == '/about.html' %}aria-current="page"{% endif %}>About</a>
-      <a href="{{ site.baseurl }}/contact.html"
-         {% if here == '/contact.html' %}aria-current="page"{% endif %}>Contact</a>
-    </nav>
-  </div>
-</header>
+<nav class="site-nav">
+  <a class="brand" href="{{ site.baseurl }}/">AI Expert Toolkit</a>
+  <a href="{{ site.baseurl }}/writesonic-review.html">Writesonic Review</a>
+  <a href="{{ site.baseurl }}/comparisons.html">Comparisons</a>
+  <a href="{{ site.baseurl }}/pricing.html">Pricing</a>
+  <a href="{{ site.baseurl }}/blog.html">Blog</a>
+  <a href="{{ site.baseurl }}/guides.html">Guides</a>
+  <a href="{{ site.baseurl }}/about.html">About</a>
+  <a href="{{ site.baseurl }}/contact.html">Contact</a>
+</nav>
