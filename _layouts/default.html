@@ -1,78 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-  {%- comment -%}
-    Jekyll SEO Tag will output the <title>, canonical, OG/Twitter, etc.
-    Make sure _config.yml has at least:
-      title: AI Expert Toolkit
-      url: https://aiexperttoolkit.github.io
-      baseurl: /aiexperttoolkit
-    Optionally set a default social image there (see notes below).
-  {%- endcomment -%}
-  {% seo %}
-
-  <!-- Favicon (inline SVG so we don't depend on /assets/img files) -->
-  <link rel="icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2358bcff'/%3E%3Ctext x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='28' font-weight='700' fill='%2300111a'%3EA%3C/text%3E%3C/svg%3E">
-
-  <!-- Optional theme color for mobile UIs -->
-  <meta name="theme-color" content="#0b0d12" />
-
-  <!-- Site CSS -->
-  <link rel="stylesheet" href="{{ '/assets/css/base.css?v=12' | relative_url }}" />
-
-  <!-- Safety net so the page isn’t unstyled for a moment on odd caches -->
-  <style id="sanity-check">
-    body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} | {% endif %}AI Expert Toolkit</title>
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url }}">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css">
 </head>
 <body>
-  <!-- Accessibility: skip straight to main content -->
-  <a class="sr-only" href="#main">Skip to content</a>
-
   {% include header.html %}
-
-  <main id="main">
+  <main id="main-content">
     {{ content }}
   </main>
-
-  {% include footer.html %}
-
-  <!-- Minimal JS for the mobile drawer (with Safari fallback) -->
-  <script>
-    (function () {
-      const toggle = document.querySelector('.nav-toggle');
-      const drawer = document.getElementById('mobileMenu');
-
-      if (toggle && drawer) {
-        toggle.addEventListener('click', () => {
-          const open = toggle.getAttribute('aria-expanded') === 'true';
-          toggle.setAttribute('aria-expanded', String(!open));
-          drawer.hidden = open;
-          document.body.classList.toggle('no-scroll', !open);
-          document.body.classList.toggle('drawer-open', !open);
-        });
-
-        // Close the drawer if resized to desktop
-        const mq = window.matchMedia('(min-width: 981px)');
-        function closeIfDesktop(e){ if (e.matches) {
-          toggle.setAttribute('aria-expanded','false');
-          drawer.hidden = true;
-          document.body.classList.remove('no-scroll','drawer-open');
-        }}
-        if (mq.addEventListener) mq.addEventListener('change', closeIfDesktop);
-        else if (mq.addListener) mq.addListener(closeIfDesktop);
-      }
-
-      // Remove the inline safety style after everything loads
-      window.addEventListener('load', () => {
-        const sc = document.getElementById('sanity-check');
-        if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
-      });
-    })();
-  </script>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; <span id="y"></span> AI Expert Toolkit</p>
+    </div>
+    <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+  </footer>
 </body>
 </html>
