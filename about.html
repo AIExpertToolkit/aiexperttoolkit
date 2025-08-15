@@ -1,232 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>About — AI Expert Toolkit</title>
-  <meta name="description" content="What AI Expert Toolkit is, our mission, and exactly how we evaluate tools. Research-based today, hands-on badges rolling out." />
-  <link rel="canonical" href="https://aiexperttoolkit.github.io/aiexperttoolkit/about.html" />
+---
+layout: default
+title: About AI Expert Toolkit
+description: We test, compare, and explain AI tools so you pick the right one faster—with clear pros/cons, pricing, and step‑by‑step guides.
+permalink: /about.html
+og_image: {{ site.baseurl }}/assets/img/og-default.jpg
+---
 
-  <!-- Site CSS -->
-  <link rel="stylesheet" href="assets/css/base.css?v=12" />
+<style>
+  .about-hero{border-radius:16px;background:linear-gradient(135deg,#0F172A 0%,#123044 100%);
+    padding:clamp(18px,3vw,26px);margin:clamp(12px,2vw,18px) 0;border:1px solid rgba(255,255,255,.06)}
+  .cols{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+  .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px}
+  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+  .kpi .card h3{margin:0;font-size:1.6rem}
+  .list{margin:8px 0 0 1.1rem}
+  @media (max-width:900px){.cols{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}}
+</style>
 
-  <!-- Inline safety (removed on load) -->
-  <style id="sanity-check">body{background:#0b0d12;color:#e7e0f3;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif}</style>
+<section class="about-hero">
+  <div class="wrap">
+    <h1 style="margin:.2rem 0 .3rem 0;font-size:clamp(1.9rem,3.2vw,2.4rem)">About AI Expert Toolkit</h1>
+    <p class="muted">We’re a small, focused team that reviews, compares, and explains AI tools—so you can pick the right one, first try.</p>
+  </div>
+</section>
 
-  <!-- Page-local polish -->
-  <style>
-    .mini{color:var(--muted);font-size:.95rem}
-    .pill{display:inline-block;padding:.2rem .55rem;border:1px solid var(--hair-2);border-radius:999px;color:var(--muted);font-weight:600}
-    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-    .legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin-top:.5rem}
-    .legend .card{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:.75rem}
-    .steps{counter-reset: s}
-    .steps .pick h3::before{counter-increment:s;content: counter(s) ") ";opacity:.85}
-    @media (max-width: 840px){
-      .grid-2,.legend{grid-template-columns:minmax(0,1fr)}
-    }
-  </style>
+<section class="section">
+  <div class="wrap cols">
+    <article class="card">
+      <h2>What we do</h2>
+      <p>AI moves fast. We make it practical. Every review and comparison follows a consistent test plan:
+      same prompts, same tasks, and honest commentary on output quality, speed, and cost.</p>
 
-  <!-- OG -->
-  <meta property="og:title" content="About — AI Expert Toolkit" />
-  <meta property="og:description" content="Mission and methodology: how we evaluate AI tools and keep recommendations practical and fair." />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://aiexperttoolkit.github.io/aiexperttoolkit/about.html" />
+      <h3>Our review framework</h3>
+      <ul class="list">
+        <li><strong>Hands‑on tests:</strong> We recreate common workflows (blog drafts, image sets, video explainers, briefs).</li>
+        <li><strong>Comparable prompts:</strong> Side‑by‑side inputs to highlight strengths and limitations.</li>
+        <li><strong>Real pricing math:</strong> We model monthly spend for solo, team, and scale use.</li>
+        <li><strong>Ranked takeaways:</strong> Clear “best for” scenarios—not one‑size‑fits‑all advice.</li>
+      </ul>
 
-  <!-- JSON-LD (AboutPage helps search clarity) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "About — AI Expert Toolkit",
-    "url": "https://aiexperttoolkit.github.io/aiexperttoolkit/about.html",
-    "description": "Mission and methodology for AI Expert Toolkit, including research-based and hands-on testing badges."
-  }
-  </script>
-</head>
+      <h3>Who we help</h3>
+      <ul class="list">
+        <li>Entrepreneurs and small teams choosing their first stack</li>
+        <li>Marketers and creators looking for speed + consistency</li>
+        <li>Operators who need automation without technical debt</li>
+      </ul>
 
-<body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="nav">
-      <a class="brand" href="index.html">
-        <span class="brand-mark" aria-hidden="true">AETK</span>
-        <span class="brand-text">AI Expert Toolkit</span>
-      </a>
+      <p>Start with our <a href="{{ site.baseurl }}/comparisons.html">AI tool comparisons</a> or jump into deep‑dives:
+        <a href="{{ site.baseurl }}/comparisons.html#jasper">Jasper</a>,
+        <a href="{{ site.baseurl }}/comparisons.html#chatgpt">ChatGPT</a>,
+        <a href="{{ site.baseurl }}/comparisons.html#midjourney">Midjourney</a>,
+        <a href="{{ site.baseurl }}/comparisons.html#synthesia">Synthesia</a>,
+        <a href="{{ site.baseurl }}/comparisons.html#surfer">Surfer SEO</a>,
+        <a href="{{ site.baseurl }}/comparisons.html#writesonic">Writesonic</a>.
+      </p>
+    </article>
 
-      <nav class="nav-primary" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="writesonic-review.html">Writesonic Review</a>
-        <a href="comparisons.html">Comparisons</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-        <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-        <a href="about.html" aria-current="page">About</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+    <aside class="card">
+      <h2>Our principles</h2>
+      <ul class="list">
+        <li><strong>Trust first:</strong> No hype, no pay‑to‑win rankings.</li>
+        <li><strong>Clarity:</strong> Plain‑English verdicts, screenshots, and steps.</li>
+        <li><strong>Speed:</strong> We favor tools and setups that save you time.</li>
+      </ul>
 
-      <div class="nav-cta">
-        <a class="btn btn-ghost"
-           href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=nav-cta"
-           target="_blank" rel="sponsored noopener">Try Writesonic</a>
+      <h3 style="margin-top:12px">At‑a‑glance</h3>
+      <div class="kpi">
+        <div class="card"><h3>6</h3><p class="muted">Core categories</p></div>
+        <div class="card"><h3>30+</h3><p class="muted">In‑depth guides</p></div>
+        <div class="card"><h3>50+</h3><p class="muted">Tools tracked</p></div>
       </div>
+    </aside>
+  </div>
+</section>
 
-      <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu">
-        <span class="nav-toggle-bar"></span>
-        <span class="sr-only">Toggle menu</span>
-      </button>
+<section class="section">
+  <div class="wrap">
+    <div class="card">
+      <h2>How we make money</h2>
+      <p class="muted">Transparency matters. Some links on our site are affiliate links—if you click and buy, we may earn a commission at no extra cost to you. We only recommend tools we’d use ourselves.</p>
+      <p>Read our <a href="{{ site.baseurl }}/disclosure.html">Affiliate Disclosure</a> and <a href="{{ site.baseurl }}/privacy.html">Privacy Policy</a> for details.</p>
     </div>
+  </div>
+</section>
 
-    <div id="mobileMenu" class="nav-drawer" hidden>
-      <a href="index.html">Home</a>
-      <a href="writesonic-review.html">Writesonic Review</a>
-      <a href="comparisons.html">Comparisons</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-      <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-      <a href="about.html" aria-current="page">About</a>
-      <a href="contact.html">Contact</a>
-      <a class="btn full" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=mobile-cta" target="_blank" rel="sponsored noopener">Try Writesonic</a>
+<section class="section" aria-label="Get in touch">
+  <div class="wrap">
+    <div class="card">
+      <h2>Contact us</h2>
+      <p>Have a tool we should test, or a question about a workflow? We’d love to hear it.</p>
+      <a class="btn" href="{{ site.baseurl }}/contact.html">Contact</a>
     </div>
-  </header>
+  </div>
+</section>
 
-  <!-- Main -->
-  <main>
-    <!-- Hero -->
-    <section class="section hero">
-      <div class="wrap">
-        <p class="eyebrow">Who we are</p>
-        <h1>About AI Expert Toolkit</h1>
-        <p class="lead">We help entrepreneurs ship faster with practical guidance on AI tools — clear picks, clean workflows, and prompts that actually work.</p>
-        <p class="mini">Last updated: <time datetime="2025-08-14">August 14, 2025</time></p>
-      </div>
-    </section>
-
-    <!-- Mission + Methodology -->
-    <section class="section">
-      <div class="wrap grid-2">
-        <article class="pick">
-          <h3>Mission</h3>
-          <p>Cut through noise and show what actually works — with realistic processes you can deploy in under an hour. We prioritize speed-to-value, clarity, and repeatability.</p>
-          <p>Our north star: <em>make it easy to start, and even easier to scale.</em></p>
-        </article>
-
-        <article class="pick">
-          <h3>Methodology</h3>
-          <p>Right now, many pages are <span class="pill">Research-based</span> (docs, changelogs, public demos, and user feedback). As we complete end-to-end runs, we add a <span class="pill">Hands-on tested</span> badge and link supporting notes.</p>
-          <p>We fund the site with affiliate links. Partners don’t review our content. See our <a href="disclosure.html">Affiliate Disclosure</a> for details.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- Badges legend -->
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">What our badges mean</h2>
-        <div class="legend">
-          <div class="card">
-            <strong class="pill">Research-based</strong>
-            <p class="mini" style="margin-top:.35rem">Coverage compiled from official docs, public demos, and credible user reports. Great for a fast overview and deciding what to try.</p>
-          </div>
-          <div class="card">
-            <strong class="pill">Hands-on tested</strong>
-            <p class="mini" style="margin-top:.35rem">We ran the workflow end-to-end, documented prompts/settings, and compared output against realistic acceptance criteria.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How we evaluate -->
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">How we evaluate a tool</h2>
-        <div class="steps stack">
-          <article class="pick">
-            <h3>Define the job to be done</h3>
-            <p>We scope a concrete outcome (e.g., “20 PDPs with bullets, descriptions, and alt text”) and list non-negotiables like tone, accuracy, and safe claims.</p>
-          </article>
-          <article class="pick">
-            <h3>Set baseline prompts & inputs</h3>
-            <p>We use short, reusable prompts + a one-page voice guide and a basic intake (specs, audience, claims to avoid, competitors) to mimic real client work.</p>
-          </article>
-          <article class="pick">
-            <h3>Run and record</h3>
-            <p>We capture steps, settings, and time-to-result. We log any post-edits needed and note friction (rate limits, confusing UI, hallucinations).</p>
-          </article>
-          <article class="pick">
-            <h3>Score what matters</h3>
-            <p>We score clarity, speed, consistency (voice/style), and risk controls. If a tool wins on a niche job (e.g., Amazon bullets), we’ll call that out.</p>
-          </article>
-          <article class="pick">
-            <h3>Publish practical takeaways</h3>
-            <p>We share prompts, checklists, and package ideas so you can ship this week — not after a course.</p>
-          </article>
-        </div>
-
-        <div class="pick" style="margin-top:1rem">
-          <h3>Editorial independence</h3>
-          <p>Vendors don’t approve our content. If we use affiliate links, it’s clearly disclosed, and there’s no extra cost to you. More in our <a href="disclosure.html">disclosure</a>.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact / CTA -->
-    <section class="section">
-      <div class="wrap">
-        <h2 class="section-title">Contact & suggestions</h2>
-        <p>Have a correction, request, or a tool we should test next? <a href="contact.html">Contact us</a> — we read every note.</p>
-
-        <div class="btn-row" style="margin-top:.75rem">
-          <a class="btn" href="https://writesonic.com?via=AIExpertToolkit&utm_source=aetk&utm_medium=site&utm_campaign=cta&utm_content=about-cta" target="_blank" rel="sponsored noopener">Try Writesonic</a>
-          <a class="btn btn-ghost" href="comparisons.html">See comparisons</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="wrap footer-inner">
-      <div class="footer-left">
-        <div class="brand">
-          <span class="brand-mark" aria-hidden="true">AETK</span>
-          <span class="brand-text">AI Expert Toolkit</span>
-        </div>
-        <p class="copyright">© 2025 AI Expert Toolkit. All rights reserved.</p>
-      </div>
-
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="writesonic-review.html">Writesonic Review</a>
-        <a href="comparisons.html">Comparisons</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="disclosure.html">Disclosure</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </footer>
-
-  <!-- Mobile drawer JS + remove inline safety style -->
-  <script>
-    const toggle = document.querySelector('.nav-toggle');
-    const drawer = document.getElementById('mobileMenu');
-    if (toggle && drawer) {
-      toggle.addEventListener('click', () => {
-        const open = toggle.getAttribute('aria-expanded') === 'true';
-        toggle.setAttribute('aria-expanded', String(!open));
-        drawer.hidden = open;
-        document.body.classList.toggle('no-scroll', !open);
-      });
-      const mq = window.matchMedia('(min-width: 981px)');
-      mq.addEventListener?.('change', e => {
-        if (e.matches) { toggle.setAttribute('aria-expanded','false'); drawer.hidden = true; document.body.classList.remove('no-scroll'); }
-      });
-    }
-    window.addEventListener('load', () => {
-      const sc = document.getElementById('sanity-check');
-      if (sc && sc.parentNode) sc.parentNode.removeChild(sc);
-    });
-  </script>
-</body>
-</html>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"AI Expert Toolkit",
+  "url":"{{ site.url }}{{ site.baseurl }}/",
+  "sameAs": [],
+  "logo":"{{ site.url }}{{ site.baseurl }}/assets/img/og-default.jpg"
+}
+</script>
