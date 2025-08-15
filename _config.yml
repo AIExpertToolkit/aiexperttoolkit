@@ -1,6 +1,12 @@
 title: AI Expert Toolkit
+description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
 url: https://aiexperttoolkit.github.io
 baseurl: /aiexperttoolkit
-plugins:
-  - jekyll-sitemap
-  - jekyll-seo-tag
+permalink: /:title.html
+markdown: kramdown
+exclude:
+  - README.md
+  - SITE_STATE.md
+  - manifest.json
+  - node_modules
+  - vendor
