@@ -3,18 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{% if page.title %}{{ page.title }} | {% endif %}AI Expert Toolkit</title>
+  <meta name="format-detection" content="telephone=no" />
+  <title>{% if page.title %}{{ page.title | escape }} | {% endif %}AI Expert Toolkit</title>
 
   {%- assign meta_desc = page.description | default: site.description -%}
   {%- if meta_desc -%}<meta name="description" content="{{ meta_desc | escape }}">{%- endif -%}
 
-  <!-- Robots: allow per-page override; include large previews for Discover -->
-  <meta name="robots" content="{% if page.noindex %}noindex, nofollow{% else %}index, follow, max-image-preview:large{% endif %}">
+  <!-- Robots: per-page override + rich previews -->
+  <meta name="robots" content="{% if page.noindex %}noindex, nofollow{% else %}index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1{% endif %}">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="theme-color" content="#0b1220">
+
+  <!-- Theme color (dark/light) -->
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b1220">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
   <meta name="color-scheme" content="dark light">
 
-  {%- comment -%} Canonical URL: page.canonical_url wins; else site.url + site.baseurl + page.url {%- endcomment -%}
   {%- if page.canonical_url and page.canonical_url != '' -%}
     {%- assign canonical = page.canonical_url -%}
   {%- else -%}
@@ -22,7 +25,13 @@
   {%- endif -%}
   <link rel="canonical" href="{{ canonical }}">
 
-  <!-- Optional: preconnect to vendor domains (set page.preconnect_domains: ['https://writesonic.com']) -->
+  {%- if page.alternates and page.alternates.size > 0 -%}
+    {%- for alt in page.alternates -%}
+      <link rel="alternate" hreflang="{{ alt.lang | escape }}" href="{{ alt.url | escape }}">
+    {%- endfor -%}
+  {%- endif -%}
+
+  <!-- Optional: preconnect to vendor domains (set `preconnect_domains:` in front matter) -->
   {%- if page.preconnect_domains -%}
     {%- for d in page.preconnect_domains -%}
       <link rel="dns-prefetch" href="{{ d | replace: 'https://','//' | replace: 'http://','//' }}">
@@ -30,21 +39,35 @@
     {%- endfor -%}
   {%- endif -%}
 
-  <!-- Optional: LCP hero image preload & priority (set page.lcp_image:'/assets/img/home/hero-1200.jpg') -->
+  <!-- Optional: LCP hero image preload (set `lcp_image:` in front matter) -->
   {%- if page.lcp_image and page.lcp_image != '' -%}
     {%- assign lcp_abs = site.url | append: site.baseurl | append: page.lcp_image -%}
     <link rel="preload" as="image" href="{{ lcp_abs }}" fetchpriority="high">
   {%- endif -%}
 
-  <!-- Open Graph / Twitter -->
+  {%- assign ogtype = 'website' -%}
+  {%- if page.og_type and page.og_type != '' -%}
+    {%- assign ogtype = page.og_type -%}
+  {%- elsif page.article or page.layout == 'post' -%}
+    {%- assign ogtype = 'article' -%}
+  {%- endif -%}
   <meta property="og:site_name" content="AI Expert Toolkit">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="{% if page.title %}{{ page.title }} | {% endif %}AI Expert Toolkit">
+  <meta property="og:type" content="{{ ogtype }}">
+  <meta property="og:title" content="{% if page.title %}{{ page.title | escape }} | {% endif %}AI Expert Toolkit">
   {%- if meta_desc -%}<meta property="og:description" content="{{ meta_desc | escape }}">{%- endif -%}
   <meta property="og:url" content="{{ canonical }}">
   <meta property="og:locale" content="{{ page.og_locale | default: 'en_US' }}">
 
-  {%- comment -%} OG image (supports relative/absolute), width/height/alt {%- endcomment -%}
+  {%- if ogtype == 'article' -%}
+    {%- if page.date -%}<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">{%- endif -%}
+    {%- if page.last_modified_at -%}<meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">{%- endif -%}
+    {%- if page.author -%}<meta property="article:author" content="{{ page.author | escape }}">{%- endif -%}
+    {%- if page.section -%}<meta property="article:section" content="{{ page.section | escape }}">{%- endif -%}
+    {%- if page.tags and page.tags.size > 0 -%}
+      {%- for tag in page.tags -%}<meta property="article:tag" content="{{ tag | escape }}">{%- endfor -%}
+    {%- endif -%}
+  {%- endif -%}
+
   {%- assign ogimg = page.og_image | default: site.og_image -%}
   {%- if ogimg and ogimg != '' -%}
     {%- if ogimg contains '://' -%}{%- assign ogimg_abs = ogimg -%}{%- else -%}{%- assign ogimg_abs = site.url | append: site.baseurl | append: ogimg -%}{%- endif -%}
@@ -56,14 +79,22 @@
   {%- else -%}
     <meta name="twitter:card" content="summary">
   {%- endif -%}
+  {%- if site.twitter_username and site.twitter_username != '' -%}
+    <meta name="twitter:site" content="@{{ site.twitter_username | replace: '@','' }}">
+  {%- endif -%}
 
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css">
 
-  <!-- Icons / Manifest (optional) -->
+  <!-- Icons / Manifest -->
   <link rel="icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" type="image/svg+xml">
   {%- if site.manifest and site.manifest != '' -%}<link rel="manifest" href="{{ site.baseurl }}{{ site.manifest }}">{%- endif -%}
   {%- if site.feed_path and site.feed_path != '' -%}<link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }}" href="{{ site.baseurl }}{{ site.feed_path }}">{%- endif -%}
+
+  <!-- Search console verifications (optional) -->
+  {%- if site.verification and site.verification.google -%}<meta name="google-site-verification" content="{{ site.verification.google | escape }}">{%- endif -%}
+  {%- if site.verification and site.verification.bing -%}<meta name="msvalidate.01" content="{{ site.verification.bing | escape }}">{%- endif -%}
+  {%- if site.verification and site.verification.pinterest -%}<meta name="p:domain_verify" content="{{ site.verification.pinterest | escape }}">{%- endif -%}
 
   <!-- GTM/GA resource hints when enabled -->
   {%- if site.analytics.gtm and site.analytics.gtm != '' -%}
@@ -92,7 +123,7 @@
   </script>
   {%- endif -%}
 
-  <!-- Organization schema (adds social sameAs if provided) -->
+  <!-- Organization schema -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -104,7 +135,22 @@
   }
   </script>
 
-  {%- comment -%} Optional page-level BreadcrumbList (set `breadcrumbs:` array in front matter) {%- endcomment -%}
+  {%- if site.enable_sitelinks_searchbox -%}
+    {%- assign sitehost = site.url | replace: 'https://','' | replace: 'http://','' -%}
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "url":"{{ site.url }}",
+      "potentialAction":{
+        "@type":"SearchAction",
+        "target":"https://www.google.com/search?q=site:{{ sitehost | escape }}+{search_term_string}",
+        "query-input":"required name=search_term_string"
+      }
+    }
+    </script>
+  {%- endif -%}
+
   {%- if page.breadcrumbs -%}
   <script type="application/ld+json">
   {
@@ -119,7 +165,6 @@
   </script>
   {%- endif -%}
 
-  {%- comment -%} Optional per-page schema: put a YAML object `schema:` in front matter {%- endcomment -%}
   {%- if page.schema -%}
   <script type="application/ld+json">
     {{ page.schema | jsonify }}
