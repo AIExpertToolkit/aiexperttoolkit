@@ -1,75 +1,10 @@
-<header class="site-header">
-  <div class="nav">
-    <!-- Brand -->
-    <a class="brand" href="{{ site.baseurl }}/" aria-label="AI Expert Toolkit — Home">
-      <span class="brand-mark" aria-hidden="true">AETK</span>
-      <span class="brand-text">AI Expert Toolkit</span>
-    </a>
-
-    <!-- Primary nav -->
-    <nav class="nav-primary" aria-label="Primary">
-      <a href="{{ site.baseurl }}/"
-         {% if page.url == '/' or page.url == '/index.html' %}aria-current="page"{% endif %}>Home</a>
-
-      <a href="{{ site.baseurl }}/writesonic-review.html"
-         {% if page.url == '/writesonic-review.html' %}aria-current="page"{% endif %}>Writesonic Review</a>
-
-      <a href="{{ site.baseurl }}/comparisons.html"
-         {% if page.url == '/comparisons.html' %}aria-current="page"{% endif %}>Comparisons</a>
-
-      <a href="{{ site.baseurl }}/pricing.html"
-         {% if page.url == '/pricing.html' %}aria-current="page"{% endif %}>Pricing</a>
-
-      <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-      <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-
-      <!-- Use local About/Contact pages for credibility & approval -->
-      <a href="{{ site.baseurl }}/about.html"
-         {% if page.url == '/about.html' %}aria-current="page"{% endif %}>About</a>
-
-      <a href="{{ site.baseurl }}/contact.html"
-         {% if page.url == '/contact.html' %}aria-current="page"{% endif %}>Contact</a>
+<header class="site-header" role="banner">
+  <div class="wrap">
+    <a class="brand" href="{{ site.baseurl }}/">AI Expert Toolkit</a>
+    <nav aria-label="Primary">
+      <a href="{{ site.baseurl }}/comparisons.html">Comparisons</a>
+      <a href="{{ site.baseurl }}/about.html">About</a>
+      <a href="{{ site.baseurl }}/contact.html">Contact</a>
     </nav>
-
-    <!-- Header CTA (affiliate-safe) -->
-    <div class="nav-cta">
-      <a class="btn btn-ghost"
-         href="{% include aff_url.html name='writesonic' content='nav-cta' %}"
-         target="_blank" rel="sponsored noopener">Try Writesonic</a>
-    </div>
-
-    <!-- Mobile toggle -->
-    <button class="nav-toggle" aria-expanded="false" aria-controls="mobileMenu">
-      <span class="nav-toggle-bar"></span>
-      <span class="sr-only">Toggle menu</span>
-    </button>
-  </div>
-
-  <!-- Mobile drawer -->
-  <div id="mobileMenu" class="nav-drawer" hidden>
-    <a href="{{ site.baseurl }}/"
-       {% if page.url == '/' or page.url == '/index.html' %}aria-current="page"{% endif %}>Home</a>
-
-    <a href="{{ site.baseurl }}/writesonic-review.html"
-       {% if page.url == '/writesonic-review.html' %}aria-current="page"{% endif %}>Writesonic Review</a>
-
-    <a href="{{ site.baseurl }}/comparisons.html"
-       {% if page.url == '/comparisons.html' %}aria-current="page"{% endif %}>Comparisons</a>
-
-    <a href="{{ site.baseurl }}/pricing.html"
-       {% if page.url == '/pricing.html' %}aria-current="page"{% endif %}>Pricing</a>
-
-    <a href="https://aiexperttoolkit.com/blog" target="_blank" rel="noopener">Blog</a>
-    <a href="https://aiexperttoolkit.com/category/guides/" target="_blank" rel="noopener">Guides</a>
-
-    <a href="{{ site.baseurl }}/about.html"
-       {% if page.url == '/about.html' %}aria-current="page"{% endif %}>About</a>
-
-    <a href="{{ site.baseurl }}/contact.html"
-       {% if page.url == '/contact.html' %}aria-current="page"{% endif %}>Contact</a>
-
-    <a class="btn full"
-       href="{% include aff_url.html name='writesonic' content='mobile-cta' %}"
-       target="_blank" rel="sponsored noopener">Try Writesonic</a>
   </div>
 </header>
