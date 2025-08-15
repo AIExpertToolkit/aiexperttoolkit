@@ -1,0 +1,181 @@
+=== BEGIN _config.yml ===
+title: AI Expert Toolkit
+description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
+url: https://aiexperttoolkit.github.io
+baseurl: /aiexperttoolkit
+permalink: /:title.html
+markdown: kramdown
+exclude:
+  - README.md
+  - SITE_STATE.md
+  - manifest.json
+  - node_modules
+  - vendor
+
+=== END _config.yml ===
+
+=== BEGIN _layouts\default.html ===
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if page.title %}{{ page.title }} | {% endif %}AI Expert Toolkit</title>
+
+  <!-- CSS (prefix with baseurl) -->
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css">
+
+  <!-- Optional: favicon/logo -->
+  <link rel="icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  {% include header.html %}
+  <main class="wrap">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+</body>
+</html>
+
+=== END _layouts\default.html ===
+
+=== BEGIN _includes\header.html ===
+<nav class="site-nav">
+  <a class="brand" href="{{ site.baseurl }}/">AI Expert Toolkit</a>
+  <a href="{{ site.baseurl }}/writesonic-review.html">Writesonic Review</a>
+  <a href="{{ site.baseurl }}/comparisons.html">Comparisons</a>
+  <a href="{{ site.baseurl }}/pricing.html">Pricing</a>
+  <a href="{{ site.baseurl }}/blog.html">Blog</a>
+  <a href="{{ site.baseurl }}/guides.html">Guides</a>
+  <a href="{{ site.baseurl }}/about.html">About</a>
+  <a href="{{ site.baseurl }}/contact.html">Contact</a>
+</nav>
+
+=== END _includes\header.html ===
+
+=== BEGIN assets\css\base.css ===
+:root{
+  --bg:#0b1220; --panel:#0f172a; --ink:#e6f1ff; --muted:#9fb6d1;
+  --accent:#22d3ee; --accent-2:#0ea5e9; --ring:rgba(34,211,238,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 ui-sans-serif,system-ui,Segoe UI,Arial}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1100px;margin:auto;padding:18px}
+.site-header{background:#0d1528;border-bottom:1px solid rgba(255,255,255,.06)}
+.site-header .wrap{display:flex;gap:14px;align-items:center;justify-content:space-between}
+.brand{font-weight:700;color:#fff}
+nav a{margin-left:14px;color:#cfe9ff}
+.site-footer{border-top:1px solid rgba(255,255,255,.06);margin-top:40px}
+.section{padding-block:min(6vw,56px)}
+.btn{display:inline-block;background:var(--accent);color:#072635;padding:.8rem 1.1rem;border-radius:10px;font-weight:600;text-decoration:none}
+.btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.muted{color:var(--muted)}
+/* Cards / grids */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px}
+.card img{max-width:100%;height:auto;border-radius:12px}
+/* Hero */
+.hero{border-radius:18px;overflow:hidden;margin-block:clamp(12px,2vw,18px);color:#fff;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(63,255,172,.10), transparent),
+    linear-gradient(135deg,#0F172A 0%, #114b5e 100%);}
+.hero .wrap{display:grid;gap:22px;grid-template-columns:1.1fr .9fr;align-items:center}
+.badge{display:inline-block;font-size:.85rem;padding:.4rem .6rem;border-radius:999px;background:rgba(63,255,172,.14);
+  color:#A7F3D0;border:1px solid rgba(63,255,172,.35)}
+.hero-media{border-radius:16px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.18)}
+.hero-16x9{width:100%;padding-top:56.25%;background-position:center;background-size:cover}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+}
+/* --- a11y & header polish --- */
+.skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip:focus{left:12px;top:12px;width:auto;height:auto;background:#fff;color:#000;padding:.4rem .6rem;border-radius:8px}
+.header-row{display:flex;align-items:center;justify-content:space-between}
+.primary-nav a[aria-current="page"]{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.site-footer nav a{margin-right:12px;color:#cfe9ff}
+
+=== END assets\css\base.css ===
+
+=== BEGIN index.html ===
+---
+layout: default
+title: Master the Best AI Tools of 2025
+description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
+permalink: /
+---
+
+<style>
+/* Page-scoped tweaks only */
+.hero {
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(63,255,172,.10), transparent),
+    linear-gradient(135deg,#0F172A 0%, #114b5e 100%),
+    url('{{ site.baseurl }}/assets/img/home/hero-1920.jpg');
+  background-size: cover;
+  background-position: center;
+}
+</style>
+
+<section class="hero section" aria-label="AI Expert Toolkit hero">
+  <div class="wrap">
+    <div>
+      <span class="badge">Your Shortcut to the Best AI Tools</span>
+      <h1 style="margin:.2rem 0 .6rem 0;font-size:clamp(2.2rem,4vw,3rem)">Master the Best AI Tools of 2025</h1>
+      <p class="muted">Expert reviews, comparisons, and easy‑to‑follow tutorials — choose the right AI faster and work smarter.</p>
+      <a class="btn" href="{{ site.baseurl }}/comparisons.html">See Our Top Picks</a>
+    </div>
+
+    <figure class="hero-media" style="margin:0" aria-hidden="true">
+      <picture>
+        <source type="image/jpeg" 
+          srcset="{{ site.baseurl }}/assets/img/home/hero-480.jpg 480w,
+                  {{ site.baseurl }}/assets/img/home/hero-640.jpg 640w,
+                  {{ site.baseurl }}/assets/img/home/hero-768.jpg 768w,
+                  {{ site.baseurl }}/assets/img/home/hero-960.jpg 960w,
+                  {{ site.baseurl }}/assets/img/home/hero-1200.jpg 1200w,
+                  {{ site.baseurl }}/assets/img/home/hero-1366.jpg 1366w,
+                  {{ site.baseurl }}/assets/img/home/hero-1600.jpg 1600w,
+                  {{ site.baseurl }}/assets/img/home/hero-1920.jpg 1920w">
+        <img src="{{ site.baseurl }}/assets/img/home/hero-1200.jpg" alt="" width="1200" height="675" loading="eager" style="width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;">
+      </picture>
+    </figure>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="why">
+  <div class="wrap">
+    <h2 id="why">Why AI Expert Toolkit?</h2>
+    <p>We cut through the hype with <strong>hands‑on reviews</strong>, <strong>side‑by‑side comparisons</strong>,
+      and <strong>step‑by‑step guides</strong>. Our mission: help you pick the right AI without wasting time or money.</p>
+
+    <div class="grid-3" style="margin-top:14px">
+      <article class="card">
+        <h3>Hands‑on Reviews</h3>
+        <p class="muted">We run the same tasks across tools and share real outputs.</p>
+      </article>
+      <article class="card">
+        <h3>Comparisons</h3>
+        <p class="muted">Clear pros/cons, pricing, and best use‑cases.</p>
+      </article>
+      <article class="card">
+        <h3>Tutorials</h3>
+        <p class="muted">Follow our blueprints to deploy AI in hours, not weeks.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-label="Call to action">
+  <div class="wrap">
+    <h2>Start Exploring the Best AI Tools Today</h2>
+    <p class="muted">See which tools are worth your time (and which to skip).</p>
+    <a class="btn" href="{{ site.baseurl }}/comparisons.html">See the Best AI Tools for 2025</a>
+  </div>
+</section>
+
+=== END index.html ===
+
+=== END SYNC PAYLOAD ===

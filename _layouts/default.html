@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% if page.title %}{{ page.title }} | {% endif %}AI Expert Toolkit</title>
-
-  <!-- CSS (prefix with baseurl) -->
+  {% assign meta_desc = page.description | default: site.description %}
+  {% if meta_desc %}<meta name="description" content="{{ meta_desc | escape }}">{% endif %}
+  <link rel="canonical" href="{{ site.url }}{{ site.baseurl }}{{ page.url | default: page.permalink }}">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css">
-
-  <!-- Optional: favicon/logo -->
   <link rel="icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" type="image/svg+xml">
 </head>
 <body>
+  <a class="skip" href="#content">Skip to content</a>
   {% include header.html %}
-  <main class="wrap">
+  <main id="content" class="wrap">
     {{ content }}
   </main>
   {% include footer.html %}
