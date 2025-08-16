@@ -1,9 +1,6 @@
 @echo off
-setlocal ENABLEDELAYEDEXPANSION
-chcp 65001 >nul
-
+setlocal
 REM AETK — One-click full repo zip for ChatGPT analysis (excludes .git, _site, node_modules, vendor, .cache)
-REM Usage: double-click this file, or run from Command Prompt at the repo root.
 
 REM Resolve repo root to this script’s folder
 set "ROOT=%~dp0"
@@ -17,27 +14,25 @@ REM Timestamp (yyyyMMdd-HHmmss)
 for /f %%t in ('powershell -NoProfile -Command "(Get-Date).ToString(\"yyyyMMdd-HHmmss\")"') do set "TS=%%t"
 
 set "ZIP=%EXPORT%\AETK-%TS%.zip"
-
 echo Creating: "%ZIP%"
-REM Use PowerShell to gather files and compress with excludes
-powershell -NoProfile -Command ^
+
+REM Create the zip using a single-line PowerShell call (no line continuations)
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "$r='%ROOT%'.TrimEnd('\'); $z='%ZIP%';" ^
   "if (Test-Path $z) { Remove-Item $z -Force };" ^
   "$items = Get-ChildItem -LiteralPath $r -Recurse -Force | Where-Object { $_.FullName -notmatch '\\\.git\\|\\node_modules\\|\\vendor\\|\\_site\\|\\\.cache\\' };" ^
-  "$paths = $items | Select-Object -ExpandProperty FullName;" ^
-  "if($paths.Count -eq 0){ throw 'No files found to zip' };" ^
-  "Compress-Archive -Path $paths -DestinationPath $z -Force"
+  "if (-not $items -or $items.Count -eq 0) { throw 'No files found to zip' };" ^
+  "Compress-Archive -Path ($items | Select-Object -ExpandProperty FullName) -DestinationPath $z -Force"
 
-if exist "%ZIP%" (
-  echo Created: "%ZIP%"
-  powershell -NoProfile -Command "Set-Clipboard -Value '%ZIP%'; Start-Process explorer.exe '%EXPORT%';"
-  echo.
-  echo ✅ Zip path copied to clipboard. Drag-and-drop it into ChatGPT.
-  echo    (If Explorer opened, the newest zip is already selected.)
-  exit /b 0
-) else (
-  echo [X] Failed to create zip at "%ZIP%"
+if not exist "%ZIP%" (
+  echo [X] Failed to create zip.
   exit /b 1
 )
 
-endlocal
+REM Copy path to clipboard and open folder (done separately to avoid quotes/escaping issues)
+powershell -NoProfile -Command "Set-Clipboard -Value '%ZIP%'"
+start "" "%EXPORT%"
+
+echo Created: "%ZIP%"
+echo (Path copied to clipboard. Drag-and-drop it into this chat.)
+exit /b 0
