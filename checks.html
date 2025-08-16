@@ -42,11 +42,11 @@ noindex: true
       <li><strong>Canonical:</strong> exactly one, absolute, matches the page’s live URL.</li>
       <li><strong>Robots meta:</strong> index/follow (unless the page is intentionally <code>noindex</code> like Terms or this Checks page).</li>
       <li><strong>Breadcrumbs:</strong> visible <code>&lt;nav class="breadcrumbs"&gt;</code> and JSON-LD <code>BreadcrumbList</code>.</li>
-      <li><strong>Schema:</strong> <em>Article</em> on reviews/comparisons; <em>FAQPage</em> when FAQs exist; <em>Service</em> on consulting.</li>
+      <li><strong>Schema:</strong> <em>Article</em> on reviews/VS; <em>FAQPage</em> when FAQs exist; <em>Service</em> on <code>/consulting.html</code>.</li>
       <li><strong>GA4:</strong> a <code>gtag</code> loader or <code>googletagmanager</code> script present.</li>
       <li><strong>Affiliate CTAs:</strong> at least one link with <code>data-aff="true"</code> on relevant pages.</li>
       <li><strong>Alt text:</strong> no images missing <code>alt</code> (decorative images use <code>alt=""</code>).</li>
-      <li><strong>Image dimensions:</strong> images set <code>width</code> and <code>height</code> (helps CLS).</li>
+      <li><strong>Image dimensions:</strong> images set <code>width</code> and <code>height</code> (helps prevent CLS).</li>
       <li><strong>robots.txt / sitemap:</strong> robots lists a sitemap; sitemap parses; index URLs are reachable.</li>
     </ul>
   </section>
@@ -69,10 +69,9 @@ noindex: true
 (function(){
   // --- Config ---
   const ORIGIN = location.origin;
-  const BASEURL = "{{ site.baseurl | default: '' }}"; // usually ''
   const EXTRA_HTML_PATHS = [
     "/consulting-terms.html",  // intentionally noindexed but important
-    "/checks.html"             // this page (should be noindex)
+    "/checks.html"             // this page (noindex)
   ];
   const EXPECT_NOINDEX = new Set(["/consulting-terms.html", "/checks.html"]);
   const CONCURRENCY = 8;
@@ -80,11 +79,11 @@ noindex: true
   // Heuristics to set expectations based on path
   function guessExpect(path){
     const expect = {breadcrumbs:false, article:false, faq:false, service:false, affiliate:false, noindex: EXPECT_NOINDEX.has(path)};
-    if (path === "/" || /index\.html$/.test(path)) { /* homepage */ }
-    if (/comparisons/i.test(path)) expect.breadcrumbs = true;
-    if (/review|vs|comparison/i.test(path)) { expect.breadcrumbs = true; expect.article = true; }
+    // Homepage: nothing special by default
+    if (/comparisons\.html$/i.test(path)) expect.breadcrumbs = true; // index page (no Article expected)
+    if (/review|vs/i.test(path)) { expect.breadcrumbs = true; expect.article = true; } // money pages
     if (/faq|review|vs|writesonic/i.test(path)) expect.faq = true;
-    if (/consulting/i.test(path)) { expect.breadcrumbs = true; expect.service = true; }
+    if (path === "/consulting.html") { expect.breadcrumbs = true; expect.service = true; }
     if (/writesonic|review|vs/i.test(path)) expect.affiliate = true;
     return expect;
   }
@@ -178,7 +177,7 @@ noindex: true
     addRow(fullURL, 'HTTP status', res.ok?'OK':'FAIL', `status ${res.status}`);
     if(!res.ok) return;
 
-    const absolute = res.url; // follows redirects if any
+    const absolute = res.url; // final URL after any redirects
     const text = await res.text();
     const doc = new DOMParser().parseFromString(text, 'text/html');
 
@@ -236,7 +235,7 @@ noindex: true
     const { total, missingAlt, missingSize } = imgAltAudit(doc);
     addRow(fullURL, 'Images missing alt', missingAlt===0?'OK':'WARN', `${missingAlt} / ${total} missing alt`);
     addRow(fullURL, 'Images missing width/height', missingSize===0?'OK':'WARN', `${missingSize} / ${total} without w/h`);
-    
+
     // Headings sanity
     const h1s = doc.querySelectorAll('h1').length;
     addRow(fullURL, 'Single <h1>', h1s===1?'OK':'WARN', `Found ${h1s}`);
@@ -280,14 +279,14 @@ noindex: true
   function toPath(u){
     try{
       const url = new URL(u, ORIGIN);
-      // Only include same-origin URLs
-      if (url.origin !== ORIGIN) return null;
+      if (url.origin !== ORIGIN) return null; // same-origin only
       return url.pathname + (url.search||'');
     }catch(_){ return null; }
   }
 
   async function discoverPaths(){
     const paths = new Set();
+
     // Try sitemap index first
     const idx = await fetchText(ORIGIN + "/sitemap_index.xml");
     if(idx.ok && /<sitemapindex/i.test(idx.text)){
@@ -317,7 +316,6 @@ noindex: true
     // Also test robots/sitemap endpoints explicitly
     paths.add("/robots.txt"); paths.add("/sitemap.xml"); paths.add("/sitemap_index.xml");
 
-    // Normalize duplicates
     return [...paths];
   }
 
