@@ -1,23 +1,13 @@
----
-layout: null
-permalink: /sitemap.xml
----
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% assign host = site.url | append: site.baseurl %}
-  {% for page in site.pages %}
-    {% assign path = page.url | default: page.path %}
-    {% unless page.sitemap == false or page.url contains 'sitemap.xml' or page.url contains 'robots.txt' or page.url contains 'assets/' or page.name == '404.html' %}
-      <url>
-        <loc>{{ host }}{{ page.url | replace:'index.html','' }}</loc>
-        {% if page.last_modified_at %}
-          <lastmod>{{ page.last_modified_at | date_to_xmlschema }}</lastmod>
-        {% else %}
-          <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
-        {% endif %}
-        <changefreq>weekly</changefreq>
-        <priority>{% if page.url == '/' or page.url == '/aiexperttoolkit/' %}1.0{% else %}0.6{% endif %}</priority>
-      </url>
-    {% endunless %}
-  {% endfor %}
+  <url><loc>https://aiexperttoolkit.com/</loc></url>
+  <url><loc>https://aiexperttoolkit.com/comparisons.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/jasper-vs-writesonic.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/writesonic-review.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/pricing.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/about.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/contact.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/privacy.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/terms.html</loc></url>
+  <url><loc>https://aiexperttoolkit.com/disclosure.html</loc></url>
 </urlset>
