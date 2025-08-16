@@ -16,6 +16,17 @@ article: false
     <h1>Build-With-You Website Sprint</h1>
     <p class="muted">A focused, 10-business-day engagement to stand up or overhaul a Jekyll + GitHub Pages site with SEO/CWV/Accessibility baked in. We record every key step so you own the process.</p>
 
+    <nav class="onpage" aria-label="On this page">
+      <ul>
+        <li><a href="#deliverables">Deliverables</a></li>
+        <li><a href="#scope">Scope</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#why-us">Why us</a></li>
+        <li><a href="#faqs">FAQs</a></li>
+      </ul>
+    </nav>
+
     <div class="kpis">
       <div class="kpi"><strong>10 days</strong><br>time-boxed sprint</div>
       <div class="kpi"><strong>Proof-of-build</strong><br>SOPs + recordings</div>
@@ -23,11 +34,19 @@ article: false
     </div>
 
     <p class="cta-row">
-      <a class="btn" data-service="consult" data-plan="sprint" href="{{ site.baseurl }}/contact.html?topic=consult">Book a consult →</a>
+      <a class="btn" data-service="consult" data-plan="sprint"
+         href="{{ site.baseurl }}/contact.html?topic=consult"
+         aria-label="Book a consult to discuss the Build-With-You Website Sprint">
+        Book a consult →
+      </a>
       <a class="btn btn-ghost" href="{{ site.baseurl }}/consulting-terms.html" rel="noopener">Read the terms</a>
+      {% if site.email %}
+        <a class="btn btn-ghost" href="mailto:{{ site.email }}?subject=Build-With-You%20Website%20Sprint%20inquiry"
+           rel="noopener">Email us</a>
+      {% endif %}
     </p>
 
-    <div class="notice" role="note" aria-label="Assurance">
+    <div class="notice" role="note" aria-label="Assurance" id="guarantee">
       <strong>Guarantee:</strong> if we don’t launch within the 10-day window for reasons in our control, we continue at no additional cost until live and refund $500. <a href="{{ site.baseurl }}/consulting-terms.html#guarantee">Details</a>.
     </div>
   </header>
@@ -37,7 +56,7 @@ article: false
     <ul class="checks">
       <li>Production Jekyll site on GitHub Pages (custom domain, DNS, CNAME).</li>
       <li>SEO hygiene: single canonical, robots, sitemaps; Organization/WebSite/Article/Breadcrumb structured data.</li>
-      <li>Core Web Vitals pass targets on home + one money page (Perf & AX ≥ 95 in Lighthouse, CLS &lt; 0.02).* </li>
+      <li>Core Web Vitals pass targets on home + one money page (Perf & AX ≥ 95 in Lighthouse, CLS &lt; 0.02).*</li>
       <li>Accessibility (WCAG 2.1 AA): skip links, landmarks, focus states, color contrast, alt text audit.</li>
       <li>Monetization readiness: affiliate link hygiene (rel, UTM), GA4 event logging (<code>click_affiliate</code>, <code>click_nav</code>, <code>click_consult</code>), CRO CTAs.</li>
       <li>Content scaffolds: comparison, review, pricing templates; breadcrumbs; ToC; FAQ schema.</li>
@@ -95,7 +114,10 @@ article: false
           <li>30-day post-launch async support</li>
         </ul>
         <p class="muted small">50% due at kickoff, 50% at launch. Invoicing via Stripe/ACH. Refund terms in <a href="{{ site.baseurl }}/consulting-terms.html#guarantee">Guarantee</a>.</p>
-        <p><a class="btn" data-service="consult" data-plan="sprint" href="{{ site.baseurl }}/contact.html?topic=consult">Book a consult →</a></p>
+        <p>
+          <a class="btn" data-service="consult" data-plan="sprint"
+             href="{{ site.baseurl }}/contact.html?topic=consult">Book a consult →</a>
+        </p>
       </article>
 
       <article class="plan">
@@ -183,9 +205,24 @@ article: false
   "areaServed":"Global",
   "termsOfService":"{{ '/consulting-terms.html' | absolute_url }}",
   "offers":[
-    {"@type":"Offer","priceCurrency":"USD","price":"4800","name":"Build-With-You Sprint"},
-    {"@type":"Offer","priceCurrency":"USD","price":"7900","name":"Build-For-You (+DWY)"},
-    {"@type":"Offer","priceCurrency":"USD","price":"1200","name":"Advisory Retainer","priceSpecification":{"@type":"UnitPriceSpecification","price":"1200","unitText":"month"}}
+    {"@type":"Offer","priceCurrency":"USD","price":"4800","name":"Build-With-You Sprint","url":"{{ '/contact.html?topic=consult' | absolute_url }}"},
+    {"@type":"Offer","priceCurrency":"USD","price":"7900","name":"Build-For-You (+DWY)","url":"{{ '/contact.html?topic=consult' | absolute_url }}"},
+    {"@type":"Offer","priceCurrency":"USD","price":"1200","name":"Advisory Retainer","priceSpecification":{"@type":"UnitPriceSpecification","price":"1200","unitText":"month"},"url":"{{ '/contact.html?topic=consult' | absolute_url }}"}
+  ]
+}
+</script>
+
+<!-- FAQPage schema (mirrors the Q&A above) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"What happens on the consult call?","acceptedAnswer":{"@type":"Answer","text":"We review goals, constraints, and pick the highest-ROI pages for the sprint. If there’s not a fit, we’ll say so."}},
+    {"@type":"Question","name":"Can you work with my existing repo/theme?","acceptedAnswer":{"@type":"Answer","text":"Yes. We prefer minimal changes and GitHub Pages-compatible plugins only."}},
+    {"@type":"Question","name":"What do you need from us?","acceptedAnswer":{"@type":"Answer","text":"Decision-maker availability for quick approvals, access to your domain DNS and GitHub repo, and initial content priorities."}},
+    {"@type":"Question","name":"How do refunds work?","acceptedAnswer":{"@type":"Answer","text":"If we miss the 10-business-day window for reasons in our control, we continue at no additional cost until live and refund $500. See the Guarantee for details."}},
+    {"@type":"Question","name":"How is privacy handled?","acceptedAnswer":{"@type":"Answer","text":"Consult bookings share only the data you provide. We do not sell or share personal information. See the Privacy Policy if available."}}
   ]
 }
 </script>
@@ -193,9 +230,7 @@ article: false
 <!-- Page-level GA4 funnel events -->
 <script>
 (function(){
-  // Count a view with explicit event for funnel clarity
   try{ if(window.gtag){ gtag('event','view_consulting',{page_location:window.location.href}); } }catch(_){}
-  // Button clicks already tracked in header/footer; double-cover here
   document.addEventListener('click', function(e){
     var el = e.target.closest('[data-service="consult"]');
     if(!el) return;
@@ -205,8 +240,11 @@ article: false
 </script>
 
 <style>
-/* Calm, trustworthy accents and spacing */
+/* Calm, trustworthy accents and spacing (page-local to avoid global bloat) */
 .eyebrow{letter-spacing:.06em;text-transform:uppercase;font-size:.86rem;color:#9fb6d1}
+.onpage ul{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;margin:.6rem 0 0;padding:0}
+.onpage a{display:inline-block;padding:.25rem .5rem;border:1px solid rgba(255,255,255,.18);border-radius:.5rem;text-decoration:none;color:#e6f1ff}
+.onpage a:hover,.onpage a:focus{outline:2px solid rgba(34,211,238,.75);outline-offset:2px}
 .cta-row{display:flex;gap:10px;flex-wrap:wrap}
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
 .kpi{border:1px solid rgba(255,255,255,.08);border-radius:.6rem;padding:.6rem;text-align:center}
@@ -228,4 +266,6 @@ article: false
 .faq dd{margin:0 0 .6rem 0;color:#c9d9ee}
 .small{font-size:.92rem}.xsmall{font-size:.82rem}
 .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.25);color:#e6f1ff}
+</style>
+255,255,.25);color:#e6f1ff}
 </style>
