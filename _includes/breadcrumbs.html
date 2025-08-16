@@ -1,0 +1,16 @@
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ site.baseurl }}/">Home</a></li>
+    {% if page.breadcrumbs and page.breadcrumbs.size > 0 %}
+      {% for crumb in page.breadcrumbs %}
+        {% if forloop.last %}
+          <li aria-current="page">{{ crumb.name }}</li>
+        {% else %}
+          <li><a href="{{ site.baseurl }}{{ crumb.url }}">{{ crumb.name }}</a></li>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li aria-current="page">{{ page.title }}</li>
+    {% endif %}
+  </ol>
+</nav>
