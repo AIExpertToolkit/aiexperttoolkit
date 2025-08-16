@@ -1,53 +1,57 @@
-# _config.yml — AI Expert Toolkit
+# ┌─────────────────────────────────────────────────────────────────┐
+# │ AI Expert Toolkit — Jekyll site config (custom domain)         │
+# └─────────────────────────────────────────────────────────────────┘
+title: AI Expert Toolkit
+description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
 
-title: "AI Expert Toolkit"
-description: "Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter."
-lang: en
+# Your live domain (apex) and no baseurl when using a custom domain
+url: https://aiexperttoolkit.com
+baseurl: "" # important: empty string
 
-# Current live host on GitHub Pages
-url: "https://aiexperttoolkit.github.io"
-baseurl: "/aiexperttoolkit"
+# Build settings
+permalink: /:title.html
+markdown: kramdown
+timezone: Etc/UTC
 
-# URLs your pages use (keeps existing pattern like /writesonic-review.html)
-permalink: "/:title.html"
-
-# Performance hints used by the layout
-preconnect_domains:
-  - https://writesonic.com
-  - https://www.googletagmanager.com
-
-# Enable the WebSite/SearchAction JSON-LD block in the layout
-enable_sitelinks_searchbox: true
-
-# Analytics (read by _layouts/default.html)
+# Analytics & verification
 analytics:
-  ga4: "G-6E56LGF5M5" # ✅ your GA4 Measurement ID
-  gtm: "" # leave empty unless you add Google Tag Manager
+  ga4: G-6E56LGF5M5 # your GA4 Measurement ID
+  gtm: "" # add later if you spin up GTM (optional)
 
-# Search Console verification (layout pulls this into a <meta> tag)
 verification:
-  google: "Q2zwZybZQFSXqMBM_ESNzndVqjHGmjyJ3l5ZLu0F2F0"
+  google: Q2zwZybZQFSXqMBM_ESNzndVqjHGmjyJ3l5ZLu0F2F0
+  bing:
+  pinterest:
 
-# Optional fields your layout will include only if present
-logo: /assets/ui/favicon.svg # placeholder until you add a proper logo
-contact_email: ""
+# Icons / manifest (optional PNGs can come later)
+logo:
+manifest:
+apple_touch_icon:
+favicon_png_32:
+favicon_png_16:
+
+# Social (optional)
 twitter_username:
 social_sameas: []
 
-# Build settings
-markdown: kramdown
-kramdown:
-  input: GFM
-timezone: UTC
+# Feature flags
+enable_sitelinks_searchbox: true
 
-# Keep the build lean
+# Preconnects (site-wide; page can override/extend)
+preconnect_domains:
+  - https://writesonic.com
+
+# Files/directories not published
 exclude:
   - README.md
   - SITE_STATE.md
+  - manifest.json
   - node_modules
   - vendor
-  - Gemfile
-  - Gemfile.lock
-  - package.json
-  - package-lock.json
-  # NOTE: Don't list manifest.json here unless you're sure you don't want a <link rel="manifest">.
+
+# Plugins (no extra gems required on GitHub Pages default)
+plugins: []
+
+# Kramdown defaults
+kramdown:
+  input: GFM
