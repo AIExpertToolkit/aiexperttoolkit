@@ -3,32 +3,22 @@ layout: default
 title: Master the Best AI Tools of 2025
 description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
 permalink: /
+lcp_image: /assets/img/home/hero-1200.jpg
+og_image: /assets/img/home/hero-1200.jpg
 ---
-
-<style>
-/* Page-scoped tweaks only */
-.hero {
-  background-image:
-    radial-gradient(1200px 600px at 80% -10%, rgba(63,255,172,.10), transparent),
-    linear-gradient(135deg,#0F172A 0%, #114b5e 100%),
-    url('{{ site.baseurl }}/assets/img/home/hero-1920.jpg');
-  background-size: cover;
-  background-position: center;
-}
-</style>
 
 <section class="hero section" aria-label="AI Expert Toolkit hero">
   <div class="wrap">
     <div>
       <span class="badge">Your Shortcut to the Best AI Tools</span>
       <h1 style="margin:.2rem 0 .6rem 0;font-size:clamp(2.2rem,4vw,3rem)">Master the Best AI Tools of 2025</h1>
-      <p class="muted">Expert reviews, comparisons, and easy‑to‑follow tutorials — choose the right AI faster and work smarter.</p>
-      <a class="btn" href="{{ site.baseurl }}/comparisons.html">See Our Top Picks</a>
+      <p class="muted">Expert reviews, comparisons, and easy-to-follow tutorials — choose the right AI faster and work smarter.</p>
+      <a class="btn" href="{{ site.baseurl }}/comparisons.html" aria-label="See our top picks">See Our Top Picks</a>
     </div>
 
     <figure class="hero-media" style="margin:0" aria-hidden="true">
       <picture>
-        <source type="image/jpeg" 
+        <source type="image/jpeg"
           srcset="{{ site.baseurl }}/assets/img/home/hero-480.jpg 480w,
                   {{ site.baseurl }}/assets/img/home/hero-640.jpg 640w,
                   {{ site.baseurl }}/assets/img/home/hero-768.jpg 768w,
@@ -37,7 +27,9 @@ permalink: /
                   {{ site.baseurl }}/assets/img/home/hero-1366.jpg 1366w,
                   {{ site.baseurl }}/assets/img/home/hero-1600.jpg 1600w,
                   {{ site.baseurl }}/assets/img/home/hero-1920.jpg 1920w">
-        <img src="{{ site.baseurl }}/assets/img/home/hero-1200.jpg" alt="" width="1200" height="675" loading="eager" style="width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;">
+        <img src="{{ site.baseurl }}/assets/img/home/hero-1200.jpg"
+             alt="" width="1200" height="675" fetchpriority="high" decoding="async" loading="eager"
+             style="width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;">
       </picture>
     </figure>
   </div>
@@ -46,30 +38,15 @@ permalink: /
 <section class="section" aria-labelledby="why">
   <div class="wrap">
     <h2 id="why">Why AI Expert Toolkit?</h2>
-    <p>We cut through the hype with <strong>hands‑on reviews</strong>, <strong>side‑by‑side comparisons</strong>,
-      and <strong>step‑by‑step guides</strong>. Our mission: help you pick the right AI without wasting time or money.</p>
+    <p>We cut through the hype with <strong>hands-on reviews</strong>, <strong>side-by-side comparisons</strong>,
+      and <strong>step-by-step guides</strong>. Our mission: help you pick the right AI without wasting time or money.</p>
 
-    <div class="grid-3" style="margin-top:14px">
-      <article class="card">
-        <h3>Hands‑on Reviews</h3>
-        <p class="muted">We run the same tasks across tools and share real outputs.</p>
-      </article>
-      <article class="card">
-        <h3>Comparisons</h3>
-        <p class="muted">Clear pros/cons, pricing, and best use‑cases.</p>
-      </article>
-      <article class="card">
-        <h3>Tutorials</h3>
-        <p class="muted">Follow our blueprints to deploy AI in hours, not weeks.</p>
-      </article>
+    <div class="grid-3" style="margin-top:1rem">
+      <div><h3>Reviews</h3><p class="muted">Clear, unbiased takes that explain who a tool is best for.</p></div>
+      <div><h3>Comparisons</h3><p class="muted">Straight answers when tools look similar but behave differently.</p></div>
+      <div><h3>Guides</h3><p class="muted">Practical tutorials to put your AI stack to work.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section" aria-label="Call to action">
-  <div class="wrap">
-    <h2>Start Exploring the Best AI Tools Today</h2>
-    <p class="muted">See which tools are worth your time (and which to skip).</p>
-    <a class="btn" href="{{ site.baseurl }}/comparisons.html">See the Best AI Tools for 2025</a>
-  </div>
-</section>
+{% include mini_cta.html cta_url="https://writesonic.com" cta_label="Try Writesonic Free →" cta_mode="both" %}

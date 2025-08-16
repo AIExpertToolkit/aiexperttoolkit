@@ -1,10 +1,10 @@
-# ┌─────────────────────────────────────────────────────────────────┐
-# │ AI Expert Toolkit — Jekyll site config (custom domain)         │
-# └─────────────────────────────────────────────────────────────────┘
+# ┌───────────────────────────────────────────────────────────────┐
+# │ AI Expert Toolkit — Jekyll site config (custom domain)       │
+# └───────────────────────────────────────────────────────────────┘
 title: AI Expert Toolkit
 description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
 
-# Your live domain (apex) and no baseurl when using a custom domain
+# Live domain and no baseurl for custom domain
 url: https://aiexperttoolkit.com
 baseurl: "" # important: empty string
 
@@ -15,15 +15,15 @@ timezone: Etc/UTC
 
 # Analytics & verification
 analytics:
-  ga4: G-6E56LGF5M5 # your GA4 Measurement ID
-  gtm: "" # add later if you spin up GTM (optional)
+  ga4: G-6E56LGF5M5
+  gtm: "" # optional later
 
 verification:
   google: Q2zwZybZQFSXqMBM_ESNzndVqjHGmjyJ3l5ZLu0F2F0
   bing:
   pinterest:
 
-# Icons / manifest (optional PNGs can come later)
+# Icons / manifest
 logo:
 manifest:
 apple_touch_icon:
@@ -37,7 +37,7 @@ social_sameas: []
 # Feature flags
 enable_sitelinks_searchbox: true
 
-# Preconnects (site-wide; page can override/extend)
+# Preconnects (page can override)
 preconnect_domains:
   - https://writesonic.com
 
@@ -49,8 +49,9 @@ exclude:
   - node_modules
   - vendor
 
-# Plugins (no extra gems required on GitHub Pages default)
-plugins: []
+# Plugins (GitHub Pages safe)
+plugins:
+  - jekyll-sitemap
 
 # Kramdown defaults
 kramdown:

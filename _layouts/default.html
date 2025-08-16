@@ -9,8 +9,11 @@
   {%- assign meta_desc = page.description | default: site.description -%}
   {%- if meta_desc -%}<meta name="description" content="{{ meta_desc | escape }}">{%- endif -%}
 
-  <!-- Robots: per-page override + rich previews -->
-  <meta name="robots" content="{% if page.noindex %}noindex, nofollow{% else %}index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1{% endif %}">
+  {%- if page.noindex == true -%}
+    <meta name="robots" content="noindex, nofollow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  {%- else -%}
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  {%- endif -%}
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <!-- Theme color (dark/light) -->
@@ -18,6 +21,7 @@
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
   <meta name="color-scheme" content="dark light">
 
+  <!-- Canonical -->
   {%- if page.canonical_url and page.canonical_url != '' -%}
     {%- assign canonical = page.canonical_url -%}
   {%- else -%}
@@ -31,7 +35,7 @@
     {%- endfor -%}
   {%- endif -%}
 
-  <!-- Optional: preconnect to vendor domains (supports page- or site-level lists) -->
+  <!-- Optional preconnects -->
   {%- assign preconns = page.preconnect_domains | default: site.preconnect_domains -%}
   {%- if preconns -%}
     {%- for d in preconns -%}
@@ -40,12 +44,13 @@
     {%- endfor -%}
   {%- endif -%}
 
-  <!-- Optional: LCP hero image preload (set `lcp_image:` in front matter) -->
+  <!-- LCP image preload -->
   {%- if page.lcp_image and page.lcp_image != '' -%}
     {%- assign lcp_abs = site.url | append: site.baseurl | append: page.lcp_image -%}
     <link rel="preload" as="image" href="{{ lcp_abs }}" fetchpriority="high">
   {%- endif -%}
 
+  <!-- Open Graph / Twitter -->
   {%- assign ogtype = 'website' -%}
   {%- if page.og_type and page.og_type != '' -%}{%- assign ogtype = page.og_type -%}
   {%- elsif page.article or page.layout == 'post' -%}{%- assign ogtype = 'article' -%}{%- endif -%}
@@ -54,25 +59,9 @@
   <meta property="og:title" content="{% if page.title %}{{ page.title | escape }} | {% endif %}AI Expert Toolkit">
   {%- if meta_desc -%}<meta property="og:description" content="{{ meta_desc | escape }}">{%- endif -%}
   <meta property="og:url" content="{{ canonical }}">
-  <meta property="og:locale" content="{{ page.og_locale | default: 'en_US' }}">
-
-  {%- if ogtype == 'article' -%}
-    {%- if page.date -%}<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">{%- endif -%}
-    {%- if page.last_modified_at -%}<meta property="article:modified_time" content="{{ page.last_modified_at | date_to_xmlschema }}">{%- endif -%}
-    {%- if page.author -%}<meta property="article:author" content="{{ page.author | escape }}">{%- endif -%}
-    {%- if page.section -%}<meta property="article:section" content="{{ page.section | escape }}">{%- endif -%}
-    {%- if page.tags and page.tags.size > 0 -%}
-      {%- for tag in page.tags -%}<meta property="article:tag" content="{{ tag | escape }}">{%- endfor -%}
-    {%- endif -%}
-  {%- endif -%}
-
-  {%- assign ogimg = page.og_image | default: site.og_image -%}
-  {%- if ogimg and ogimg != '' -%}
-    {%- if ogimg contains '://' -%}{%- assign ogimg_abs = ogimg -%}{%- else -%}{%- assign ogimg_abs = site.url | append: site.baseurl | append: ogimg -%}{%- endif -%}
-    <meta property="og:image" content="{{ ogimg_abs }}">
-    {%- if page.og_image_width -%}<meta property="og:image:width" content="{{ page.og_image_width }}">{%- endif -%}
-    {%- if page.og_image_height -%}<meta property="og:image:height" content="{{ page.og_image_height }}">{%- endif -%}
-    {%- if page.og_image_alt -%}<meta property="og:image:alt" content="{{ page.og_image_alt | escape }}">{%- endif -%}
+  {%- if page.og_image and page.og_image != '' -%}
+    {%- assign og_image_abs = site.url | append: site.baseurl | append: page.og_image -%}
+    <meta property="og:image" content="{{ og_image_abs }}">
     <meta name="twitter:card" content="summary_large_image">
   {%- else -%}
     <meta name="twitter:card" content="summary">
@@ -81,247 +70,113 @@
     <meta name="twitter:site" content="@{{ site.twitter_username | replace: '@','' }}">
   {%- endif -%}
 
+  <!-- GA4 -->
+  {%- if site.analytics and site.analytics.ga4 and site.analytics.ga4 != '' -%}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.ga4 }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ site.analytics.ga4 }}', { 'anonymize_ip': true });
+    </script>
+  {%- endif -%}
+
+  <!-- GSC verification -->
+  {%- if site.verification and site.verification.google -%}
+    <meta name="google-site-verification" content="{{ site.verification.google | escape }}">
+  {%- endif -%}
+
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css">
 
   <!-- Icons / Manifest -->
   <link rel="icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" type="image/svg+xml" sizes="any">
-  <link rel="mask-icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" color="#0b1220">
-  {%- if site.favicon_png_32 and site.favicon_png_16 -%}
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}{{ site.favicon_png_32 }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}{{ site.favicon_png_16 }}">
+  {%- if site.manifest and site.manifest != '' -%}
+    <link rel="manifest" href="{{ site.baseurl }}{{ site.manifest }}">
   {%- endif -%}
-  {%- if site.apple_touch_icon and site.apple_touch_icon != '' -%}
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}{{ site.apple_touch_icon }}">
-  {%- endif -%}
-  {%- if site.manifest and site.manifest != '' -%}<link rel="manifest" href="{{ site.baseurl }}{{ site.manifest }}">{%- endif -%}
-  {%- if site.feed_path and site.feed_path != '' -%}<link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }}" href="{{ site.baseurl }}{{ site.feed_path }}">{%- endif -%}
+</head>
+<body>
+  {% include header.html %}
 
-  <!-- Search console verifications (optional) -->
-  {%- if site.verification and site.verification.google -%}<meta name="google-site-verification" content="{{ site.verification.google | escape }}">{%- endif -%}
-  {%- if site.verification and site.verification.bing -%}<meta name="msvalidate.01" content="{{ site.verification.bing | escape }}">{%- endif -%}
-  {%- if site.verification and site.verification.pinterest -%}<meta name="p:domain_verify" content="{{ site.verification.pinterest | escape }}">{%- endif -%}
+  <main id="content" class="site-main" role="main" tabindex="-1">
+    {{ content }}
+  </main>
 
-  <!-- GTM/GA resource hints when enabled -->
-  {%- if site.analytics.gtm and site.analytics.gtm != '' -%}
-    <link rel="dns-prefetch" href="//www.googletagmanager.com">
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-  {%- endif -%}
+  {% include footer.html %}
 
-  {%- if site.analytics.gtm and site.analytics.gtm != '' -%}
-  <!-- Google Tag Manager -->
-  <script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-    j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','{{ site.analytics.gtm }}');
-  </script>
-  {%- endif -%}
-
-  {%- if site.analytics.ga4 and site.analytics.ga4 != '' -%}
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.ga4 }}"></script>
-  <script>
-    window.dataLayer=window.dataLayer||[];
-    function gtag(){dataLayer.push(arguments)}
-    gtag('js', new Date());
-    gtag('config', '{{ site.analytics.ga4 }}');
-  </script>
-  {%- endif -%}
-
-  <!-- Organization schema (+logo if configured) -->
+  <!-- Organization -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Organization",
     "name":"AI Expert Toolkit",
     "url":"{{ site.url }}",
-    {%- if site.logo and site.logo != '' -%}"logo":"{{ site.url }}{{ site.baseurl }}{{ site.logo }}",{%- endif -%}
-    "email":"{{ site.contact_email | escape }}"{% if site.social_sameas and site.social_sameas.size > 0 %},
-    "sameAs": {{ site.social_sameas | jsonify }}{% endif %}
+    {% if site.logo and site.logo != '' %}"logo":"{{ site.url }}{{ site.baseurl }}{{ site.logo }}",{% endif %}
+    {% if site.social_sameas and site.social_sameas.size > 0 %}"sameAs":{{ site.social_sameas | jsonify }},{% endif %}
+    {% if site.contact_email %}"email":"{{ site.contact_email | escape }}"{% endif %}
   }
   </script>
 
-  {%- if site.enable_sitelinks_searchbox -%}
-    {%- assign sitehost = site.url | replace: 'https://','' | replace: 'http://','' -%}
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"WebSite",
-      "url":"{{ site.url }}",
-      "potentialAction":{
-        "@type":"SearchAction",
-        "target":"https://www.google.com/search?q=site:{{ sitehost | escape }}+{search_term_string}",
-        "query-input":"required name=search_term_string"
-      }
+  <!-- WebSite + SearchAction (Google site: scope) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "url":"{{ site.url }}",
+    "name":"AI Expert Toolkit",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://www.google.com/search?q=site%3A{{ site.url | replace:'https://','' | replace:'http://','' | split:'/' | first }}+{search_term_string}",
+      "query-input":"required name=search_term_string"
     }
-    </script>
-  {%- endif -%}
+  }
+  </script>
 
-  {%- if page.breadcrumbs -%}
+  {% if page.breadcrumbs and page.breadcrumbs.size > 0 %}
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"BreadcrumbList",
     "itemListElement":[
       {%- for crumb in page.breadcrumbs -%}
-        {"@type":"ListItem","position":{{ forloop.index }},"name":"{{ crumb.name | escape }}","item":"{{ site.url }}{{ crumb.url }}"}{% if forloop.last == false %},{% endif %}
+        { "@type":"ListItem", "position":{{ forloop.index }}, "name":"{{ crumb.name | escape }}", "item":"{{ site.url }}{{ site.baseurl }}{{ crumb.url }}" }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]
   }
   </script>
-  {%- endif -%}
+  {% endif %}
 
-  {%- comment -%}Fallback Article schema if none supplied{%- endcomment -%}
-  {%- if page.article and page.schema == nil -%}
+  {% if page.article == true or page.layout == 'post' %}
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Article",
     "headline": {{ page.title | jsonify }},
-    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+    {% if page.date %}"datePublished": {{ page.date | date_to_xmlschema | jsonify }},{% endif %}
     "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
-    "mainEntityOfPage": {{ canonical | jsonify }},
-    "author": { "@type": "Organization", "name": "AI Expert Toolkit" },
-    "publisher": { "@type": "Organization", "name": "AI Expert Toolkit" }
-    {%- if ogimg_abs -%}, "image": {{ ogimg_abs | jsonify }}{%- endif -%}
+    "mainEntityOfPage": { "@type":"WebPage", "@id": "{{ canonical }}" }
   }
   </script>
-  {%- endif -%}
-</head>
-<body>
-  {%- if site.analytics.gtm and site.analytics.gtm != '' -%}
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ site.analytics.gtm }}"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  {%- endif -%}
+  {% endif %}
 
-  <a class="skip" href="#content">Skip to content</a>
-  {% include header.html %}
-
-  <main id="content" class="wrap" role="main">
-    {%- if page.toc == true -%}{% include toc.html %}{%- endif -%}
-    {{ content }}
-    {%- if page.faq -%}{% include faq.html %}{%- endif -%}
-  </main>
-
-  {% include footer.html %}
-
-  {%- comment -%} Mini sticky CTA (only if a URL is configured) {%- endcomment -%}
-  {%- assign mini_url   = page.mini_cta_url   | default: site.header_cta_url -%}
-  {%- assign mini_label = page.mini_cta_label | default: site.header_cta_label | default: 'Start free with Writesonic' -%}
-  {%- assign mini_mode  = page.mini_cta_mode  | default: site.header_cta_mode  | default: 'both' -%} {# both|time|scroll|exit #}
-  {%- if mini_url and mini_url != '' -%}
-    {% include mini_cta.html cta_url=mini_url cta_label=mini_label cta_mode=mini_mode %}
-    <noscript><div style="text-align:center;margin:1rem 0;"><a class="btn" href="{{ mini_url }}" rel="nofollow sponsored"> {{ mini_label }} </a></div></noscript>
-  {%- endif -%}
-
-  <!-- Progressive enhancement: externals + lazy media + affiliate decorator + prefetch -->
+  <!-- Lightweight internal-link prefetch -->
   <script>
-    (function () {
-      // 1) target=_blank safety
-      try {
-        var links = document.querySelectorAll('a[target="_blank"]');
-        for (var i=0;i<links.length;i++){
-          var rel = (links[i].getAttribute('rel')||'').toLowerCase();
-          if (!/noopener/.test(rel)) links[i].setAttribute('rel',(rel?rel+' ':'')+'noopener');
-        }
-      } catch(e) {}
-
-      // 2) Lazy-ish defaults
-      try {
-        var imgs = document.querySelectorAll('img:not([loading])');
-        for (var j=0;j<imgs.length;j++){
-          imgs[j].setAttribute('loading','lazy');
-          imgs[j].setAttribute('decoding','async');
-        }
-        var ifr = document.querySelectorAll('iframe:not([loading])');
-        for (var k=0;k<ifr.length;k++){ ifr[k].setAttribute('loading','lazy'); }
-      } catch(e) {}
-
-      // 3) Affiliate allowlist (from _data/affiliates.yml if present; else fallback)
-      try {
-        window.AETK = (function(){
-          var allow = (function(){
-            try {
-              {% if site.data.affiliates and site.data.affiliates.allowlist %}
-                return {{ site.data.affiliates.allowlist | jsonify }};
-              {% elsif site.data.affiliates and site.data.affiliates.domains %}
-                return {{ site.data.affiliates.domains | jsonify }};
-              {% else %}
-                return ["writesonic.com"];
-              {% endif %}
-            } catch(e){ return ["writesonic.com"]; }
-          })();
-
-          var defaultUTM = "{{ site.default_utm | default: 'utm_source=aetk&utm_medium=site&utm_campaign=' }}"+encodeURIComponent("{{ page.title | default: 'site' }}");
-
-          function isAff(href){
-            try { var u = new URL(href, location.origin);
-              return allow.some(function(d){ return u.hostname===d || u.hostname.endsWith("."+d); });
-            } catch(e){ return false; }
-          }
-          function decorateURL(href){
-            try {
-              var u = new URL(href, location.origin);
-              if (!isAff(u.href)) return href;
-              if (!u.searchParams.has('utm_source')) {
-                defaultUTM.split('&').forEach(function(kv){
-                  var p = kv.split('=');
-                  if (p[0] && p[1]) u.searchParams.set(p[0], p[1]);
-                });
-              }
-              return u.toString();
-            } catch(e){ return href; }
-          }
-          function markAffiliateLink(a){
-            var rel = (a.getAttribute('rel')||'').toLowerCase();
-            ['sponsored','nofollow','noopener'].forEach(function(token){
-              if (!rel.includes(token)) rel = (rel?rel+' ':'')+token;
-            });
-            a.setAttribute('rel', rel.trim());
-            if (!a.getAttribute('target')) a.setAttribute('target','_blank');
-          }
-          function bindAffiliateLinks(){
-            var anchors = document.querySelectorAll('a[data-aff="true"], a.aff');
-            for (var i=0;i<anchors.length;i++){
-              var a = anchors[i];
-              a.href = decorateURL(a.href);
-              if (isAff(a.href)) markAffiliateLink(a);
-              a.addEventListener('click', function(){
-                try{
-                  if (window.dataLayer){
-                    dataLayer.push({ event:'AffiliateClick', href:this.href, domain:new URL(this.href).hostname, page: location.pathname });
-                  }
-                }catch(_){}
-              });
-            }
-          }
-          return { decorateURL: decorateURL, bindAffiliateLinks: bindAffiliateLinks };
-        })();
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', AETK.bindAffiliateLinks);
-        } else {
-          AETK.bindAffiliateLinks();
-        }
-      } catch(e) {}
-
-      // 4) Prefetch internal pages on hover (perceived speed)
+    (function(){
       try{
-        var prefetched = new Set();
+        const seen = new Set();
         function prefetch(href){
-          if (prefetched.has(href)) return;
-          var l = document.createElement('link');
-          l.rel='prefetch'; l.as='document'; l.href=href;
+          if (seen.has(href)) return;
+          seen.add(href);
+          const l = document.createElement('link');
+          l.rel = 'prefetch'; l.href = href; l.as = 'document';
           document.head.appendChild(l);
-          prefetched.add(href);
         }
         document.addEventListener('mouseover', function(e){
-          var a = e.target.closest('a');
+          const a = e.target.closest && e.target.closest('a');
           if (!a) return;
-          var href = a.getAttribute('href')||'';
-          if (!href || href.indexOf('#')===0) return;
-          var u = new URL(href, location.href);
+          const href = a.getAttribute('href') || '';
+          if (!href || href.indexOf('#') === 0) return;
+          const u = new URL(href, location.href);
           if (u.origin === location.origin) prefetch(u.href);
         }, {passive:true});
       }catch(e){}

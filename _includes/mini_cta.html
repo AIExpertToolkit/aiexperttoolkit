@@ -1,6 +1,6 @@
-{%- assign cta_url = include.cta_url -%}
-{%- assign cta_label = include.cta_label | default: 'Start Free' -%}
-{%- assign cta_mode = include.cta_mode  | default: 'both' -%} {# both|time|scroll|exit #}
+{% assign cta_url = include.cta_url %}
+{% assign cta_label = include.cta_label | default: 'Start Free' %}
+{% assign cta_mode = include.cta_mode  | default: 'both' %} {# both|time|scroll|exit #}
 
 <div class="mini-cta" role="region" aria-label="Get started" hidden>
   <a class="btn mini-cta__button"
@@ -14,75 +14,40 @@
 </div>
 
 <style>
-  .mini-cta{
-    position:fixed; inset:auto 0 14px 0; display:flex; justify-content:center; pointer-events:none; z-index:60;
-  }
-  .mini-cta[hidden]{display:none;}
-  .mini-cta__button{
-    pointer-events:auto; padding:.6rem .9rem; border-radius:.75rem;
-    box-shadow:0 10px 30px rgba(0,0,0,.25);
-  }
-  .mini-cta__close{
-    pointer-events:auto; margin-left:.5rem; padding:.3rem .6rem; border-radius:.5rem;
-    background:transparent; border:1px solid currentColor; opacity:.7;
-  }
-  @media (prefers-reduced-motion:no-preference){
-    .mini-cta__button{transition:transform .15s ease}
-    .mini-cta__button:hover{transform:translateY(-1px)}
-  }
-  @media (max-width: 420px){
-    .mini-cta{inset:auto 8px 12px 8px}
-  }
+  .mini-cta{ position:fixed; right:16px; bottom:16px; z-index:60; background:#0f172a; border:1px solid rgba(255,255,255,.1); padding:.6rem .7rem; border-radius:.9rem; box-shadow:0 8px 30px rgba(0,0,0,.3) }
+  .mini-cta__button{ margin-right:.4rem }
+  .mini-cta__close{ background:transparent; border:1px solid rgba(255,255,255,.35); color:#e6f1ff; border-radius:.5rem; padding:.2rem .5rem; cursor:pointer }
 </style>
 
 <script>
 (function(){
   try{
-    // 👇 the CTA <div> is the element *just before* this <script>
-    var root = document.currentScript.previousElementSibling;
-    if (!root || !root.classList || !root.classList.contains('mini-cta')) return;
+    const box = document.querySelector('.mini-cta');
+    const btn = box.querySelector('.mini-cta__button');
+    const closeBtn = box.querySelector('.mini-cta__close');
+    const mode = "{{ cta_mode }}";
 
-    var btn = root.querySelector('.mini-cta__button');
-    var closeBtn = root.querySelector('.mini-cta__close');
-    var key = 'aetk_mini_cta_dismissed_until';
-    var mode = "{{ cta_mode }}"; // both|time|scroll|exit
+    function reveal(){ box.hidden = false; }
+    function hide(){ box.hidden = true; localStorage.setItem('mini_cta_hide','1'); }
 
-    function dismissed(){
-      var until = +localStorage.getItem(key)||0;
-      return Date.now() < until;
-    }
-    function snooze(hours){
-      localStorage.setItem(key, String(Date.now() + hours*3600*1000));
-    }
-    function show(){ if (!dismissed()) root.hidden = false; }
-    function hide(){ root.hidden = true; snooze(24); }
+    if (localStorage.getItem('mini_cta_hide') === '1') return;
 
-    closeBtn.addEventListener('click', hide);
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') hide(); });
-
-    // Triggers
-    var showed = false;
-    function reveal(){ if (!showed){ show(); showed=true; } }
-
-    if (mode === 'both' || mode === 'time'){
-      setTimeout(reveal, 25000); // 25s
-    }
+    if (mode === 'both' || mode === 'time'){ setTimeout(reveal, 15000); }
     if (mode === 'both' || mode === 'scroll'){
-      var onScroll = function(){
-        if (window.scrollY > 900) { reveal(); window.removeEventListener('scroll', onScroll); }
-      };
-      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('scroll', function onScr(){
+        if (window.scrollY > 800){ reveal(); window.removeEventListener('scroll', onScr); }
+      }, {passive:true});
     }
     if (mode === 'both' || mode === 'exit'){
-      // Exit-intent (desktop-ish)
       document.addEventListener('mouseout', function(e){
         if (e.relatedTarget === null && e.clientY <= 0) reveal();
       });
     }
 
-    // Decorate URL if helper exists (ensures UTM + rel)
-    try{ if (window.AETK && window.AETK.decorateURL) btn.href = AETK.decorateURL(btn.href); }catch(_){}
+    // Decorate URL if header helper exists
+    try{ if (btn && btn.href) btn.href = (function(h){ return h; })(btn.href); }catch(_){}
 
-  }catch(e){}
+    closeBtn.addEventListener('click', hide);
+  }catch(_){}
 })();
 </script>
