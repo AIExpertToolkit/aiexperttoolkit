@@ -9,11 +9,11 @@
   <meta name="description" content="{{ page.description | strip_newlines | escape }}">
   {% endif %}
 
-  {%- comment -%} Robots: index/follow by default, allow per-page noindex {%- endcomment -%}
+  {%- comment -%} Robots: index/follow by default; allow page-level noindex {%- endcomment -%}
   {% assign noindex = page.noindex or layout.noindex | default: false %}
   <meta name="robots" content="{% if noindex %}noindex, nofollow{% else %}index, follow, max-image-preview:large{% endif %}">
 
-  {%- comment -%} Canonical with hard fallback to apex so a wrong site.url can't break it tonight {%- endcomment -%}
+  {%- comment -%} Canonical (hard fallback to apex so a wrong site.url can’t break tonight) {%- endcomment -%}
   {% assign host = site.canonical_host | default: 'https://aiexperttoolkit.com' %}
   <link rel="canonical" href="{{ host }}{{ page.url }}">
 
