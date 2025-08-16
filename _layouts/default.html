@@ -47,11 +47,8 @@
   {%- endif -%}
 
   {%- assign ogtype = 'website' -%}
-  {%- if page.og_type and page.og_type != '' -%}
-    {%- assign ogtype = page.og_type -%}
-  {%- elsif page.article or page.layout == 'post' -%}
-    {%- assign ogtype = 'article' -%}
-  {%- endif -%}
+  {%- if page.og_type and page.og_type != '' -%}{%- assign ogtype = page.og_type -%}
+  {%- elsif page.article or page.layout == 'post' -%}{%- assign ogtype = 'article' -%}{%- endif -%}
   <meta property="og:site_name" content="AI Expert Toolkit">
   <meta property="og:type" content="{{ ogtype }}">
   <meta property="og:title" content="{% if page.title %}{{ page.title | escape }} | {% endif %}AI Expert Toolkit">
@@ -139,9 +136,7 @@
     "@type":"Organization",
     "name":"AI Expert Toolkit",
     "url":"{{ site.url }}",
-    {%- if site.logo and site.logo != '' -%}
-    "logo":"{{ site.url }}{{ site.baseurl }}{{ site.logo }}",
-    {%- endif -%}
+    {%- if site.logo and site.logo != '' -%}"logo":"{{ site.url }}{{ site.baseurl }}{{ site.logo }}",{%- endif -%}
     "email":"{{ site.contact_email | escape }}"{% if site.social_sameas and site.social_sameas.size > 0 %},
     "sameAs": {{ site.social_sameas | jsonify }}{% endif %}
   }
@@ -177,9 +172,20 @@
   </script>
   {%- endif -%}
 
-  {%- if page.schema -%}
+  {%- comment -%}Fallback Article schema if none supplied{%- endcomment -%}
+  {%- if page.article and page.schema == nil -%}
   <script type="application/ld+json">
-    {{ page.schema | jsonify }}
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline": {{ page.title | jsonify }},
+    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+    "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+    "mainEntityOfPage": {{ canonical | jsonify }},
+    "author": { "@type": "Organization", "name": "AI Expert Toolkit" },
+    "publisher": { "@type": "Organization", "name": "AI Expert Toolkit" }
+    {%- if ogimg_abs -%}, "image": {{ ogimg_abs | jsonify }}{%- endif -%}
+  }
   </script>
   {%- endif -%}
 </head>
@@ -194,15 +200,26 @@
   {% include header.html %}
 
   <main id="content" class="wrap" role="main">
+    {%- if page.toc == true -%}{% include toc.html %}{%- endif -%}
     {{ content }}
+    {%- if page.faq -%}{% include faq.html %}{%- endif -%}
   </main>
 
   {% include footer.html %}
 
-  <!-- Progressive enhancement: safer externals + lazy media defaults -->
+  {%- comment -%} Mini sticky CTA (only if a URL is configured) {%- endcomment -%}
+  {%- assign mini_url   = page.mini_cta_url   | default: site.header_cta_url -%}
+  {%- assign mini_label = page.mini_cta_label | default: site.header_cta_label | default: 'Start free with Writesonic' -%}
+  {%- assign mini_mode  = page.mini_cta_mode  | default: site.header_cta_mode  | default: 'both' -%} {# both|time|scroll|exit #}
+  {%- if mini_url and mini_url != '' -%}
+    {% include mini_cta.html cta_url=mini_url cta_label=mini_label cta_mode=mini_mode %}
+    <noscript><div style="text-align:center;margin:1rem 0;"><a class="btn" href="{{ mini_url }}" rel="nofollow sponsored"> {{ mini_label }} </a></div></noscript>
+  {%- endif -%}
+
+  <!-- Progressive enhancement: externals + lazy media + affiliate decorator + prefetch -->
   <script>
     (function () {
-      // Add rel=noopener to all target=_blank links that are missing it
+      // 1) target=_blank safety
       try {
         var links = document.querySelectorAll('a[target="_blank"]');
         for (var i=0;i<links.length;i++){
@@ -211,7 +228,7 @@
         }
       } catch(e) {}
 
-      // Apply lazy loading to images/iframes that forgot it
+      // 2) Lazy-ish defaults
       try {
         var imgs = document.querySelectorAll('img:not([loading])');
         for (var j=0;j<imgs.length;j++){
@@ -221,6 +238,93 @@
         var ifr = document.querySelectorAll('iframe:not([loading])');
         for (var k=0;k<ifr.length;k++){ ifr[k].setAttribute('loading','lazy'); }
       } catch(e) {}
+
+      // 3) Affiliate allowlist (from _data/affiliates.yml if present; else fallback)
+      try {
+        window.AETK = (function(){
+          var allow = (function(){
+            try {
+              {% if site.data.affiliates and site.data.affiliates.allowlist %}
+                return {{ site.data.affiliates.allowlist | jsonify }};
+              {% elsif site.data.affiliates and site.data.affiliates.domains %}
+                return {{ site.data.affiliates.domains | jsonify }};
+              {% else %}
+                return ["writesonic.com"];
+              {% endif %}
+            } catch(e){ return ["writesonic.com"]; }
+          })();
+
+          var defaultUTM = "{{ site.default_utm | default: 'utm_source=aetk&utm_medium=site&utm_campaign=' }}"+encodeURIComponent("{{ page.title | default: 'site' }}");
+
+          function isAff(href){
+            try { var u = new URL(href, location.origin);
+              return allow.some(function(d){ return u.hostname===d || u.hostname.endsWith("."+d); });
+            } catch(e){ return false; }
+          }
+          function decorateURL(href){
+            try {
+              var u = new URL(href, location.origin);
+              if (!isAff(u.href)) return href;
+              if (!u.searchParams.has('utm_source')) {
+                defaultUTM.split('&').forEach(function(kv){
+                  var p = kv.split('=');
+                  if (p[0] && p[1]) u.searchParams.set(p[0], p[1]);
+                });
+              }
+              return u.toString();
+            } catch(e){ return href; }
+          }
+          function markAffiliateLink(a){
+            var rel = (a.getAttribute('rel')||'').toLowerCase();
+            ['sponsored','nofollow','noopener'].forEach(function(token){
+              if (!rel.includes(token)) rel = (rel?rel+' ':'')+token;
+            });
+            a.setAttribute('rel', rel.trim());
+            if (!a.getAttribute('target')) a.setAttribute('target','_blank');
+          }
+          function bindAffiliateLinks(){
+            var anchors = document.querySelectorAll('a[data-aff="true"], a.aff');
+            for (var i=0;i<anchors.length;i++){
+              var a = anchors[i];
+              a.href = decorateURL(a.href);
+              if (isAff(a.href)) markAffiliateLink(a);
+              a.addEventListener('click', function(){
+                try{
+                  if (window.dataLayer){
+                    dataLayer.push({ event:'AffiliateClick', href:this.href, domain:new URL(this.href).hostname, page: location.pathname });
+                  }
+                }catch(_){}
+              });
+            }
+          }
+          return { decorateURL: decorateURL, bindAffiliateLinks: bindAffiliateLinks };
+        })();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', AETK.bindAffiliateLinks);
+        } else {
+          AETK.bindAffiliateLinks();
+        }
+      } catch(e) {}
+
+      // 4) Prefetch internal pages on hover (perceived speed)
+      try{
+        var prefetched = new Set();
+        function prefetch(href){
+          if (prefetched.has(href)) return;
+          var l = document.createElement('link');
+          l.rel='prefetch'; l.as='document'; l.href=href;
+          document.head.appendChild(l);
+          prefetched.add(href);
+        }
+        document.addEventListener('mouseover', function(e){
+          var a = e.target.closest('a');
+          if (!a) return;
+          var href = a.getAttribute('href')||'';
+          if (!href || href.indexOf('#')===0) return;
+          var u = new URL(href, location.href);
+          if (u.origin === location.origin) prefetch(u.href);
+        }, {passive:true});
+      }catch(e){}
     })();
   </script>
 </body>
