@@ -1,12 +1,162 @@
 <header class="site-header" role="banner">
   <div class="wrap header-row">
-    <a class="brand" href="{{ site.baseurl }}/">AI Expert Toolkit</a>
-    <nav class="primary-nav" aria-label="Primary">
-      <a href="{{ site.baseurl }}/comparisons.html" {% if page.url == '/comparisons.html' %}aria-current="page"{% endif %}>Comparisons</a>
-      <a href="{{ site.baseurl }}/writesonic-review.html" {% if page.url == '/writesonic-review.html' %}aria-current="page"{% endif %}>Writesonic Review</a>
-      <a href="{{ site.baseurl }}/pricing.html" {% if page.url == '/pricing.html' %}aria-current="page"{% endif %}>Pricing</a>
-      <a href="{{ site.baseurl }}/about.html" {% if page.url == '/about.html' %}aria-current="page"{% endif %}>About</a>
-      <a href="{{ site.baseurl }}/contact.html" {% if page.url == '/contact.html' %}aria-current="page"{% endif %}>Contact</a>
+    <!-- Brand / home -->
+    <a class="brand"
+       href="{{ site.baseurl }}/"
+       {% if page.url == '/' or page.url == '/index.html' %}aria-current="page" class="active"{% endif %}
+       aria-label="{{ site.title | default: 'AI Expert Toolkit' }} — Home">
+      AI Expert Toolkit
+    </a>
+
+    <!-- Primary navigation -->
+    <nav id="primary-nav"
+         class="primary-nav"
+         aria-label="Primary"
+         data-baseurl="{{ site.baseurl | default: '' }}">
+      {%- assign here = page.url | default: '' -%}
+
+      <a href="{{ site.baseurl }}/comparisons.html"
+         {% if here contains '/comparisons' %}aria-current="page" class="active"{% endif %}>
+        Comparisons
+      </a>
+
+      <a href="{{ site.baseurl }}/jasper-vs-writesonic.html"
+         {% if here contains '/jasper-vs-writesonic' %}aria-current="page" class="active"{% endif %}>
+        Jasper vs Writesonic
+      </a>
+
+      <a href="{{ site.baseurl }}/writesonic-review.html"
+         {% if here contains '/writesonic-review' %}aria-current="page" class="active"{% endif %}>
+        Writesonic Review
+      </a>
+
+      <a href="{{ site.baseurl }}/pricing.html"
+         {% if here contains '/pricing' %}aria-current="page" class="active"{% endif %}>
+        Pricing
+      </a>
+
+      <a href="{{ site.baseurl }}/about.html"
+         {% if here contains '/about' %}aria-current="page" class="active"{% endif %}>
+        About
+      </a>
+
+      <a href="{{ site.baseurl }}/contact.html"
+         {% if here contains '/contact' %}aria-current="page" class="active"{% endif %}>
+        Contact
+      </a>
+
+      {%- assign on_money_page = (here contains '/writesonic-review' or here contains '/jasper-vs-writesonic') -%}
+      {%- unless on_money_page -%}
+      <!-- Site-wide CTA (hidden on money pages to avoid cannibalizing) -->
+      <a id="nav-cta"
+         class="btn"
+         href="https://writesonic.com/pricing?utm_source=aetk&utm_medium=nav&utm_campaign=sitewide_cta"
+         target="_blank"
+         rel="nofollow noopener noreferrer"
+         aria-label="Try Writesonic (opens in new tab)">
+        Try Writesonic
+      </a>
+      {%- endunless -%}
     </nav>
   </div>
+
+  <!-- SEO: SiteNavigationElement -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SiteNavigationElement",
+    "name": [
+      "Comparisons",
+      "Jasper vs Writesonic",
+      "Writesonic Review",
+      "Pricing",
+      "About",
+      "Contact"
+    ],
+    "url": [
+      "{{ site.url }}{{ site.baseurl }}/comparisons.html",
+      "{{ site.url }}{{ site.baseurl }}/jasper-vs-writesonic.html",
+      "{{ site.url }}{{ site.baseurl }}/writesonic-review.html",
+      "{{ site.url }}{{ site.baseurl }}/pricing.html",
+      "{{ site.url }}{{ site.baseurl }}/about.html",
+      "{{ site.url }}{{ site.baseurl }}/contact.html"
+    ]
+  }
+  </script>
+
+  <!-- Perf: prefetch internal links on hover/focus/touch (same-origin only, respects baseurl, network-aware) -->
+  <script>
+    (function () {
+      try {
+        var nav = document.getElementById('primary-nav');
+        if (!nav) return;
+
+        // Respect users on constrained networks
+        var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        var constrained = !!(conn && (conn.saveData || (conn.effectiveType && /2g/.test(conn.effectiveType))));
+        if (constrained) return;
+
+        var base = nav.getAttribute('data-baseurl') || '';
+
+        function isInternal(a) {
+          if (!a || !a.href) return false;
+          var u = new URL(a.href, location.href);
+          if (u.origin !== location.origin) return false;
+          return u.pathname.startsWith(base + '/');
+        }
+
+        function prefetch(href) {
+          if (document.querySelector('link[rel="prefetch"][href="'+href+'"]')) return;
+          var l = document.createElement('link');
+          l.rel = 'prefetch';
+          l.href = href;
+          document.head.appendChild(l);
+        }
+
+        function schedule(href){
+          (window.requestIdleCallback || function (cb){ setTimeout(cb, 120); })(function () { prefetch(href); });
+        }
+
+        function onIntent(e) {
+          var a = e.target.closest('a');
+          if (!a || !isInternal(a)) return;
+          schedule(new URL(a.href, location.href).href);
+        }
+
+        nav.addEventListener('mouseover', onIntent, { passive: true });
+        nav.addEventListener('focusin', onIntent, { passive: true });
+        nav.addEventListener('touchstart', onIntent, { passive: true });
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Analytics: GTM-friendly click tracking for all nav links and CTA (no-op if GTM absent) -->
+  <script>
+    (function(){
+      try {
+        var nav = document.getElementById('primary-nav');
+        if (!nav) return;
+
+        function pushEvent(label, href, id){
+          if (window.dataLayer && Array.isArray(window.dataLayer)) {
+            window.dataLayer.push({
+              'event': 'nav_link_click',
+              'link_text': label,
+              'link_id': id || '',
+              'link_url': href,
+              'page_path': location.pathname,
+              'page_title': document.title
+            });
+          }
+        }
+
+        nav.addEventListener('click', function(e){
+          var a = e.target.closest('a');
+          if (!a) return;
+          var label = (a.textContent || a.getAttribute('aria-label') || '').trim();
+          pushEvent(label, a.href, a.id || '');
+        }, {passive:true});
+      } catch(e) {}
+    })();
+  </script>
 </header>
