@@ -56,3 +56,9 @@ plugins:
 # Kramdown defaults
 kramdown:
   input: GFM
+
+# --- Analytics ---
+ga4_measurement_id: G-6E56LGF5M5
+ga_exclude:
+  - "/checks.html"
+  - "/consulting-terms.html"
