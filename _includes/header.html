@@ -1,7 +1,4 @@
 <header class="site-header" role="banner">
-  <!-- Skip link for keyboard users -->
-  <a class="skip-link" href="#main">Skip to content</a>
-
   {% if site.promo_text and site.promo_url %}
   <div class="promo-bar" role="note">
     <a href="{{ site.baseurl }}{{ site.promo_url | replace: site.baseurl,'' }}">{{ site.promo_text }}</a>
@@ -9,195 +6,101 @@
   {% endif %}
 
   <div class="wrap header-row">
-    <!-- Brand -->
-    <a class="brand" href="{{ site.baseurl }}/" aria-label="{{ site.title | default: 'AI Expert Toolkit' }} — Home">
+    <a class="brand" href="{{ site.baseurl }}/" aria-label="{{ site.title | default:'AI Expert Toolkit' }} — Home">
       {% if site.logo and site.logo != '' %}
-        <img src="{{ site.baseurl }}{{ site.logo }}" alt="{{ site.title | default: 'AI Expert Toolkit' }}" width="112" height="28" decoding="async">
-      {% else %}
-        {{ site.title | default: 'AI Expert Toolkit' }}
-      {% endif %}
+        <img src="{{ site.baseurl }}{{ site.logo }}" alt="{{ site.title | default:'AI Expert Toolkit' }}" width="112" height="28" decoding="async">
+      {% else %}{{ site.title | default:'AI Expert Toolkit' }}{% endif %}
     </a>
 
-    <!-- Mobile menu toggle -->
-    <button class="menu-toggle" type="button"
-            aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false">
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">
       <span class="menu-icon" aria-hidden="true"></span><span class="menu-text">Menu</span>
     </button>
 
-    <!-- Primary navigation -->
-    <nav id="primary-nav" class="primary-nav" aria-label="Primary" itemscope itemtype="https://schema.org/SiteNavigationElement">
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
       {% assign here = page.url | default: '' %}
-      <ul class="nav-list">
-        <li><a itemprop="url" href="{{ site.baseurl }}/comparisons.html" data-nav="Comparisons" {% if here contains '/comparisons' %}aria-current="page"{% endif %}><span itemprop="name">Comparisons</span></a></li>
-        <li><a itemprop="url" href="{{ site.baseurl }}/jasper-vs-writesonic.html" data-nav="Jasper vs Writesonic" {% if here contains '/jasper-vs-writesonic' %}aria-current="page"{% endif %}><span itemprop="name">Jasper vs Writesonic</span></a></li>
-        <li><a itemprop="url" href="{{ site.baseurl }}/writesonic-review.html" data-nav="Writesonic Review" {% if here contains '/writesonic-review' %}aria-current="page"{% endif %}><span itemprop="name">Writesonic Review</span></a></li>
-        <li><a itemprop="url" href="{{ site.baseurl }}/pricing.html" data-nav="Pricing" {% if here contains '/pricing' %}aria-current="page"{% endif %}><span itemprop="name">Pricing</span></a></li>
-        <li><a itemprop="url" href="{{ site.baseurl }}/about.html" data-nav="About" {% if here contains '/about' %}aria-current="page"{% endif %}><span itemprop="name">About</span></a></li>
-        <li><a itemprop="url" href="{{ site.baseurl }}/contact.html" data-nav="Contact" {% if here contains '/contact' %}aria-current="page"{% endif %}><span itemprop="name">Contact</span></a></li>
-        <!-- NEW: Consulting -->
-        <li><a itemprop="url" href="{{ site.baseurl }}/consulting.html" class="nav-accent"
-               data-nav="Consulting" {% if here contains '/consulting' %}aria-current="page"{% endif %}><span itemprop="name">Consulting</span></a></li>
-      </ul>
-
-      <!-- CTA (desktop) -->
-      {% if site.header_cta_url %}
-      <div class="nav-cta">
-        <a class="btn header-cta"
-           href="{{ site.header_cta_url }}"
-           target="_blank"
-           rel="{% if site.header_cta_sponsored %}sponsored {% endif %}nofollow noopener noreferrer"
-           data-aff="true"
-           aria-label="{{ site.header_cta_label | default: 'Start Free' }}">
-          {{ site.header_cta_label | default: 'Start Free' }}
-        </a>
-      </div>
-      {% endif %}
+      <a href="{{ site.baseurl }}/comparisons.html" {% if here contains '/comparisons' %}aria-current="page"{% endif %}>Comparisons</a>
+      <a href="{{ site.baseurl }}/jasper-vs-writesonic.html" {% if here contains '/jasper-vs-writesonic' %}aria-current="page"{% endif %}>Jasper vs Writesonic</a>
+      <a href="{{ site.baseurl }}/writesonic-review.html" {% if here contains '/writesonic-review' %}aria-current="page"{% endif %}>Writesonic Review</a>
+      <a href="{{ site.baseurl }}/pricing.html" {% if here contains '/pricing' %}aria-current="page"{% endif %}>Pricing</a>
+      <a href="{{ site.baseurl }}/about.html" {% if here contains '/about' %}aria-current="page"{% endif %}>About</a>
+      <a href="{{ site.baseurl }}/contact.html" {% if here contains '/contact' %}aria-current="page"{% endif %}>Contact</a>
+      <a href="{{ site.baseurl }}/consulting.html" {% if here contains '/consulting' and here contains '.html' and here == '/consulting.html' %}aria-current="page"{% endif %}>Consulting</a>
     </nav>
 
-    <!-- Site search (Google site: scope; no backend) -->
+    {% if site.header_cta_url %}
+      <a class="btn header-cta" href="{{ site.header_cta_url }}" target="_blank"
+         rel="{% if site.header_cta_sponsored %}sponsored {% endif %}nofollow noopener"
+         data-aff="true" aria-label="{{ site.header_cta_label | default:'Start Free' }}">
+        {{ site.header_cta_label | default:'Start Free' }}
+      </a>
+    {% endif %}
+
     {% assign sitehost = site.url | replace: 'https://','' | replace: 'http://','' | split:'/' | first %}
     <form class="site-search" action="https://www.google.com/search" method="get" role="search">
-      <label class="sr-only" for="site-search-q">Search site</label>
-      <input id="site-search-q" name="q" type="search" placeholder="Search articles & comparisons"
-             autocomplete="off" aria-label="Search {{ site.title | default: 'AI Expert Toolkit' }}">
+      <label class="sr-only" for="q">Search site</label>
+      <input id="q" name="q" type="search" placeholder="Search articles & comparisons"
+             autocomplete="off" aria-label="Search {{ site.title | default:'AI Expert Toolkit' }}">
       <button class="btn search-btn" type="submit" aria-label="Search">Search</button>
       <input type="hidden" name="hl" value="en">
       <input type="hidden" id="siteScope" value="site:{{ sitehost }}">
     </form>
   </div>
 
-  <!-- Critical micro-styles to avoid CLS & improve a11y without touching global CSS -->
-  <style>
-    .site-header{min-height:56px}
-    .skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden}
-    .skip-link:focus{left:12px;top:8px;width:auto;height:auto;background:#22d3ee;color:#072635;padding:.35rem .6rem;border-radius:.5rem;z-index:1000;text-decoration:none;font-weight:700}
-    :where(a,button):focus-visible{outline:3px solid rgba(34,211,238,.85);outline-offset:2px;border-radius:.35rem}
-    .nav-list{display:flex;gap:14px;list-style:none;margin:0;padding:0;align-items:center}
-    .nav-cta{margin-left:auto}
-    .menu-toggle{display:none}
-    @media (max-width: 860px){
-      .menu-toggle{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .55rem;border:1px solid rgba(255,255,255,.2);background:transparent;color:#e6f1ff;border-radius:.6rem}
-      .primary-nav{display:none;width:100%}
-      .site-header.is-open .primary-nav{display:block}
-      .nav-list{display:block}
-      .nav-list>li{margin:.35rem 0}
-      .nav-cta{margin:.5rem 0 0}
-    }
-    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
-  </style>
-
   <script>
   (function(){
-    var header = document.currentScript.closest('.site-header');
-    var btn = header.querySelector('.menu-toggle');
-    var nav = header.querySelector('#primary-nav');
-
-    function isOpen(){ return header.classList.contains('is-open'); }
-    function openMenu(){
-      header.classList.add('is-open'); btn && btn.setAttribute('aria-expanded','true');
-      var first = nav && nav.querySelector('a,button,[tabindex]:not([tabindex="-1"])'); if(first) setTimeout(function(){ first.focus(); },0);
-    }
-    function closeMenu(){
-      header.classList.remove('is-open'); btn && btn.setAttribute('aria-expanded','false'); btn && btn.focus();
-    }
-
-    if(btn){
-      btn.addEventListener('click', function(){
-        isOpen() ? closeMenu() : openMenu();
-      });
-    }
-
-    // Esc closes, and focus trap while open
-    document.addEventListener('keydown', function(e){
-      if(!isOpen()) return;
-      if(e.key === 'Escape'){ closeMenu(); }
-      else if(e.key === 'Tab'){
-        var f = nav.querySelectorAll('a,button,[tabindex]:not([tabindex="-1"])');
-        if(!f.length) return;
-        var first=f[0], last=f[f.length-1];
-        if(e.shiftKey && document.activeElement===first){ last.focus(); e.preventDefault(); }
-        else if(!e.shiftKey && document.activeElement===last){ first.focus(); e.preventDefault(); }
+    try{
+      const header=document.querySelector('.site-header');
+      const btn=header.querySelector('.menu-toggle');
+      const nav=header.querySelector('#primary-nav');
+      let lastFocus=null;
+      function setOpen(state){
+        header.classList.toggle('is-open', !!state);
+        btn.setAttribute('aria-expanded', !!state);
+        if(state){ const first=nav.querySelector('a'); first && first.focus({preventScroll:true}); }
+        else if(lastFocus){ lastFocus.focus({preventScroll:true}); }
       }
-    });
+      btn.addEventListener('click', function(){ lastFocus=document.activeElement; setOpen(!header.classList.contains('is-open')); });
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape' && header.classList.contains('is-open')) setOpen(false); });
+      document.addEventListener('click', e=>{ if(header.classList.contains('is-open') && !header.contains(e.target)) setOpen(false); });
 
-    // Outside click closes (mobile)
-    document.addEventListener('click', function(e){
-      if(!isOpen()) return;
-      if(!header.contains(e.target)) closeMenu();
-    }, true);
+      const form=header.querySelector('.site-search');
+      if(form){ form.addEventListener('submit', function(){
+        const q=form.querySelector('#q'); const scope=form.querySelector('#siteScope').value||'';
+        if(q && scope && !q.value.trim().startsWith('site:')) q.value = scope + ' ' + q.value.trim();
+      }); }
 
-    // Auto-close on viewport widen
-    window.addEventListener('resize', function(){ if(window.innerWidth>860 && isOpen()) closeMenu(); });
-
-    // Google site: scope
-    var form = header.querySelector('.site-search');
-    if(form){
-      form.addEventListener('submit', function(){
-        var q = form.querySelector('#site-search-q'); var scope = form.querySelector('#siteScope').value || '';
-        if(q && scope && !/^\s*site:/.test(q.value)) q.value = scope + ' ' + q.value.trim();
-      });
-    }
-
-    // GA4: nav & consulting CTA clicks (delegated)
-    document.addEventListener('click', function(e){
-      var a = e.target.closest('a');
-      if(!a) return;
-      try{
-        if(a.hasAttribute('data-nav') && window.gtag){
-          gtag('event','click_nav',{event_category:'engagement',event_label:a.getAttribute('data-nav'),location:window.location.pathname});
+      const affDomains=["writesonic.com"];
+      function decorateURL(href){
+        const u=new URL(href, location.href);
+        const isAff=affDomains.some(d=>u.hostname.endsWith(d));
+        if(!isAff) return u.toString();
+        if(!u.searchParams.has('utm_source')) u.searchParams.set('utm_source','aiexperttoolkit');
+        if(!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium','affiliate');
+        if(!u.searchParams.has('utm_campaign')) u.searchParams.set('utm_campaign',(document.title||'site').toLowerCase().replace(/\s+/g,'-').slice(0,60));
+        if(!u.searchParams.has('utm_content')){
+          const linkText=(document.activeElement && document.activeElement.textContent || 'link').trim().toLowerCase().replace(/\s+/g,'-').slice(0,40);
+          const pageSlug=location.pathname.replace(/\/+$/,'').split('/').pop()||'home';
+          u.searchParams.set('utm_content', pageSlug + '--' + linkText);
         }
-        if(a.matches('[href$="/consulting.html"]') && window.gtag){
-          gtag('event','click_consult',{event_category:'engagement',event_label:'header',location:window.location.pathname});
-        }
-      }catch(_){}
-    }, {capture:true});
-
-    // Affiliate hygiene on header CTA links (data-aff)
-    header.addEventListener('click', function(e){
-      var a = e.target.closest('a[data-aff="true"]'); if(!a) return;
-      try{
-        // enforce rel/target
-        var rel=(a.getAttribute('rel')||'').toLowerCase();
-        ['nofollow','sponsored','noopener','noreferrer'].forEach(function(t){ if(rel.indexOf(t)===-1) rel += (rel?' ':'') + t; });
-        a.setAttribute('rel', rel.trim()); a.setAttribute('target','_blank');
-
-        // optional UTM decoration for known affiliate hosts
-        var affDomains = ["writesonic.com"]; // extend as needed
-        var u = new URL(a.href, location.href);
-        if(affDomains.some(function(d){ return u.hostname.endsWith(d); })){
-          if(!u.searchParams.has('utm_source')) u.searchParams.set('utm_source','aiexperttoolkit');
-          if(!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium','affiliate');
-          if(!u.searchParams.has('utm_campaign')) u.searchParams.set('utm_campaign',(document.title||'site').toLowerCase().replace(/\s+/g,'-').slice(0,60));
-          if(!u.searchParams.has('utm_content')){
-            var linkText=(a.textContent||'link').trim().toLowerCase().replace(/\s+/g,'-').slice(0,40);
-            var pageSlug=(location.pathname.replace(/\/+$/,'').split('/').pop()||'home');
-            u.searchParams.set('utm_content', pageSlug + '--' + linkText);
-          }
-          a.href = u.toString();
-        }
-        if(window.gtag){ gtag('event','click_affiliate',{event_category:'affiliate',event_label:(new URL(a.href)).hostname,value:1}); }
-      }catch(_){}
-    }, true);
-
-    // Prefetch Consulting on first hover/focus for snappier first paint
-    var consultLink = header.querySelector('a[href$="/consulting.html"]');
-    function prefetchOnce(){
-      var link = document.createElement('link'); link.rel='prefetch'; link.href='{{ site.baseurl }}/consulting.html'; document.head.appendChild(link);
-    }
-    if(consultLink){
-      consultLink.addEventListener('mouseenter', prefetchOnce, {once:true});
-      consultLink.addEventListener('focus', prefetchOnce, {once:true});
-    }
+        return u.toString();
+      }
+      header.addEventListener('click', function(e){
+        const a=e.target.closest('a[href]'); if(!a || !a.hasAttribute('data-aff')) return;
+        try{
+          a.href=decorateURL(a.href);
+          if(typeof gtag==='function'){ const host=(new URL(a.href)).hostname; gtag('event','click_affiliate',{event_category:'affiliate',event_label:host,value:1}); }
+        }catch(_){}
+      }, true);
+    }catch(_){}
   })();
   </script>
 
-  <!-- SiteNavigationElement JSON-LD (kept here so it stays accurate to header) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"SiteNavigationElement",
-    "name": ["Comparisons","Jasper vs Writesonic","Writesonic Review","Pricing","About","Contact","Consulting"],
-    "url": [
+    "name":["Comparisons","Jasper vs Writesonic","Writesonic Review","Pricing","About","Contact","Consulting"],
+    "url":[
       "{{ site.url }}{{ site.baseurl }}/comparisons.html",
       "{{ site.url }}{{ site.baseurl }}/jasper-vs-writesonic.html",
       "{{ site.url }}{{ site.baseurl }}/writesonic-review.html",
@@ -207,5 +110,8 @@
       "{{ site.url }}{{ site.baseurl }}/consulting.html"
     ]
   }
+  </script>
+</header>
+
   </script>
 </header>
