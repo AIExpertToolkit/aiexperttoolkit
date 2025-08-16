@@ -47,3 +47,4 @@ img{max-width:100%;height:auto}
 .breadcrumbs li{display:flex;align-items:center;gap:.35rem;color:#cfe9ff}
 .breadcrumbs li+li::before{content:"›";opacity:.6}
 .breadcrumbs [aria-current="page"]{color:#fff;font-weight:600;text-decoration:none}
+
