@@ -1,14 +1,41 @@
-{%- comment -%}
-GA4 loader. Accepts any of these keys in _config.yml:
-  ga4_measurement_id, ga4_id, ga4, google_analytics
-{%- endcomment -%}
-{% assign GAID = site.ga4_measurement_id | default: site.ga4_id | default: site.ga4 | default: site.google_analytics %}
-{% if GAID and GAID contains 'G-' %}
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ GAID | escape }}"></script>
+{% comment %}
+GA4 loader (sitewide).
+Set ga4_measurement_id in _config.yml (e.g., G-6E56LGF5M5).
+
+Scope control (optional):
+- page.disable_ga: true          → never track this page
+- site.ga_include: ["/x"]        → track ONLY these prefixes/paths
+- site.ga_exclude: ["/y"]        → track everything EXCEPT these prefixes/paths
+{% endcomment %}
+
+{% assign GAID  = site.ga4_measurement_id | default: site.google_analytics %}
+{% assign track = true %}
+{% assign path  = page.url | default: '' %}
+
+{%- if page.disable_ga == true -%}
+  {% assign track = false %}
+{%- endif -%}
+
+{%- if track and site.ga_include and site.ga_include.size > 0 -%}
+  {% assign track = false %}
+  {%- for p in site.ga_include -%}
+    {%- if path == p or path contains p -%}{% assign track = true %}{% break %}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if track and site.ga_exclude and site.ga_exclude.size > 0 -%}
+  {%- for p in site.ga_exclude -%}
+    {%- if path == p or path contains p -%}{% assign track = false %}{% break %}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if GAID and GAID contains 'G-' and track -%}
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ GAID }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', '{{ GAID | escape }}', {anonymize_ip:true});
+    gtag('config', '{{ GAID }}', { anonymize_ip: true });
   </script>
-{% endif %}
+{%- endif -%}
