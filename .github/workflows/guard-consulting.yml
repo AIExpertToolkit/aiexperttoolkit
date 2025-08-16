@@ -1,0 +1,26 @@
+name: guard-consulting
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+
+      - name: Check consulting page exists
+        run: |
+          test -f consulting.html || (echo "consulting.html missing" && exit 1)
+          grep -q "permalink:\s*/consulting\.html" consulting.html || (echo "permalink not /consulting.html" && exit 1)
+          grep -q "Build-With-You Website Sprint" consulting.html || (echo "Expected hero text missing" && exit 1)
+
+      - name: Check header has Consulting nav
+        run: |
+          test -f _includes/header.html || (echo "_includes/header.html missing" && exit 1)
+          grep -q "/consulting\.html" _includes/header.html || (echo "Consulting link not found in header" && exit 1)
+          grep -qi "Consulting" _includes/header.html || (echo "Consulting text not found" && exit 1)
+
+      - name: Summary
+        run: echo "Consulting page and header link present ✅"
