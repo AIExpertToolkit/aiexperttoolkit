@@ -1,6 +1,6 @@
 @echo off
 setlocal
-REM AETK — One-click full repo zip for ChatGPT analysis (excludes .git, _site, node_modules, vendor, .cache)
+REM AETK — One-click full repo zip for ChatGPT analysis (tar-based; excludes .git, _site, node_modules, vendor, .cache)
 
 REM Resolve repo root to this script’s folder
 set "ROOT=%~dp0"
@@ -16,23 +16,16 @@ for /f %%t in ('powershell -NoProfile -Command "(Get-Date).ToString(\"yyyyMMdd-H
 set "ZIP=%EXPORT%\AETK-%TS%.zip"
 echo Creating: "%ZIP%"
 
-REM Create the zip using a single-line PowerShell call (no line continuations)
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$r='%ROOT%'.TrimEnd('\'); $z='%ZIP%';" ^
-  "if (Test-Path $z) { Remove-Item $z -Force };" ^
-  "$items = Get-ChildItem -LiteralPath $r -Recurse -Force | Where-Object { $_.FullName -notmatch '\\\.git\\|\\node_modules\\|\\vendor\\|\\_site\\|\\\.cache\\' };" ^
-  "if (-not $items -or $items.Count -eq 0) { throw 'No files found to zip' };" ^
-  "Compress-Archive -Path ($items | Select-Object -ExpandProperty FullName) -DestinationPath $z -Force"
+pushd "%ROOT%"
+tar -a -c -f "%ZIP%" --exclude=.git --exclude=_site --exclude=node_modules --exclude=vendor --exclude=.cache .
+popd
 
 if not exist "%ZIP%" (
   echo [X] Failed to create zip.
   exit /b 1
 )
 
-REM Copy path to clipboard and open folder (done separately to avoid quotes/escaping issues)
-powershell -NoProfile -Command "Set-Clipboard -Value '%ZIP%'"
 start "" "%EXPORT%"
-
 echo Created: "%ZIP%"
-echo (Path copied to clipboard. Drag-and-drop it into this chat.)
+echo (Drag-and-drop this zip into ChatGPT.)
 exit /b 0
