@@ -79,11 +79,10 @@ noindex: true
   // Heuristics to set expectations based on path
   function guessExpect(path){
     const expect = {breadcrumbs:false, article:false, faq:false, service:false, affiliate:false, noindex: EXPECT_NOINDEX.has(path)};
-    // Homepage: nothing special by default
-    if (/comparisons\.html$/i.test(path)) expect.breadcrumbs = true; // index page (no Article expected)
-    if (/review|vs/i.test(path)) { expect.breadcrumbs = true; expect.article = true; } // money pages
+    if (/comparisons\.html$/i.test(path)) expect.breadcrumbs = true;                         // index page; no Article expected
+    if (/review|vs/i.test(path)) { expect.breadcrumbs = true; expect.article = true; }       // money pages
     if (/faq|review|vs|writesonic/i.test(path)) expect.faq = true;
-    if (path === "/consulting.html") { expect.breadcrumbs = true; expect.service = true; }
+    if (path === "/consulting.html") { expect.breadcrumbs = true; expect.service = true; }   // only the offer page expects Service
     if (/writesonic|review|vs/i.test(path)) expect.affiliate = true;
     return expect;
   }
@@ -95,9 +94,8 @@ noindex: true
   const summaryEl = $('#summary');
   const copyBtn = $('#copy');
   const openFailsBtn = $('#openFails');
-
-  // --- Row & CSV store ---
   const rows = []; // {url, check, outcome, details}
+
   function addRow(url, check, outcome, details){
     const tr = document.createElement('tr');
     tr.innerHTML = `<td><a href="${url}" target="_blank" rel="noopener">${url}</a></td>
@@ -108,7 +106,7 @@ noindex: true
     rows.push({url, check, outcome, details: (details||'').replace(/\s+/g,' ').trim()});
   }
 
-  function csvEscape(s){ return `"${String(s).replace(/"/g,'""')}"`; }
+  function csvEscape(s){ return '"' + String(s).replace(/"/g,'""') + '"'; }
   function rowsToCSV(){
     const header = ["URL","Check","Outcome","Details"];
     const lines = [header.map(csvEscape).join(",")];
@@ -177,7 +175,7 @@ noindex: true
     addRow(fullURL, 'HTTP status', res.ok?'OK':'FAIL', `status ${res.status}`);
     if(!res.ok) return;
 
-    const absolute = res.url; // final URL after any redirects
+    const absolute = res.url; // final URL after redirects if any
     const text = await res.text();
     const doc = new DOMParser().parseFromString(text, 'text/html');
 
