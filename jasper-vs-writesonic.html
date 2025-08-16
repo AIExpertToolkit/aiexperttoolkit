@@ -7,6 +7,15 @@ article: true
 breadcrumbs:
   - { name: "Comparisons", url: "/comparisons.html" }
   - { name: "Jasper vs Writesonic", url: "/jasper-vs-writesonic.html" }
+faq:
+  - q: "Is Writesonic good for e-commerce PDPs?"
+    a: "Yes—templates make titles, bullets, and short descriptions fast. Always review outputs for accuracy before publishing."
+  - q: "Does Jasper or Writesonic integrate with WordPress?"
+    a: "Both support common publishing flows; Writesonic’s lightweight approach is often simpler to roll out."
+  - q: "Which is cheaper?"
+    a: "It varies by plan and seats. Check each site for current pricing."
+  - q: "Will either replace a writer?"
+    a: "They accelerate writers; you still need human review for accuracy, tone, and compliance."
 ---
 
 <div class="wrap">
@@ -30,38 +39,14 @@ breadcrumbs:
     <div style="overflow:auto">
       <table role="table" aria-label="Jasper vs Writesonic feature comparison">
         <thead>
-          <tr>
-            <th scope="col">Factor</th>
-            <th scope="col">Writesonic</th>
-            <th scope="col">Jasper</th>
-          </tr>
+          <tr><th scope="col">Factor</th><th scope="col">Writesonic</th><th scope="col">Jasper</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Draft quality for web</th>
-            <td>Strong “first pass” outputs; easy to iterate.</td>
-            <td>Good with brand tone guidance; requires setup time.</td>
-          </tr>
-          <tr>
-            <th scope="row">Speed</th>
-            <td>Fast generations; lightweight UI.</td>
-            <td>Responsive, but heavier UI at times.</td>
-          </tr>
-          <tr>
-            <th scope="row">Learning curve</th>
-            <td>Low—jump in and ship.</td>
-            <td>Moderate—more features to configure.</td>
-          </tr>
-          <tr>
-            <th scope="row">Workflows</th>
-            <td>Practical templates for blog, PDP, ads.</td>
-            <td>Strong brand voice & campaigns focus.</td>
-          </tr>
-          <tr>
-            <th scope="row">Value</th>
-            <td>Flexible plans; good per-seat economics.</td>
-            <td>Priced like a marketing suite.</td>
-          </tr>
+          <tr><th scope="row">Draft quality for web</th><td>Strong “first pass” outputs; easy to iterate.</td><td>Good with brand tone guidance; requires setup time.</td></tr>
+          <tr><th scope="row">Speed</th><td>Fast generations; lightweight UI.</td><td>Responsive, but heavier UI at times.</td></tr>
+          <tr><th scope="row">Learning curve</th><td>Low—jump in and ship.</td><td>Moderate—more features to configure.</td></tr>
+          <tr><th scope="row">Workflows</th><td>Practical templates for blog, PDP, ads.</td><td>Strong brand voice & campaigns focus.</td></tr>
+          <tr><th scope="row">Value</th><td>Flexible plans; good per-seat economics.</td><td>Priced like a marketing suite.</td></tr>
         </tbody>
       </table>
     </div>
@@ -85,16 +70,6 @@ breadcrumbs:
 
   <section class="section" aria-labelledby="faqs">
     <h2 id="faqs">FAQs</h2>
-    {% assign faqs =  site.data.jvw_faq | default: nil %}
-    {% assign local_faq =  faqs | default:
-      [
-        { "q":"Is Writesonic good for e-commerce PDPs?", "a":"Yes—templates make titles, bullets, and short descriptions fast. Always review outputs for accuracy before publishing." },
-        { "q":"Does Jasper or Writesonic integrate with WordPress?", "a":"Both support common publishing flows; Writesonic’s lightweight approach is often simpler to roll out." },
-        { "q":"Which is cheaper?", "a":"It varies by plan and seats. Check each site for current pricing." },
-        { "q":"Will either replace a writer?", "a":"They accelerate writers; you still need human review for accuracy, tone, and compliance." }
-      ]
-    %}
-    {% assign page = page | merge: {"faq": local_faq} %}
     {% include faq.html %}
   </section>
 
@@ -103,5 +78,8 @@ breadcrumbs:
     <p><a class="btn" href="https://writesonic.com" target="_blank" rel="nofollow noopener" data-aff="true" aria-label="Start Writesonic free">Try Writesonic Free →</a></p>
   </section>
 </div>
+
+{% include mini_cta.html cta_url="https://writesonic.com" cta_label="Try Writesonic Free →" cta_mode="both" %}
+
 
 {% include mini_cta.html cta_url="https://writesonic.com" cta_label="Try Writesonic Free →" cta_mode="both" %}
