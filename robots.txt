@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://aiexperttoolkit.com/sitemap.xml
-Sitemap: https://aiexperttoolkit.com/sitemap_index.xml
