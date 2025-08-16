@@ -1,14 +1,21 @@
 ---
 layout: default
 title: Site Checks
+description: One-click self-audit for status, canonicals, robots, schema, breadcrumbs, GA4, affiliate CTAs, a11y, and sitemap hygiene.
 permalink: /checks.html
+noindex: true
 ---
 
 <div class="wrap" style="max-width:1100px;margin:auto;padding:18px">
   <header class="section" style="padding-top:8px">
     <h1>AI Expert Toolkit — Self-Audit</h1>
-    <p class="muted">One-click checks for status, canonicals, robots, schema, breadcrumbs, GA4, affiliate CTAs, and basic a11y. Runs entirely in your browser against the live site.</p>
-    <p><button id="run" class="btn">Run checks →</button> <span id="status" class="muted"></span></p>
+    <p class="muted">Runs in your browser against the live site. It discovers URLs from your sitemap(s) and runs checks in parallel.</p>
+    <p style="display:flex;gap:.5rem;flex-wrap:wrap">
+      <button id="run" class="btn">Run checks →</button>
+      <button id="copy" class="btn btn-ghost" disabled>Copy CSV</button>
+      <button id="openFails" class="btn btn-ghost" disabled>Open failing URLs</button>
+      <span id="status" class="muted" aria-live="polite"></span>
+    </p>
   </header>
 
   <section class="section">
@@ -32,20 +39,23 @@ permalink: /checks.html
   <section class="section">
     <h2>What “pass” looks like</h2>
     <ul class="muted">
-      <li><strong>Canonical:</strong> exactly one, pointing to the live absolute URL for that page.</li>
-      <li><strong>Robots meta:</strong> includes <code>index</code> and <code>follow</code>; not <code>noindex</code>.</li>
+      <li><strong>Canonical:</strong> exactly one, absolute, matches the page’s live URL.</li>
+      <li><strong>Robots meta:</strong> index/follow (unless the page is intentionally <code>noindex</code> like Terms or this Checks page).</li>
       <li><strong>Breadcrumbs:</strong> visible <code>&lt;nav class="breadcrumbs"&gt;</code> and JSON-LD <code>BreadcrumbList</code>.</li>
-      <li><strong>Schema:</strong> <em>Article</em> on review/comparison pages; <em>FAQPage</em> when FAQs exist; <em>Service</em> on consulting.</li>
-      <li><strong>GA4:</strong> a <code>gtag</code> snippet or a <code>googletagmanager</code> script tag is present.</li>
-      <li><strong>Affiliate CTAs:</strong> at least one link with <code>data-aff="true"</code>.</li>
-      <li><strong>Alt text:</strong> no images missing <code>alt</code> (or only decorative with <code>alt=""</code>).</li>
-      <li><strong>robots.txt / sitemap.xml:</strong> 200 OK; robots lists the sitemap; sitemap parses as XML and contains &lt;loc&gt; entries.</li>
+      <li><strong>Schema:</strong> <em>Article</em> on reviews/VS; <em>FAQPage</em> when FAQs exist; <em>Service</em> on <code>/consulting.html</code>.</li>
+      <li><strong>GA4:</strong> a <code>gtag</code> loader or <code>googletagmanager</code> script present.</li>
+      <li><strong>Affiliate CTAs:</strong> at least one link with <code>data-aff="true"</code> on relevant pages.</li>
+      <li><strong>Alt text:</strong> no images missing <code>alt</code> (decorative images use <code>alt=""</code>).</li>
+      <li><strong>Image dimensions:</strong> images set <code>width</code> and <code>height</code> (helps prevent CLS).</li>
+      <li><strong>robots.txt / sitemap:</strong> robots lists a sitemap; sitemap parses; index URLs are reachable.</li>
     </ul>
   </section>
 </div>
 
 <style>
   .btn{display:inline-block;background:#22d3ee;color:#072635;padding:.6rem .9rem;font-size:1.05rem;border-radius:10px;font-weight:700;text-decoration:none;border:0;cursor:pointer}
+  .btn[disabled]{opacity:.6;cursor:not-allowed}
+  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.25);color:#e6f1ff}
   .muted{color:#9fb6d1}
   .ok{color:#22d3ee;font-weight:700}
   .warn{color:#eab308;font-weight:700}
@@ -57,22 +67,34 @@ permalink: /checks.html
 
 <script>
 (function(){
+  // --- Config ---
   const ORIGIN = location.origin;
-  const PAGES = [
-    {path:'/', type:'html', expect:{breadcrumbs:false, article:false, faq:false}},
-    {path:'/comparisons.html', type:'html', expect:{breadcrumbs:true}},
-    {path:'/jasper-vs-writesonic.html', type:'html', expect:{breadcrumbs:true, article:true, faq:true, affiliate:true}},
-    {path:'/writesonic-review.html', type:'html', expect:{breadcrumbs:true, article:true, faq:true, affiliate:true}},
-    {path:'/pricing.html', type:'html', expect:{breadcrumbs:true}},
-    {path:'/consulting.html', type:'html', expect:{breadcrumbs:true, service:true}},
-    {path:'/robots.txt', type:'text'},
-    {path:'/sitemap.xml', type:'xml'}
+  const EXTRA_HTML_PATHS = [
+    "/consulting-terms.html",  // intentionally noindexed but important
+    "/checks.html"             // this page (noindex)
   ];
+  const EXPECT_NOINDEX = new Set(["/consulting-terms.html", "/checks.html"]);
+  const CONCURRENCY = 8;
 
+  // Heuristics to set expectations based on path
+  function guessExpect(path){
+    const expect = {breadcrumbs:false, article:false, faq:false, service:false, affiliate:false, noindex: EXPECT_NOINDEX.has(path)};
+    if (/comparisons\.html$/i.test(path)) expect.breadcrumbs = true;                         // index page; no Article expected
+    if (/review|vs/i.test(path)) { expect.breadcrumbs = true; expect.article = true; }       // money pages
+    if (/faq|review|vs|writesonic/i.test(path)) expect.faq = true;
+    if (path === "/consulting.html") { expect.breadcrumbs = true; expect.service = true; }   // only the offer page expects Service
+    if (/writesonic|review|vs/i.test(path)) expect.affiliate = true;
+    return expect;
+  }
+
+  // --- DOM helpers ---
   const $ = sel => document.querySelector(sel);
   const tbody = $('#tbody');
   const statusEl = $('#status');
   const summaryEl = $('#summary');
+  const copyBtn = $('#copy');
+  const openFailsBtn = $('#openFails');
+  const rows = []; // {url, check, outcome, details}
 
   function addRow(url, check, outcome, details){
     const tr = document.createElement('tr');
@@ -81,25 +103,37 @@ permalink: /checks.html
                     <td class="${outcome.toLowerCase()}">${outcome}</td>
                     <td><div style="white-space:pre-wrap">${details||''}</div></td>`;
     tbody.appendChild(tr);
+    rows.push({url, check, outcome, details: (details||'').replace(/\s+/g,' ').trim()});
   }
+
+  function csvEscape(s){ return '"' + String(s).replace(/"/g,'""') + '"'; }
+  function rowsToCSV(){
+    const header = ["URL","Check","Outcome","Details"];
+    const lines = [header.map(csvEscape).join(",")];
+    for (const r of rows) lines.push([r.url,r.check,r.outcome,r.details].map(csvEscape).join(","));
+    return lines.join("\n");
+  }
+
+  // --- Page checks ---
+  function normalizeUrl(u){ return u.replace(/\/+$/,'') + "/"; }
 
   function onlyOneCanonical(doc, absoluteUrl){
     const links = [...doc.querySelectorAll('link[rel="canonical"]')];
-    if(links.length !== 1) return { pass:false, details:`Found ${links.length}` };
+    if (links.length !== 1) return { pass:false, details:`Found ${links.length}` };
     const href = links[0].getAttribute('href') || '';
-    const norm = (u)=>u.replace(/\/+$/,'')+'/';
-    const ok = norm(href) === norm(absoluteUrl);
+    const ok = normalizeUrl(href) === normalizeUrl(absoluteUrl);
     return { pass: ok, details: ok ? href : `Expected ${absoluteUrl} but saw ${href}` };
   }
 
-  function robotsMetaOK(doc){
+  function robotsMetaCheck(doc, expectNoindex){
     const tag = doc.querySelector('meta[name="robots"]');
     if(!tag) return { pass:false, details:'No <meta name="robots">' };
     const c = (tag.getAttribute('content')||'').toLowerCase();
     const hasIndex = /(^|[\s,;])index([\s,;]|$)/.test(c);
     const hasFollow = /(^|[\s,;])follow([\s,;]|$)/.test(c);
-    const noindex = /noindex/.test(c);
-    return { pass: hasIndex && hasFollow && !noindex, details: c };
+    const hasNoindex = /(^|[\s,;])noindex([\s,;]|$)/.test(c);
+    const pass = expectNoindex ? (hasNoindex && !hasIndex) : (hasIndex && hasFollow && !hasNoindex);
+    return { pass, details:c };
   }
 
   function ga4Present(html){
@@ -120,15 +154,20 @@ permalink: /checks.html
             else if(Array.isArray(obj['@type'])){ obj['@type'].forEach(t=>types.push(t)); }
           }
         });
-      }catch(e){}
+      }catch(_){}
     });
     return types;
   }
 
   function imgAltAudit(doc){
     const imgs = [...doc.querySelectorAll('img')];
-    const missing = imgs.filter(img=>!img.hasAttribute('alt'));
-    return { total: imgs.length, missing: missing.length };
+    const missingAlt = imgs.filter(img=>!img.hasAttribute('alt'));
+    const missingSize = imgs.filter(img=>!img.hasAttribute('width') || !img.hasAttribute('height'));
+    return { total: imgs.length, missingAlt: missingAlt.length, missingSize: missingSize.length };
+  }
+
+  function headerHasConsulting(doc){
+    return !!doc.querySelector('header.site-header a[href$="/consulting.html"]');
   }
 
   async function checkHTML(fullURL, expect){
@@ -136,25 +175,30 @@ permalink: /checks.html
     addRow(fullURL, 'HTTP status', res.ok?'OK':'FAIL', `status ${res.status}`);
     if(!res.ok) return;
 
+    const absolute = res.url; // final URL after redirects if any
     const text = await res.text();
     const doc = new DOMParser().parseFromString(text, 'text/html');
 
     // Canonical
-    const canonical = onlyOneCanonical(doc, fullURL);
+    const canonical = onlyOneCanonical(doc, absolute);
     addRow(fullURL, 'Canonical (single & correct)', canonical.pass?'OK':'FAIL', canonical.details);
 
-    // Robots meta
-    const robots = robotsMetaOK(doc);
-    addRow(fullURL, 'Robots meta', robots.pass?'OK':'FAIL', robots.details);
+    // Robots meta (index vs expected noindex)
+    const robots = robotsMetaCheck(doc, !!expect.noindex);
+    addRow(fullURL, expect.noindex ? 'Robots meta (noindex expected)' : 'Robots meta', robots.pass?'OK':'FAIL', robots.details);
+
+    // Header → Consulting link
+    const hasConsult = headerHasConsulting(doc);
+    addRow(fullURL, 'Header has Consulting link', hasConsult?'OK':'WARN', hasConsult?'Found':'Not found');
 
     // Breadcrumbs UI
-    if(expect && expect.breadcrumbs){
+    if(expect.breadcrumbs){
       const hasCrumbs = !!doc.querySelector('nav.breadcrumbs');
-      addRow(fullURL, 'Breadcrumbs UI', hasCrumbs?'OK':'FAIL', hasCrumbs?'Found .breadcrumbs':'Not found');
+      addRow(fullURL, 'Breadcrumbs UI', hasCrumbs?'OK':'WARN', hasCrumbs?'Found .breadcrumbs':'Not found');
     }
 
     // Affiliate CTA presence
-    if(expect && expect.affiliate){
+    if(expect.affiliate){
       const aff = !!doc.querySelector('a[data-aff="true"]');
       addRow(fullURL, 'Affiliate CTA(s)', aff?'OK':'WARN', aff?'Found data-aff="true"':'None found');
     }
@@ -168,27 +212,31 @@ permalink: /checks.html
     addRow(fullURL, 'JSON-LD types found', types.length?'OK':'WARN', types.join(', ') || 'none');
 
     // Expected schema types
-    if(expect && expect.article){
+    if(expect.article){
       const ok = types.includes('Article') || types.includes('BlogPosting');
       addRow(fullURL, 'Article schema', ok?'OK':'WARN', ok?'Present':'Not detected');
     }
-    if(expect && expect.faq){
+    if(expect.faq){
       const ok = types.includes('FAQPage');
       addRow(fullURL, 'FAQPage schema', ok?'OK':'WARN', ok?'Present':'Not detected');
     }
-    if(expect && expect.service){
+    if(expect.service){
       const ok = types.includes('Service');
       addRow(fullURL, 'Service schema', ok?'OK':'WARN', ok?'Present':'Not detected');
     }
-    if(expect && (expect.breadcrumbs)){
+    if(expect.breadcrumbs){
       const ok = types.includes('BreadcrumbList');
       addRow(fullURL, 'BreadcrumbList schema', ok?'OK':'WARN', ok?'Present':'Not detected');
     }
 
-    // Basic a11y: <img> alt
-    const altAudit = imgAltAudit(doc);
-    const a11yOk = altAudit.missing === 0;
-    addRow(fullURL, 'Images with missing alt', a11yOk?'OK':'WARN', `${altAudit.missing} / ${altAudit.total} missing alt`);
+    // Basic a11y & CWV
+    const { total, missingAlt, missingSize } = imgAltAudit(doc);
+    addRow(fullURL, 'Images missing alt', missingAlt===0?'OK':'WARN', `${missingAlt} / ${total} missing alt`);
+    addRow(fullURL, 'Images missing width/height', missingSize===0?'OK':'WARN', `${missingSize} / ${total} without w/h`);
+
+    // Headings sanity
+    const h1s = doc.querySelectorAll('h1').length;
+    addRow(fullURL, 'Single <h1>', h1s===1?'OK':'WARN', `Found ${h1s}`);
   }
 
   async function checkRobots(fullURL){
@@ -196,10 +244,8 @@ permalink: /checks.html
     addRow(fullURL, 'HTTP status', res.ok?'OK':'FAIL', `status ${res.status}`);
     if(!res.ok) return;
     const txt = await res.text();
-    const hasSitemap = /Sitemap:\s*https?:\/\/[^ \r\n]+\/sitemap\.xml/i.test(txt);
-    const allowAll = /Allow:\s*\/\s*$/mi.test(txt);
+    const hasSitemap = /Sitemap:\s*https?:\/\/[^ \r\n]+\/sitemap(\.xml|_index\.xml)/i.test(txt);
     addRow(fullURL, 'robots.txt has Sitemap', hasSitemap?'OK':'FAIL', hasSitemap?'Found':'Missing');
-    addRow(fullURL, 'robots.txt allows /', allowAll?'OK':'WARN', allowAll?'Allow: /':'Different policy');
   }
 
   async function checkSitemap(fullURL){
@@ -214,27 +260,132 @@ permalink: /checks.html
     addRow(fullURL, 'Sitemap type', (isIndex||isUrlset)?'OK':'WARN', isIndex?'sitemapindex':(isUrlset?'urlset':'unknown'));
   }
 
-  async function run(){
-    tbody.innerHTML = '';
-    summaryEl.textContent = 'Running…';
-    const started = performance.now();
-    for(const p of PAGES){
-      const url = ORIGIN + p.path.replace(/\/{2,}/g,'/');
-      try{
-        if(p.type==='html') await checkHTML(url, p.expect||{});
-        else if(p.type==='text') await checkRobots(url);
-        else if(p.type==='xml') await checkSitemap(url);
-      }catch(err){
-        addRow(url, 'Fetch', 'FAIL', String(err));
-      }
-    }
-    const ms = Math.round(performance.now() - started);
-    const passes = [...tbody.querySelectorAll('.ok')].length;
-    const warns = [...tbody.querySelectorAll('.warn')].length;
-    const fails = [...tbody.querySelectorAll('.fail')].length;
-    summaryEl.textContent = `Done in ${ms}ms — Pass: ${passes}, Warn: ${warns}, Fail: ${fails}.`;
+  // --- Sitemap discovery ---
+  async function fetchText(url){
+    const res = await fetch(url, {cache:'no-store'});
+    if(!res.ok) return { ok:false, status:res.status, text:'' };
+    return { ok:true, status:res.status, text: await res.text() };
   }
 
-  document.getElementById('run').addEventListener('click', run);
+  function extractLocs(xml){
+    const locs = [];
+    const re = /<loc>([^<]+)<\/loc>/gi;
+    let m; while((m = re.exec(xml))){ locs.push(m[1].trim()); }
+    return locs;
+  }
+
+  function toPath(u){
+    try{
+      const url = new URL(u, ORIGIN);
+      if (url.origin !== ORIGIN) return null; // same-origin only
+      return url.pathname + (url.search||'');
+    }catch(_){ return null; }
+  }
+
+  async function discoverPaths(){
+    const paths = new Set();
+
+    // Try sitemap index first
+    const idx = await fetchText(ORIGIN + "/sitemap_index.xml");
+    if(idx.ok && /<sitemapindex/i.test(idx.text)){
+      addRow(ORIGIN + "/sitemap_index.xml", "Sitemap index", "OK", "Found sitemap_index.xml");
+      for(const child of extractLocs(idx.text)){
+        const childTxt = await fetchText(child);
+        if(childTxt.ok){
+          extractLocs(childTxt.text).forEach(u => { const p = toPath(u); if(p) paths.add(p); });
+        }
+      }
+    } else {
+      // Fallback to /sitemap.xml
+      const sm = await fetchText(ORIGIN + "/sitemap.xml");
+      if(sm.ok){
+        addRow(ORIGIN + "/sitemap.xml", "Sitemap", "OK", "Found sitemap.xml");
+        extractLocs(sm.text).forEach(u => { const p = toPath(u); if(p) paths.add(p); });
+      }
+    }
+
+    // Seeds that might be intentionally noindexed or omitted from sitemap
+    EXTRA_HTML_PATHS.forEach(p => paths.add(p));
+
+    // Always include a few key pages if they exist at common paths
+    ["/","/comparisons.html","/jasper-vs-writesonic.html","/writesonic-review.html","/pricing.html","/about.html","/contact.html","/consulting.html"]
+      .forEach(p => paths.add(p));
+
+    // Also test robots/sitemap endpoints explicitly
+    paths.add("/robots.txt"); paths.add("/sitemap.xml"); paths.add("/sitemap_index.xml");
+
+    return [...paths];
+  }
+
+  // --- Runner with limited concurrency ---
+  async function runQueue(items, worker, concurrency){
+    const q = items.slice(); let active = 0, i = 0;
+    return new Promise(resolve=>{
+      function next(){
+        if (!q.length && active===0) return resolve();
+        while(active < concurrency && q.length){
+          const item = q.shift(); active++; i++;
+          statusEl.textContent = `Running… ${i}/${items.length}`;
+          Promise.resolve(worker(item)).catch(()=>{}).finally(()=>{ active--; next(); });
+        }
+      }
+      next();
+    });
+  }
+
+  // --- Main run ---
+  async function run(){
+    tbody.innerHTML = ''; rows.length = 0;
+    summaryEl.textContent = 'Discovering URLs…';
+    statusEl.textContent = '';
+
+    const paths = await discoverPaths();
+
+    // Split endpoints by type
+    const htmlPaths = paths.filter(p => /\.xml$|robots\.txt$/i.test(p) === false);
+    const robotsPaths = paths.filter(p => /robots\.txt$/i.test(p));
+    const xmlPaths = paths.filter(p => /\.xml$/i.test(p));
+
+    // Run checks
+    const t0 = performance.now();
+    await runQueue(htmlPaths, async (path)=>{
+      const url = ORIGIN + path;
+      const expect = guessExpect(path);
+      await checkHTML(url, expect);
+    }, CONCURRENCY);
+
+    for(const path of robotsPaths){ await checkRobots(ORIGIN + path); }
+    for(const path of xmlPaths){ await checkSitemap(ORIGIN + path); }
+
+    // Summary
+    const ms = Math.round(performance.now() - t0);
+    const passes = [...tbody.querySelectorAll('.ok')].length;
+    const warns  = [...tbody.querySelectorAll('.warn')].length;
+    const fails  = [...tbody.querySelectorAll('.fail')].length;
+    summaryEl.textContent = `Done in ${ms}ms — Pass: ${passes}, Warn: ${warns}, Fail: ${fails}. Checked ${htmlPaths.length} HTML page(s) + ${robotsPaths.length} robots + ${xmlPaths.length} sitemap(s).`;
+
+    // Enable utilities
+    copyBtn.disabled = rows.length === 0;
+    openFailsBtn.disabled = fails === 0;
+    statusEl.textContent = 'Completed.';
+  }
+
+  // --- UI bindings ---
+  $('#run').addEventListener('click', run);
+
+  copyBtn.addEventListener('click', async function(){
+    try{
+      await navigator.clipboard.writeText(rowsToCSV());
+      statusEl.textContent = 'CSV copied to clipboard.';
+    }catch(_){
+      statusEl.textContent = 'Copy failed.';
+    }
+  });
+
+  openFailsBtn.addEventListener('click', function(){
+    const failUrls = new Set();
+    rows.forEach(r => { if (r.outcome === 'FAIL') failUrls.add(r.url); });
+    for (const u of failUrls) window.open(u, '_blank');
+  });
 })();
 </script>

@@ -1,12 +1,14 @@
 {% comment %}
 GA4 loader (sitewide).
-- Set ga4_measurement_id in _config.yml (e.g., G-6E56LGF5M5).
-- Scope control:
-    * page.disable_ga: true     -> never track this page
-    * site.ga_include: ["/x"]   -> track ONLY these prefixes/paths
-    * site.ga_exclude: ["/y"]   -> track everything EXCEPT these prefixes/paths
+Set ga4_measurement_id in _config.yml (e.g., G-6E56LGF5M5).
+
+Scope control (optional):
+- page.disable_ga: true          → never track this page
+- site.ga_include: ["/x"]        → track ONLY these prefixes/paths
+- site.ga_exclude: ["/y"]        → track everything EXCEPT these prefixes/paths
 {% endcomment %}
-{% assign GAID = site.ga4_measurement_id | default: site.google_analytics %}
+
+{% assign GAID  = site.ga4_measurement_id | default: site.google_analytics %}
 {% assign track = true %}
 {% assign path  = page.url | default: '' %}
 
@@ -14,18 +16,16 @@ GA4 loader (sitewide).
   {% assign track = false %}
 {%- endif -%}
 
-{%- if site.ga_include and site.ga_include.size > 0 -%}
+{%- if track and site.ga_include and site.ga_include.size > 0 -%}
   {% assign track = false %}
   {%- for p in site.ga_include -%}
-    {%- if path == p or path contains p -%}
-      {% assign track = true %}{% break %}
-    {%- endif -%}
+    {%- if path == p or path contains p -%}{% assign track = true %}{% break %}{%- endif -%}
   {%- endfor -%}
-{%- elsif site.ga_exclude and site.ga_exclude.size > 0 -%}
+{%- endif -%}
+
+{%- if track and site.ga_exclude and site.ga_exclude.size > 0 -%}
   {%- for p in site.ga_exclude -%}
-    {%- if path == p or path contains p -%}
-      {% assign track = false %}{% break %}
-    {%- endif -%}
+    {%- if path == p or path contains p -%}{% assign track = false %}{% break %}{%- endif -%}
   {%- endfor -%}
 {%- endif -%}
 

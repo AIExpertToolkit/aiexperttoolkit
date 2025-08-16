@@ -1,0 +1,25 @@
+name: guard-consulting
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure consulting page exists
+        run: |
+          test -f consulting.html || (echo "Missing consulting.html" && exit 1)
+
+      - name: Ensure header links to consulting
+        run: |
+          grep -RIn "href=\"{{ site.baseurl }}/consulting.html\"" _includes/header.html >/dev/null || \
+          (echo "Header missing consulting link" && exit 1)
+
+      - name: Quick lint (no placeholders)
+        run: |
+          ! grep -RIn "TODO\\|lorem ipsum\\|PLACEHOLDER" . || \
+          (echo "Found placeholder text" && exit 1)

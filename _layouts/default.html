@@ -1,83 +1,63 @@
----
-# base page shell
----
-
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title | default: "AI Expert Toolkit" }}</title>
-  <meta name="description" content="{{ page.description | default: site.description | escape }}">
+    <title>
+      {% if page.title %}{{ page.title }} | {{ site.title | default: "AI Expert Toolkit" }}{% else %}{{ site.title | default: "AI Expert Toolkit" }}{% endif %}
+    </title>
 
-  {%- comment -%} Canonical & robots {%- endcomment -%}
-  {% assign canon = page.canonical_url | default: page.url | absolute_url %}
-  <link rel="canonical" href="{{ canon }}">
-  {% if page.noindex %}
-    <meta name="robots" content="noindex, nofollow">
-  {% else %}
-    <meta name="robots" content="index, follow, max-image-preview:large">
-  {% endif %}
-
-  {%- comment -%} Basic OG/Twitter {%- endcomment -%}
-  <meta property="og:title" content="{{ page.title | default: site.title }}">
-  <meta property="og:description" content="{{ page.description | default: site.description }}">
-  <meta property="og:url" content="{{ canon }}">
-  <meta property="og:type" content="website">
-  {% assign ogimg = page.image | default: site.logo | default: '/img/og/default.jpg' | absolute_url %}
-  <meta property="og:image" content="{{ ogimg }}">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <link rel="preload" as="style" href="{{ '/assets/css/base.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/base.css' | relative_url }}">
-
-  {%- comment -%} Sitewide GA4 {%- endcomment -%}
-  {% include ga4.html %}
-
-  {%- comment -%} BreadcrumbList JSON-LD (auto) {%- endcomment -%}
-  {% capture is_home %}{% if page.url == "/" %}true{% endif %}{% endcapture %}
-  {% if is_home != "true" %}
-    {% assign crumbs = page.breadcrumbs %}
-    {% if crumbs == nil or crumbs == empty %}
-      {% assign crumbs =  site.empty_array | push: {"name":"Home","url":"/"} | push: {"name": page.nav_label | default: page.title | default: canon, "url": page.url } %}
+    {% if page.description %}
+      <meta name="description" content="{{ page.description | escape }}">
+    {% elsif site.description %}
+      <meta name="description" content="{{ site.description | escape }}">
     {% endif %}
-    {% assign pos = 0 %}
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"BreadcrumbList",
-      "itemListElement": [
-        {%- for c in crumbs -%}
-          {%- assign pos = pos | plus: 1 -%}
-          {
-            "@type":"ListItem",
-            "position": {{ pos }},
-            "name": {{ c.name | jsonify }},
-            "item": {{ c.url | absolute_url | jsonify }}
-          }{% unless forloop.last %},{% endunless %}
-        {%- endfor -%}
-      ]
-    }
-    </script>
-  {% endif %}
 
-  {%- comment -%} Conditional Article JSON-LD (reviews/comparisons) {%- endcomment -%}
-  {% include jsonld-article.html %}
-</head>
-<body>
-  <header class="site-header" role="banner">
+    {%- comment -%} Canonical & robots {%- endcomment -%}
+    {%- assign canonical = page.url | absolute_url -%}
+    <link rel="canonical" href="{{ canonical }}">
+    {%- if page.noindex == true -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- else -%}
+      <meta name="robots" content="index, follow, max-image-preview:large">
+    {%- endif -%}
+
+    {%- comment -%} Open Graph/Twitter basics {%- endcomment -%}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title | default: "AI Expert Toolkit" }}{% endif %}">
+    <meta property="og:url" content="{{ canonical }}">
+    {% if page.description or site.description %}
+      <meta property="og:description" content="{{ page.description | default: site.description | escape }}">
+    {% endif %}
+    <meta name="twitter:card" content="summary_large_image">
+
+    {%- comment -%} Styles {%- endcomment -%}
+    <link rel="preload" href="{{ '/assets/css/base.css' | relative_url }}" as="style">
+    <link rel="stylesheet" href="{{ '/assets/css/base.css' | relative_url }}">
+
+    {%- comment -%} GA4 include (uses site.ga4_measurement_id) {%- endcomment -%}
+    {% include ga4.html %}
+
+    {%- comment -%} Favicons etc. if present {%- endcomment -%}
+    {% if site.favicon %}<link rel="icon" href="{{ site.favicon | relative_url }}">{% endif %}
+  </head>
+
+  <body class="{{ page.layout | default: 'default' }}">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    {%- comment -%} Header {%- endcomment -%}
     {% include header.html %}
-  </header>
 
-  <main id="content" class="content" role="main">
-    {{ content }}
-  </main>
+    <main id="main" role="main">
+      {{ content }}
+    </main>
 
-  <footer class="site-footer" role="contentinfo">
+    {%- comment -%} Footer {%- endcomment -%}
     {% include footer.html %}
-  </footer>
 
-  <script>document.documentElement.classList.add('js');</script>
-</body>
+    {%- comment -%} Site JS (optional) {%- endcomment -%}
+    {% if site.js %}<script src="{{ site.js | relative_url }}" defer></script>{% endif %}
+  </body>
 </html>

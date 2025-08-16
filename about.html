@@ -1,106 +1,32 @@
 ---
 layout: default
-title: About AI Expert Toolkit
-description: We test, compare, and explain AI tools so you pick the right one faster—with clear pros/cons, pricing, and step‑by‑step guides.
+title: About
+description: Who runs AI Expert Toolkit, how we work, and our editorial standards.
 permalink: /about.html
-og_image: {{ site.baseurl }}/assets/img/og-default.jpg
+breadcrumbs:
+  - { name: "About", url: "/about.html" }
+article: false
 ---
 
-<style>
-  .about-hero{border-radius:16px;background:linear-gradient(135deg,#0F172A 0%,#123044 100%);
-    padding:clamp(18px,3vw,26px);margin:clamp(12px,2vw,18px) 0;border:1px solid rgba(255,255,255,.06)}
-  .cols{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-  .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px}
-  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
-  .kpi .card h3{margin:0;font-size:1.6rem}
-  .list{margin:8px 0 0 1.1rem}
-  @media (max-width:900px){.cols{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}}
-</style>
+<div class="wrap">
+  {% include breadcrumbs.html %}
 
-<section class="about-hero">
-  <div class="wrap">
-    <h1 style="margin:.2rem 0 .3rem 0;font-size:clamp(1.9rem,3.2vw,2.4rem)">About AI Expert Toolkit</h1>
-    <p class="muted">We’re a small, focused team that reviews, compares, and explains AI tools—so you can pick the right one, first try.</p>
-  </div>
-</section>
+  <header class="section" style="padding-top:8px">
+    <h1>About AI Expert Toolkit</h1>
+    <p class="muted">We publish hands-on reviews and comparison guides for AI tools. Our promise: clear methods, reproducible tests, and fast, production-safe code you can copy/paste.</p>
+  </header>
 
-<section class="section">
-  <div class="wrap cols">
-    <article class="card">
-      <h2>What we do</h2>
-      <p>AI moves fast. We make it practical. Every review and comparison follows a consistent test plan:
-      same prompts, same tasks, and honest commentary on output quality, speed, and cost.</p>
+  <section class="section">
+    <h2>What we believe</h2>
+    <ul class="checks">
+      <li><strong>Proof over hype.</strong> We show screenshots, metrics, and gists you can run.</li>
+      <li><strong>Reader-first.</strong> No dark patterns, no gated content, no fake scarcity.</li>
+      <li><strong>E-E-A-T.</strong> Real workflows, repeatable SOPs, and transparent affiliate disclosures.</li>
+    </ul>
+  </section>
 
-      <h3>Our review framework</h3>
-      <ul class="list">
-        <li><strong>Hands‑on tests:</strong> We recreate common workflows (blog drafts, image sets, video explainers, briefs).</li>
-        <li><strong>Comparable prompts:</strong> Side‑by‑side inputs to highlight strengths and limitations.</li>
-        <li><strong>Real pricing math:</strong> We model monthly spend for solo, team, and scale use.</li>
-        <li><strong>Ranked takeaways:</strong> Clear “best for” scenarios—not one‑size‑fits‑all advice.</li>
-      </ul>
-
-      <h3>Who we help</h3>
-      <ul class="list">
-        <li>Entrepreneurs and small teams choosing their first stack</li>
-        <li>Marketers and creators looking for speed + consistency</li>
-        <li>Operators who need automation without technical debt</li>
-      </ul>
-
-      <p>Start with our <a href="{{ site.baseurl }}/comparisons.html">AI tool comparisons</a> or jump into deep‑dives:
-        <a href="{{ site.baseurl }}/comparisons.html#jasper">Jasper</a>,
-        <a href="{{ site.baseurl }}/comparisons.html#chatgpt">ChatGPT</a>,
-        <a href="{{ site.baseurl }}/comparisons.html#midjourney">Midjourney</a>,
-        <a href="{{ site.baseurl }}/comparisons.html#synthesia">Synthesia</a>,
-        <a href="{{ site.baseurl }}/comparisons.html#surfer">Surfer SEO</a>,
-        <a href="{{ site.baseurl }}/comparisons.html#writesonic">Writesonic</a>.
-      </p>
-    </article>
-
-    <aside class="card">
-      <h2>Our principles</h2>
-      <ul class="list">
-        <li><strong>Trust first:</strong> No hype, no pay‑to‑win rankings.</li>
-        <li><strong>Clarity:</strong> Plain‑English verdicts, screenshots, and steps.</li>
-        <li><strong>Speed:</strong> We favor tools and setups that save you time.</li>
-      </ul>
-
-      <h3 style="margin-top:12px">At‑a‑glance</h3>
-      <div class="kpi">
-        <div class="card"><h3>6</h3><p class="muted">Core categories</p></div>
-        <div class="card"><h3>30+</h3><p class="muted">In‑depth guides</p></div>
-        <div class="card"><h3>50+</h3><p class="muted">Tools tracked</p></div>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="card">
-      <h2>How we make money</h2>
-      <p class="muted">Transparency matters. Some links on our site are affiliate links—if you click and buy, we may earn a commission at no extra cost to you. We only recommend tools we’d use ourselves.</p>
-      <p>Read our <a href="{{ site.baseurl }}/disclosure.html">Affiliate Disclosure</a> and <a href="{{ site.baseurl }}/privacy.html">Privacy Policy</a> for details.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" aria-label="Get in touch">
-  <div class="wrap">
-    <div class="card">
-      <h2>Contact us</h2>
-      <p>Have a tool we should test, or a question about a workflow? We’d love to hear it.</p>
-      <a class="btn" href="{{ site.baseurl }}/contact.html">Contact</a>
-    </div>
-  </div>
-</section>
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"AI Expert Toolkit",
-  "url":"{{ site.url }}{{ site.baseurl }}/",
-  "sameAs": [],
-  "logo":"{{ site.url }}{{ site.baseurl }}/assets/img/og-default.jpg"
-}
-</script>
+  <section class="section">
+    <h2>Editorial standards</h2>
+    <p>Every money page ships with: a clear scope, test plan, known caveats, and a changelog. See our <a href="{{ site.baseurl }}/editorial-policy.html">Editorial Policy</a>.</p>
+  </section>
+</div>
