@@ -1,0 +1,14 @@
+{%- comment -%}
+GA4 loader. Looks for any of these keys so we don't have to edit _config.yml tonight:
+  ga4_measurement_id, ga4_id, ga4, google_analytics
+{%- endcomment -%}
+{% assign GAID = site.ga4_measurement_id | default: site.ga4_id | default: site.ga4 | default: site.google_analytics %}
+{% if GAID and GAID contains 'G-' %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ GAID | escape }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ GAID | escape }}', {anonymize_ip:true});
+  </script>
+{% endif %}
