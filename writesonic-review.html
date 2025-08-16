@@ -7,6 +7,13 @@ article: true
 breadcrumbs:
   - { name: "Comparisons", url: "/comparisons.html" }
   - { name: "Writesonic Review", url: "/writesonic-review.html" }
+faq:
+  - q: "Is there a free trial?"
+    a: "Trials and promos change—check the official site for current offers."
+  - q: "Does Writesonic work with WordPress?"
+    a: "Yes, workflows are straightforward for most WP setups."
+  - q: "Can I use it for SEO content?"
+    a: "It can speed up outlines and drafts. We recommend human review and fact-checking before publishing."
 ---
 
 <div class="wrap">
@@ -44,11 +51,6 @@ breadcrumbs:
 
   <section class="section" aria-labelledby="faq">
     <h2 id="faq">FAQ</h2>
-    {% assign page = page | merge: {"faq": [
-      { "q":"Is there a free trial?", "a":"Trials and promos change—check the official site for current offers." },
-      { "q":"Does Writesonic work with WordPress?", "a":"Yes, workflows are straightforward for most WP setups." },
-      { "q":"Can I use it for SEO content?", "a":"It can speed up outlines and drafts. We recommend human review and fact-checking before publishing." }
-    ] } %}
     {% include faq.html %}
   </section>
 
@@ -57,5 +59,8 @@ breadcrumbs:
     <p><a class="btn" href="https://writesonic.com" target="_blank" rel="nofollow noopener" data-aff="true" aria-label="Start Writesonic free">Try Writesonic Free →</a></p>
   </section>
 </div>
+
+{% include mini_cta.html cta_url="https://writesonic.com" cta_label="Try Writesonic Free →" cta_mode="both" %}
+
 
 {% include mini_cta.html cta_url="https://writesonic.com" cta_label="Try Writesonic Free →" cta_mode="both" %}
