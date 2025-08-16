@@ -1,63 +1,47 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal EnableExtensions EnableDelayedExpansion
 
-:: --- 0) Go to your repo ---
-cd /d C:\AIExpertToolkit\aiexperttoolkit
+rem --- 1) Ensure we’re in the repo root ---
+pushd %~dp0
 
-:: --- 1) Safety checks ---
-where git >NUL 2>&1
-if errorlevel 1 (
-  echo ERROR: Git is not installed or not on PATH.
-  pause
-  exit /b 1
-)
+rem --- 2) Figure out branch name (or default to main) ---
+for /f "tokens=*" %%b in ('git rev-parse --abbrev-ref HEAD 2^>NUL') do set BR=%%b
+if not defined BR set BR=main
 
-git rev-parse --is-inside-work-tree >NUL 2>&1
-if errorlevel 1 (
-  echo ERROR: This folder is not a Git repository.
-  pause
-  exit /b 1
-)
-
-:: --- 2) Figure out the current branch ---
-for /f "delims=" %%B in ('git rev-parse --abbrev-ref HEAD') do set BR=%%B
-
-:: --- 3) Get commit message from args or prompt ---
-set MSG=%*
-if "%MSG%"=="" (
-  set /p MSG=Enter commit message (e.g., feat(seo): add breadcrumbs):
-)
-if "%MSG%"=="" set MSG=chore: quick update
+rem --- 3) Get commit message (support special chars) ---
+set "MSG=%*"
+if not defined MSG set "MSG=chore: quick update"
 
 echo.
-echo Branch: %BR%
-echo Message: %MSG%
+echo Branch: !BR!
+echo Message: !MSG!
 echo.
 
-:: --- 4) Stage everything (adds/mods/deletes) ---
+rem --- 4) Stage everything ---
 git add -A
 
-:: (One-time safety: if sitemap.xml was ever tracked, ensure it's removed)
+rem --- Safety: if sitemap.xml was ever tracked, ensure it’s removed ---
 git rm -f --ignore-unmatch sitemap.xml >NUL 2>&1
 
-:: --- 5) Commit only if there are staged changes ---
+rem --- 5) Commit only if there are staged changes ---
 git diff --cached --quiet
-if %ERRORLEVEL%==0 (
-  echo No staged changes to commit.
+if errorlevel 1 (
+  git commit -m "!MSG!"
 ) else (
-  git commit -m "%MSG%"
+  echo No staged changes to commit.
 )
 
-:: --- 6) Push to the same branch (set upstream on first push) ---
-git push -u origin %BR%
+rem --- 6) Push to same branch (sets upstream on first push) ---
+git push -u origin !BR!
 
 echo.
-if /I "%BR%"=="main" (
-  echo ✅ Pushed directly to main.
+if /I "!BR!"=="main" (
+  echo ✅  Pushed directly to main.
 ) else (
-  echo ✅ Pushed branch: %BR%
-  echo Open PR (if needed): https://github.com/AIExpertToolkit/aiexperttoolkit/pull/new/%BR%
+  echo ✅  Pushed branch: !BR!
+  echo 🔗  Open PR (if needed): https://github.com/AIExpertToolkit/aiexperttoolkit/pull/new/!BR!
 )
+
 echo Done.
 pause
 endlocal
