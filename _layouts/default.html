@@ -31,9 +31,10 @@
     {%- endfor -%}
   {%- endif -%}
 
-  <!-- Optional: preconnect to vendor domains (set `preconnect_domains:` in front matter) -->
-  {%- if page.preconnect_domains -%}
-    {%- for d in page.preconnect_domains -%}
+  <!-- Optional: preconnect to vendor domains (supports page- or site-level lists) -->
+  {%- assign preconns = page.preconnect_domains | default: site.preconnect_domains -%}
+  {%- if preconns -%}
+    {%- for d in preconns -%}
       <link rel="dns-prefetch" href="{{ d | replace: 'https://','//' | replace: 'http://','//' }}">
       <link rel="preconnect" href="{{ d }}" crossorigin>
     {%- endfor -%}
@@ -87,7 +88,15 @@
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/base.css">
 
   <!-- Icons / Manifest -->
-  <link rel="icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="mask-icon" href="{{ site.baseurl }}/assets/ui/favicon.svg" color="#0b1220">
+  {%- if site.favicon_png_32 and site.favicon_png_16 -%}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}{{ site.favicon_png_32 }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}{{ site.favicon_png_16 }}">
+  {%- endif -%}
+  {%- if site.apple_touch_icon and site.apple_touch_icon != '' -%}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}{{ site.apple_touch_icon }}">
+  {%- endif -%}
   {%- if site.manifest and site.manifest != '' -%}<link rel="manifest" href="{{ site.baseurl }}{{ site.manifest }}">{%- endif -%}
   {%- if site.feed_path and site.feed_path != '' -%}<link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }}" href="{{ site.baseurl }}{{ site.feed_path }}">{%- endif -%}
 
@@ -123,13 +132,16 @@
   </script>
   {%- endif -%}
 
-  <!-- Organization schema -->
+  <!-- Organization schema (+logo if configured) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"Organization",
     "name":"AI Expert Toolkit",
     "url":"{{ site.url }}",
+    {%- if site.logo and site.logo != '' -%}
+    "logo":"{{ site.url }}{{ site.baseurl }}{{ site.logo }}",
+    {%- endif -%}
     "email":"{{ site.contact_email | escape }}"{% if site.social_sameas and site.social_sameas.size > 0 %},
     "sameAs": {{ site.social_sameas | jsonify }}{% endif %}
   }
@@ -186,5 +198,30 @@
   </main>
 
   {% include footer.html %}
+
+  <!-- Progressive enhancement: safer externals + lazy media defaults -->
+  <script>
+    (function () {
+      // Add rel=noopener to all target=_blank links that are missing it
+      try {
+        var links = document.querySelectorAll('a[target="_blank"]');
+        for (var i=0;i<links.length;i++){
+          var rel = (links[i].getAttribute('rel')||'').toLowerCase();
+          if (!/noopener/.test(rel)) links[i].setAttribute('rel',(rel?rel+' ':'')+'noopener');
+        }
+      } catch(e) {}
+
+      // Apply lazy loading to images/iframes that forgot it
+      try {
+        var imgs = document.querySelectorAll('img:not([loading])');
+        for (var j=0;j<imgs.length;j++){
+          imgs[j].setAttribute('loading','lazy');
+          imgs[j].setAttribute('decoding','async');
+        }
+        var ifr = document.querySelectorAll('iframe:not([loading])');
+        for (var k=0;k<ifr.length;k++){ ifr[k].setAttribute('loading','lazy'); }
+      } catch(e) {}
+    })();
+  </script>
 </body>
 </html>
