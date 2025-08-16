@@ -1,79 +1,256 @@
 <header class="site-header" role="banner">
+  {%- comment -%}
+    Optional promo bar. Configure in _config.yml:
+      promo_text: "New: Our 2025 AI Tools Guide"
+      promo_url:  "/aiexperttoolkit/index.html#top-picks"
+  {%- endcomment -%}
+  {% if site.promo_text and site.promo_url %}
+  <div class="promo-bar" role="note">
+    <a href="{{ site.baseurl }}{{ site.promo_url | replace: site.baseurl,'' }}">{{ site.promo_text }}</a>
+  </div>
+  {% endif %}
+
   <div class="wrap header-row">
-    <!-- Brand / home -->
-    <a class="brand"
-       href="{{ site.baseurl }}/"
-       {% if page.url == '/' or page.url == '/index.html' %}aria-current="page" class="active"{% endif %}
-       aria-label="{{ site.title | default: 'AI Expert Toolkit' }} — Home">
-      AI Expert Toolkit
+    <!-- Brand -->
+    <a class="brand" href="{{ site.baseurl }}/" aria-label="AI Expert Toolkit — Home">
+      {% if site.logo and site.logo != '' %}
+        <img src="{{ site.baseurl }}{{ site.logo }}" alt="AI Expert Toolkit" width="112" height="28" decoding="async">
+      {% else %}
+        AI Expert Toolkit
+      {% endif %}
     </a>
 
-    <!-- Primary navigation -->
-    <nav id="primary-nav"
-         class="primary-nav"
-         aria-label="Primary"
-         data-baseurl="{{ site.baseurl | default: '' }}">
-      {%- assign here = page.url | default: '' -%}
+    <!-- Mobile menu toggle -->
+    <button class="menu-toggle" type="button"
+            aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">
+      <span class="menu-icon" aria-hidden="true"></span><span class="menu-text">Menu</span>
+    </button>
 
+    <!-- Primary navigation -->
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+      {%- assign here = page.url | default: '' -%}
       <a href="{{ site.baseurl }}/comparisons.html"
-         {% if here contains '/comparisons' %}aria-current="page" class="active"{% endif %}>
-        Comparisons
-      </a>
+         {% if here contains '/comparisons' %}aria-current="page"{% endif %}>Comparisons</a>
 
       <a href="{{ site.baseurl }}/jasper-vs-writesonic.html"
-         {% if here contains '/jasper-vs-writesonic' %}aria-current="page" class="active"{% endif %}>
-        Jasper vs Writesonic
-      </a>
+         {% if here contains '/jasper-vs-writesonic' %}aria-current="page"{% endif %}>Jasper vs Writesonic</a>
 
       <a href="{{ site.baseurl }}/writesonic-review.html"
-         {% if here contains '/writesonic-review' %}aria-current="page" class="active"{% endif %}>
-        Writesonic Review
-      </a>
+         {% if here contains '/writesonic-review' %}aria-current="page"{% endif %}>Writesonic Review</a>
 
       <a href="{{ site.baseurl }}/pricing.html"
-         {% if here contains '/pricing' %}aria-current="page" class="active"{% endif %}>
-        Pricing
-      </a>
+         {% if here contains '/pricing' %}aria-current="page"{% endif %}>Pricing</a>
 
       <a href="{{ site.baseurl }}/about.html"
-         {% if here contains '/about' %}aria-current="page" class="active"{% endif %}>
-        About
-      </a>
+         {% if here contains '/about' %}aria-current="page"{% endif %}>About</a>
 
       <a href="{{ site.baseurl }}/contact.html"
-         {% if here contains '/contact' %}aria-current="page" class="active"{% endif %}>
-        Contact
-      </a>
-
-      {%- assign on_money_page = (here contains '/writesonic-review' or here contains '/jasper-vs-writesonic') -%}
-      {%- unless on_money_page -%}
-      <!-- Site-wide CTA (hidden on money pages to avoid cannibalizing) -->
-      <a id="nav-cta"
-         class="btn"
-         href="https://writesonic.com/pricing?utm_source=aetk&utm_medium=nav&utm_campaign=sitewide_cta"
-         target="_blank"
-         rel="nofollow noopener noreferrer"
-         aria-label="Try Writesonic (opens in new tab)">
-        Try Writesonic
-      </a>
-      {%- endunless -%}
+         {% if here contains '/contact' %}aria-current="page"{% endif %}>Contact</a>
     </nav>
+
+    <!-- Header CTA (optional; set via page or site config) -->
+    {% assign cta_url   = page.header_cta_url   | default: site.header_cta_url %}
+    {% assign cta_label = page.header_cta_label | default: site.header_cta_label | default: 'Start free with Writesonic' %}
+    {% if cta_url and cta_url != '' %}
+      <a class="btn header-cta"
+         href="{{ cta_url }}"
+         target="_blank"
+         data-aff="true"
+         rel="{% if page.header_cta_sponsored or site.header_cta_sponsored %}sponsored {% endif %}nofollow noopener">
+        {{ cta_label }}
+      </a>
+    {% endif %}
+
+    <!-- Site search (Google site: scope; no backend) -->
+    {% assign sitehost = site.url | replace: 'https://','' | replace: 'http://','' | split:'/' | first %}
+    <form class="site-search" action="https://www.google.com/search" method="get" role="search">
+      <label class="sr-only" for="q">Search site</label>
+      <input id="q" name="q" type="search" placeholder="Search articles & comparisons" autocomplete="off"
+             aria-label="Search AI Expert Toolkit">
+      <button class="btn search-btn" type="submit" aria-label="Search">Search</button>
+      <input type="hidden" name="hl" value="en">
+      <input type="hidden" id="siteScope" value="site:{{ sitehost }}">
+    </form>
   </div>
 
-  <!-- SEO: SiteNavigationElement -->
+  <!-- Scoped styles (sticky header, mobile menu, search, promo) -->
+  <style>
+    /* Accessible visually hidden text */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+    /* CLS-safe sticky header */
+    .site-header{
+      position:sticky; top:0; z-index:50;
+      min-height:56px; /* keeps height constant */
+      backdrop-filter:saturate(140%) blur(6px);
+    }
+    .site-header::after{
+      content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px; opacity:.15;
+      box-shadow:0 1px 0 rgba(0,0,0,.35);
+    }
+
+    .site-header .promo-bar{font-size:.9rem; padding:.35rem .75rem; text-align:center;}
+    .site-header .promo-bar a{text-decoration:none;}
+
+    .site-header .menu-toggle{display:none;}
+    .site-header .menu-text{position:absolute; left:-9999px;}
+
+    .site-header .site-search{display:flex; align-items:center; gap:.4rem; margin-left:1rem;}
+    .site-header .site-search input[type="search"]{
+      max-width:18rem; padding:.4rem .6rem; border-radius:.5rem; border:1px solid transparent;
+    }
+    .site-header .search-btn{padding:.4rem .6rem;}
+
+    @media (max-width: 1100px){
+      .site-header .site-search{display:none;} /* keep header clean on smaller screens */
+    }
+    @media (max-width: 900px){
+      .site-header .header-row{ display:flex; align-items:center; gap:.75rem; }
+      .site-header .menu-toggle{
+        display:inline-flex; align-items:center; gap:.5rem;
+        padding:.5rem .75rem; border:0; background:transparent; color:inherit;
+        border-radius:.5rem; cursor:pointer;
+      }
+      .site-header .menu-icon{ width:18px; height:2px; background:currentColor; position:relative; display:inline-block; }
+      .site-header .menu-icon::before,
+      .site-header .menu-icon::after{ content:""; position:absolute; left:0; right:0; height:2px; background:currentColor; }
+      .site-header .menu-icon::before{ top:-6px; }
+      .site-header .menu-icon::after{ top:6px; }
+
+      .site-header .primary-nav{ display:none; flex-direction:column; gap:.5rem; }
+      .site-header.is-open .primary-nav{ display:flex; padding:.75rem 0; }
+
+      .site-header .header-cta{ display:none; }
+      .site-header.is-open .header-cta{ display:inline-flex; margin-left:0; }
+    }
+  </style>
+
+  <!-- Progressive enhancement: tiny JS pack -->
+  <script>
+    (function(){
+      try{
+        var header = document.querySelector('header.site-header');
+        var btn = header.querySelector('.menu-toggle');
+        var nav = header.querySelector('#primary-nav');
+
+        // Track last focused element for focus return on close
+        var lastFocus;
+
+        // Mobile menu toggle + ESC + click outside
+        if (btn && nav){
+          function setOpen(state){
+            header.classList.toggle('is-open', state);
+            btn.setAttribute('aria-expanded', state ? 'true' : 'false');
+            document.documentElement.classList.toggle('no-scroll', state);
+            if (!state && lastFocus) { lastFocus.focus({preventScroll:true}); }
+          }
+
+          btn.addEventListener('click', function(){
+            lastFocus = document.activeElement;
+            setOpen(!header.classList.contains('is-open'));
+          });
+
+          document.addEventListener('keydown', function(e){
+            if (e.key === 'Escape' && header.classList.contains('is-open')) setOpen(false);
+          });
+
+          document.addEventListener('click', function(e){
+            if (!header.classList.contains('is-open')) return;
+            if (!header.contains(e.target)) setOpen(false);
+          });
+        }
+
+        // Google site:scope for search
+        var form = header.querySelector('.site-search');
+        if (form){
+          form.addEventListener('submit', function(e){
+            var q = form.querySelector('#q');
+            var scope = form.querySelector('#siteScope').value || '';
+            if (q && scope && !q.value.trim().startsWith('site:')){
+              q.value = scope + ' ' + q.value.trim();
+            }
+          });
+        }
+
+        // Prefetch internal links on hover (snappier nav)
+        var pfTimer;
+        header.addEventListener('mouseover', function(e){
+          var a = e.target.closest('a');
+          if (!a || a.target === '_blank') return;
+          var url = new URL(a.href, location.href);
+          if (url.origin !== location.origin) return;
+          pfTimer = setTimeout(function(){
+            var link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = url.pathname + url.search;
+            document.head.appendChild(link);
+          }, 80);
+        }, {passive:true});
+        header.addEventListener('mouseout', function(){ clearTimeout(pfTimer); }, {passive:true});
+
+        // Idle preconnect to affiliate domain (if not already present in <head>)
+        var affDomains = {{ site.aff_domains | default: '["writesonic.com"]' | jsonify }};
+        function ensurePreconnect(d){
+          var has = document.querySelector('link[rel="preconnect"][href*="'+d+'"]');
+          if (has) return;
+          var l1 = document.createElement('link'); l1.rel='dns-prefetch'; l1.href='//'+d;
+          var l2 = document.createElement('link'); l2.rel='preconnect'; l2.href='https://'+d; l2.crossOrigin='';
+          document.head.appendChild(l1); document.head.appendChild(l2);
+        }
+        (window.requestIdleCallback || function(cb){return setTimeout(cb,500)})(function(){
+          try{ affDomains.forEach(function(d){ ensurePreconnect(d); }); }catch(e){}
+        });
+
+        // UTM stamping + GA4 event for affiliate clicks
+        var utmSource = '{{ site.utm_source | default: "aetk" }}';
+        var utmMedium = '{{ site.utm_medium | default: "referral" }}';
+        var defaultCampaign = '{{ page.utm_campaign | default: "header" }}';
+        var pageSlug = (location.pathname || '/').replace(/\/+$/,'').split('/').pop() || 'home';
+
+        document.addEventListener('click', function(e){
+          var a = e.target.closest('a'); if (!a) return;
+          // left-click or keyboard activation only
+          if (e.button !== 0 && e.type === 'click') return;
+          try{
+            var u = new URL(a.href, location.href);
+            // internal links: skip
+            if (u.origin === location.origin) return;
+
+            // Is affiliate?
+            var isAff = affDomains.some(function(d){ return u.hostname.endsWith(d); });
+            if (!isAff) return;
+
+            // UTM params (respect existing)
+            if (!u.searchParams.has('utm_source')) u.searchParams.set('utm_source', utmSource);
+            if (!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium', utmMedium);
+            if (!u.searchParams.has('utm_campaign')) u.searchParams.set('utm_campaign', defaultCampaign);
+            if (!u.searchParams.has('utm_content')){
+              var linkText = (a.textContent || a.getAttribute('aria-label') || 'link').trim().toLowerCase().replace(/\s+/g,'-').slice(0,40);
+              u.searchParams.set('utm_content', pageSlug + '--' + linkText);
+            }
+            a.href = u.toString();
+
+            // GA4 event (guarded)
+            if (typeof gtag === 'function'){
+              gtag('event', 'click_affiliate', {
+                event_category: 'affiliate',
+                event_label: u.hostname,
+                value: 1
+              });
+            }
+          }catch(err){}
+        }, true);
+      }catch(e){}
+    })();
+  </script>
+
+  <!-- SiteNavigationElement JSON-LD -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "SiteNavigationElement",
-    "name": [
-      "Comparisons",
-      "Jasper vs Writesonic",
-      "Writesonic Review",
-      "Pricing",
-      "About",
-      "Contact"
-    ],
-    "url": [
+    "@context":"https://schema.org",
+    "@type":"SiteNavigationElement",
+    "name":["Comparisons","Jasper vs Writesonic","Writesonic Review","Pricing","About","Contact"],
+    "url":[
       "{{ site.url }}{{ site.baseurl }}/comparisons.html",
       "{{ site.url }}{{ site.baseurl }}/jasper-vs-writesonic.html",
       "{{ site.url }}{{ site.baseurl }}/writesonic-review.html",
@@ -82,81 +259,5 @@
       "{{ site.url }}{{ site.baseurl }}/contact.html"
     ]
   }
-  </script>
-
-  <!-- Perf: prefetch internal links on hover/focus/touch (same-origin only, respects baseurl, network-aware) -->
-  <script>
-    (function () {
-      try {
-        var nav = document.getElementById('primary-nav');
-        if (!nav) return;
-
-        // Respect users on constrained networks
-        var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        var constrained = !!(conn && (conn.saveData || (conn.effectiveType && /2g/.test(conn.effectiveType))));
-        if (constrained) return;
-
-        var base = nav.getAttribute('data-baseurl') || '';
-
-        function isInternal(a) {
-          if (!a || !a.href) return false;
-          var u = new URL(a.href, location.href);
-          if (u.origin !== location.origin) return false;
-          return u.pathname.startsWith(base + '/');
-        }
-
-        function prefetch(href) {
-          if (document.querySelector('link[rel="prefetch"][href="'+href+'"]')) return;
-          var l = document.createElement('link');
-          l.rel = 'prefetch';
-          l.href = href;
-          document.head.appendChild(l);
-        }
-
-        function schedule(href){
-          (window.requestIdleCallback || function (cb){ setTimeout(cb, 120); })(function () { prefetch(href); });
-        }
-
-        function onIntent(e) {
-          var a = e.target.closest('a');
-          if (!a || !isInternal(a)) return;
-          schedule(new URL(a.href, location.href).href);
-        }
-
-        nav.addEventListener('mouseover', onIntent, { passive: true });
-        nav.addEventListener('focusin', onIntent, { passive: true });
-        nav.addEventListener('touchstart', onIntent, { passive: true });
-      } catch (e) {}
-    })();
-  </script>
-
-  <!-- Analytics: GTM-friendly click tracking for all nav links and CTA (no-op if GTM absent) -->
-  <script>
-    (function(){
-      try {
-        var nav = document.getElementById('primary-nav');
-        if (!nav) return;
-
-        function pushEvent(label, href, id){
-          if (window.dataLayer && Array.isArray(window.dataLayer)) {
-            window.dataLayer.push({
-              'event': 'nav_link_click',
-              'link_text': label,
-              'link_id': id || '',
-              'link_url': href,
-              'page_path': location.pathname,
-              'page_title': document.title
-            });
-          }
-        }
-
-        nav.addEventListener('click', function(e){
-          var a = e.target.closest('a');
-          if (!a) return;
-          var label = (a.textContent || a.getAttribute('aria-label') || '').trim();
-          pushEvent(label, a.href, a.id || '');
-        }, {passive:true});
-      } catch(e) {}
-    })();
   </script>
 </header>
