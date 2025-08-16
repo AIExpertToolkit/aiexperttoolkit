@@ -1,19 +1,11 @@
 ---
 layout: default
 title: Build-With-You Website Sprint (10 Business Days)
-description: A high-touch, proof-of-build service. We design, build, and ship your production Jekyll site on GitHub Pages—while documenting every step so your team can repeat it.
+description: We design, build, and ship your production Jekyll site on GitHub Pages—while documenting every step so your team can repeat it. Clear scope, plain-English terms, and a delivery guarantee.
 permalink: /consulting.html
 breadcrumbs:
   - { name: "Consulting", url: "/consulting.html" }
-faq:
-  - q: "What do I actually get?"
-    a: "A production Jekyll site shipped on GitHub Pages, repo access, CWV/SEO/AX hardening, GA4/GSC set up, affiliate instrumentation, SOPs, commit history, and all Loom recordings."
-  - q: "Why 'proof-of-build'?"
-    a: "We record every decision and deliver replicable SOPs + scripts (.bat) so you can rebuild or extend the site without us."
-  - q: "How fast is the sprint?"
-    a: "10 business days from kickoff to launch, assuming timely feedback. We timebox and ship in daily increments."
-  - q: "Do you offer a guarantee?"
-    a: "Yes. If we don’t launch in the sprint window, we keep working free until it’s live and refund $500."
+article: false
 ---
 
 <div class="wrap">
@@ -22,36 +14,65 @@ faq:
   <header class="section" style="padding-top:8px">
     <p class="eyebrow">Productized Service</p>
     <h1>Build-With-You Website Sprint</h1>
-    <p class="muted">We don’t just hand you a site. We prove how it’s built—step-by-step—so you can operate it confidently.</p>
+    <p class="muted">A focused, 10-business-day engagement to stand up or overhaul a Jekyll + GitHub Pages site with SEO/CWV/Accessibility baked in. We record every key step so you own the process.</p>
 
     <div class="kpis">
-      <div class="kpi"><strong>10 days</strong><br>to launch</div>
-      <div class="kpi"><strong>✅ Proof-of-build</strong><br>SOPs + recordings</div>
-      <div class="kpi"><strong>Jekyll + GitHub</strong><br>no heavy stacks</div>
+      <div class="kpi"><strong>10 days</strong><br>time-boxed sprint</div>
+      <div class="kpi"><strong>Proof-of-build</strong><br>SOPs + recordings</div>
+      <div class="kpi"><strong>CWV + WCAG</strong><br>measurable targets</div>
     </div>
 
-    <p>
+    <p class="cta-row">
       <a class="btn" data-service="consult" data-plan="sprint" href="{{ site.baseurl }}/contact.html?topic=consult">Book a consult →</a>
-      <span class="badge">Limited availability</span>
+      <a class="btn btn-ghost" href="{{ site.baseurl }}/consulting-terms.html" rel="noopener">Read the terms</a>
     </p>
-    <p class="notice">Prefer to talk first? The consult is free. We’ll review your goals, pick pages to ship first, and outline your ROI path.</p>
+
+    <div class="notice" role="note" aria-label="Assurance">
+      <strong>Guarantee:</strong> if we don’t launch within the 10-day window for reasons in our control, we continue at no additional cost until live and refund $500. <a href="{{ site.baseurl }}/consulting-terms.html#guarantee">Details</a>.
+    </div>
   </header>
 
-  <section class="section" aria-labelledby="what-you-get">
-    <h2 id="what-you-get">What you get (deliverables)</h2>
+  <section class="section" aria-labelledby="deliverables">
+    <h2 id="deliverables">Exactly what you’ll get</h2>
     <ul class="checks">
       <li>Production Jekyll site on GitHub Pages (custom domain, DNS, CNAME).</li>
-      <li>SEO/CWV/Accessibility pass to WCAG 2.1 AA targets.</li>
-      <li>Affiliate-ready UX: sticky CTA, deep links, GA4 <code>click_affiliate</code> events.</li>
-      <li>Content system: comparison/review/pricing templates, breadcrumbs, ToC, FAQPage schema.</li>
-      <li>Measurement: GA4, GSC verified, sitemap/robots, Rich Results checks.</li>
-      <li>Proof-of-build: Loom walkthroughs, daily commits, and written SOPs you can reuse.</li>
-      <li>One-click Windows <code>.bat</code> scripts for commit/push and validation.</li>
+      <li>SEO hygiene: single canonical, robots, sitemaps; Organization/WebSite/Article/Breadcrumb structured data.</li>
+      <li>Core Web Vitals pass targets on home + one money page (Perf & AX ≥ 95 in Lighthouse, CLS &lt; 0.02).* </li>
+      <li>Accessibility (WCAG 2.1 AA): skip links, landmarks, focus states, color contrast, alt text audit.</li>
+      <li>Monetization readiness: affiliate link hygiene (rel, UTM), GA4 event logging (<code>click_affiliate</code>, <code>click_nav</code>, <code>click_consult</code>), CRO CTAs.</li>
+      <li>Content scaffolds: comparison, review, pricing templates; breadcrumbs; ToC; FAQ schema.</li>
+      <li>Proof-of-build: daily commits, short Looms, and written SOPs (deploy/validate/new page).</li>
     </ul>
+    <p class="muted xsmall">* Targets depend on host/theme constraints; we surface trade-offs and track results in a validation log.</p>
   </section>
 
-  <section class="section" aria-labelledby="how-it-works">
-    <h2 id="how-it-works">How it works (10-day cadence)</h2>
+  <section class="section" aria-labelledby="scope">
+    <h2 id="scope">Scope & out-of-scope (so expectations are clear)</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Included</h3>
+        <ul>
+          <li>Jekyll layouts/includes refactor where needed (GH Pages-safe).</li>
+          <li>Header/footer hardening, breadcrumbs, ToC, FAQ blocks.</li>
+          <li>GA4 + GSC setup/verification (if not already present).</li>
+          <li>Image hygiene (sizes/decoding/lazy; modern formats when practical).</li>
+          <li>Light client-side search (if feasible without external services).</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Not included</h3>
+        <ul>
+          <li>Custom backends, server-side apps, or databases.</li>
+          <li>Heavy redesigns/brand systems or multi-language sites.</li>
+          <li>Large content migrations (>20 pages) in the sprint window.</li>
+          <li>Paid ads or complex analytics pipelines.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="process">
+    <h2 id="process">How the 10-day sprint runs</h2>
     <ol>
       <li><strong>Day 1:</strong> Kickoff, repo audit, DNS/Pages, baseline Lighthouse/AX.</li>
       <li><strong>Days 2–3:</strong> Layout/header/CWV hardening, GA4/GSC, robots/sitemap.</li>
@@ -63,16 +84,17 @@ faq:
   </section>
 
   <section class="section" aria-labelledby="pricing">
-    <h2 id="pricing">Pricing & guarantee</h2>
+    <h2 id="pricing">Pricing & how payment works</h2>
     <div class="pricing">
       <article class="plan">
         <h3>Build-With-You Sprint</h3>
         <p class="price">$4,800 <span class="muted">/ one-time</span></p>
         <ul class="checks">
-          <li>Everything listed above</li>
+          <li>Everything in “Deliverables” above</li>
           <li>2 recorded working sessions (90 min each)</li>
-          <li>30-day post-launch support (async)</li>
+          <li>30-day post-launch async support</li>
         </ul>
+        <p class="muted small">50% due at kickoff, 50% at launch. Invoicing via Stripe/ACH. Refund terms in <a href="{{ site.baseurl }}/consulting-terms.html#guarantee">Guarantee</a>.</p>
         <p><a class="btn" data-service="consult" data-plan="sprint" href="{{ site.baseurl }}/contact.html?topic=consult">Book a consult →</a></p>
       </article>
 
@@ -98,81 +120,112 @@ faq:
         <p><a class="btn" data-service="consult" data-plan="retainer" href="{{ site.baseurl }}/contact.html?topic=consult">Book a consult →</a></p>
       </article>
     </div>
-
-    <p class="notice"><strong>Guarantee:</strong> If we don’t launch within 10 business days of kickoff, we continue free until live + $500 refund.</p>
   </section>
 
-  <section class="section" aria-labelledby="proof">
-    <h2 id="proof">Proof-of-build (how we “prove it”)</h2>
-    <ul class="checks">
-      <li>Daily commit logs with descriptive messages.</li>
-      <li>Loom recordings of key steps (repo setup, CWV fixes, schema, GA4 events).</li>
-      <li>Written SOPs: deploy, commit, validate, add a new comparison/review.</li>
-      <li>One-page architecture map (layouts, includes, data files).</li>
-    </ul>
-  </section>
-
-  <section class="section" aria-labelledby="fit">
-    <h2 id="fit">Is this for you?</h2>
-    <div class="grid-3">
+  <section class="section" aria-labelledby="why-us">
+    <h2 id="why-us">Why this is worth it</h2>
+    <div class="grid-2">
       <div>
-        <h3>Great fit</h3>
-        <ul>
-          <li>Operators who want ownership (no CMS bloat).</li>
-          <li>Teams who value speed + clarity + proof.</li>
-          <li>Sites that monetize via affiliates/services.</li>
-        </ul>
+        <h3>Proof over promises</h3>
+        <p>We prioritize measurable improvements (CWV, Accessibility, rich results) and show the receipts: before/after reports, commit diffs, and SOPs you can reuse.</p>
       </div>
       <div>
-        <h3>Not a fit</h3>
-        <ul>
-          <li>Heavy custom app/backend needs.</li>
-          <li>Large content migrations in week one.</li>
-        </ul>
-      </div>
-      <div>
-        <h3>Requirements</h3>
-        <ul>
-          <li>Single decision-maker for fast approvals.</li>
-          <li>Access to domain DNS + GitHub repo.</li>
-        </ul>
+        <h3>Ownership, not lock-in</h3>
+        <p>You keep the repo, SOPs, and workflow scripts. No proprietary themes or plugins. Everything runs on GitHub Pages.</p>
       </div>
     </div>
+    <p class="muted small">Curious who’s behind this? See <a href="{{ site.baseurl }}/about.html">About</a> and our <a href="{{ site.baseurl }}/editorial-policy.html">Editorial Policy</a>.</p>
+  </section>
+
+  {%- comment -%}
+  Optional case studies: render only if data exists (no placeholders).
+  Create _data/case_studies.yml with items: { title, url, summary }
+  {%- endcomment -%}
+  {%- if site.data.case_studies and site.data.case_studies.size > 0 -%}
+  <section class="section" aria-labelledby="cases">
+    <h2 id="cases">Selected work</h2>
+    <ul class="cards">
+      {%- for cs in site.data.case_studies -%}
+      <li class="card">
+        <h3><a href="{{ cs.url }}">{{ cs.title }}</a></h3>
+        {%- if cs.summary -%}<p class="muted">{{ cs.summary }}</p>{%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+  </section>
+  {%- endif -%}
+
+  <section class="section" aria-labelledby="faqs">
+    <h2 id="faqs">Common questions</h2>
+    <dl class="faq">
+      <dt>What happens on the consult call?</dt>
+      <dd>We review goals, constraints, and pick the highest-ROI pages for the sprint. If there’s not a fit, we’ll say so.</dd>
+      <dt>Can you work with my existing repo/theme?</dt>
+      <dd>Yes. We prefer minimal changes and GH Pages-compatible plugins only.</dd>
+      <dt>What do you need from us?</dt>
+      <dd>Decision-maker availability for quick approvals, access to your domain DNS and GitHub repo, and initial content priorities.</dd>
+      <dt>How do refunds work?</dt>
+      <dd>See the <a href="{{ site.baseurl }}/consulting-terms.html#guarantee">Guarantee</a>. In short: if we miss the window for reasons in our control, we keep working free and refund $500.</dd>
+      <dt>How is privacy handled?</dt>
+      <dd>Consult bookings share only the data you provide. We do not sell or share PII. See <a href="{{ site.baseurl }}/privacy.html">Privacy Policy</a> if available.</dd>
+    </dl>
   </section>
 </div>
 
-<!-- Service schema for SEO -->
+<!-- Service schema for SEO (links to Terms) -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"Service",
   "name":"Build-With-You Website Sprint",
-  "description":"A high-touch, proof-of-build service to design, build, and ship a production Jekyll site while documenting every step.",
-  "areaServed":"Global",
+  "description":"A focused, 10-business-day engagement to build or overhaul a Jekyll + GitHub Pages site with SEO/CWV/Accessibility baked in, delivered with proof-of-build artifacts.",
   "provider":{"@type":"Organization","name":"{{ site.title | default: 'AI Expert Toolkit' }}"},
+  "areaServed":"Global",
+  "termsOfService":"{{ '/consulting-terms.html' | absolute_url }}",
   "offers":[
     {"@type":"Offer","priceCurrency":"USD","price":"4800","name":"Build-With-You Sprint"},
     {"@type":"Offer","priceCurrency":"USD","price":"7900","name":"Build-For-You (+DWY)"},
-    {"@type":"Offer","priceCurrency":"USD","price":"1200","priceSpecification":{"@type":"UnitPriceSpecification","unitText":"month","price":"1200"},"name":"Advisory Retainer"}
+    {"@type":"Offer","priceCurrency":"USD","price":"1200","name":"Advisory Retainer","priceSpecification":{"@type":"UnitPriceSpecification","price":"1200","unitText":"month"}}
   ]
 }
 </script>
 
-<!-- GA4 event for consult CTA clicks -->
+<!-- Page-level GA4 funnel events -->
 <script>
 (function(){
+  // Count a view with explicit event for funnel clarity
+  try{ if(window.gtag){ gtag('event','view_consulting',{page_location:window.location.href}); } }catch(_){}
+  // Button clicks already tracked in header/footer; double-cover here
   document.addEventListener('click', function(e){
-    var el = e.target.closest('[data-service]');
+    var el = e.target.closest('[data-service="consult"]');
     if(!el) return;
-    try{
-      if(window.gtag){
-        gtag('event','click_consult',{
-          event_category:'engagement',
-          event_label: el.getAttribute('data-plan') || 'unknown',
-          location: window.location.pathname
-        });
-      }
-    }catch(err){}
+    try{ if(window.gtag){ gtag('event','click_consult',{event_category:'engagement',event_label: el.getAttribute('data-plan')||'consulting', location: window.location.pathname}); } }catch(_){}
   }, {capture:true});
 })();
 </script>
+
+<style>
+/* Calm, trustworthy accents and spacing */
+.eyebrow{letter-spacing:.06em;text-transform:uppercase;font-size:.86rem;color:#9fb6d1}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.kpi{border:1px solid rgba(255,255,255,.08);border-radius:.6rem;padding:.6rem;text-align:center}
+.pricing{display:grid;gap:16px;margin:12px 0}
+@media(min-width:900px){.pricing{grid-template-columns:1fr 1fr 1fr}}
+.plan{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);border-radius:14px;padding:18px}
+.price{font-size:1.6rem;font-weight:800}
+.checks{list-style:none;padding:0;margin:0}
+.checks li{padding-left:26px;position:relative;margin:.4rem 0}
+.checks li::before{content:"✓";position:absolute;left:0;top:0;color:#22d3ee;font-weight:800}
+.notice{border:1px dashed rgba(255,255,255,.25);border-radius:.6rem;padding:.8rem;background:rgba(255,255,255,.03)}
+.grid-2{display:grid;gap:16px}
+@media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+.cards{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+@media(min-width:900px){.cards{grid-template-columns:1fr 1fr 1fr}}
+.card{border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px}
+.faq{margin:0;padding:0}
+.faq dt{font-weight:700;margin-top:.8rem}
+.faq dd{margin:0 0 .6rem 0;color:#c9d9ee}
+.small{font-size:.92rem}.xsmall{font-size:.82rem}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.25);color:#e6f1ff}
+</style>
