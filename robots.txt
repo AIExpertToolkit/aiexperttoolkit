@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aiexperttoolkit.github.io/aiexperttoolkit/sitemap.xml
+Sitemap: https://aiexperttoolkit.com/sitemap.xml
+Sitemap: https://aiexperttoolkit.com/sitemap_index.xml
