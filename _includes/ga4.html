@@ -1,5 +1,5 @@
 {%- comment -%}
-GA4 loader. Looks for any of these keys so we don't have to edit _config.yml tonight:
+GA4 loader. Accepts any of these keys in _config.yml:
   ga4_measurement_id, ga4_id, ga4, google_analytics
 {%- endcomment -%}
 {% assign GAID = site.ga4_measurement_id | default: site.ga4_id | default: site.ga4 | default: site.google_analytics %}
