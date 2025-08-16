@@ -42,8 +42,5 @@ img{max-width:100%;height:auto}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* ── Breadcrumbs ─────────────────────────────────────────────── */
-.breadcrumbs{background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:.6rem; margin:16px 0; padding:.5rem .75rem}
-.breadcrumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.35rem}
-.breadcrumbs li{display:flex;align-items:center;gap:.35rem;color:#cfe9ff}
-.breadcrumbs li+li::before{content:"›";opacity:.6}
-.breadcrumbs [aria-current="page"]{color:#fff;font-weight:600;text-decoration:none}
+.breadcrumbs{background:rgba(255,255,255,.03); border:
+
