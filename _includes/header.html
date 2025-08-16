@@ -6,16 +6,19 @@
   {% endif %}
 
   <div class="wrap header-row">
+    <!-- Brand -->
     <a class="brand" href="{{ site.baseurl }}/" aria-label="{{ site.title | default:'AI Expert Toolkit' }} — Home">
       {% if site.logo and site.logo != '' %}
         <img src="{{ site.baseurl }}{{ site.logo }}" alt="{{ site.title | default:'AI Expert Toolkit' }}" width="112" height="28" decoding="async">
       {% else %}{{ site.title | default:'AI Expert Toolkit' }}{% endif %}
     </a>
 
+    <!-- Mobile menu toggle -->
     <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">
       <span class="menu-icon" aria-hidden="true"></span><span class="menu-text">Menu</span>
     </button>
 
+    <!-- Primary navigation -->
     <nav id="primary-nav" class="primary-nav" aria-label="Primary">
       {% assign here = page.url | default: '' %}
       <a href="{{ site.baseurl }}/comparisons.html" {% if here contains '/comparisons' %}aria-current="page"{% endif %}>Comparisons</a>
@@ -24,9 +27,10 @@
       <a href="{{ site.baseurl }}/pricing.html" {% if here contains '/pricing' %}aria-current="page"{% endif %}>Pricing</a>
       <a href="{{ site.baseurl }}/about.html" {% if here contains '/about' %}aria-current="page"{% endif %}>About</a>
       <a href="{{ site.baseurl }}/contact.html" {% if here contains '/contact' %}aria-current="page"{% endif %}>Contact</a>
-      <a href="{{ site.baseurl }}/consulting.html" {% if here contains '/consulting' and here contains '.html' and here == '/consulting.html' %}aria-current="page"{% endif %}>Consulting</a>
+      <a href="{{ site.baseurl }}/consulting.html" {% if here == '/consulting.html' %}aria-current="page"{% endif %}>Consulting</a>
     </nav>
 
+    <!-- CTA -->
     {% if site.header_cta_url %}
       <a class="btn header-cta" href="{{ site.header_cta_url }}" target="_blank"
          rel="{% if site.header_cta_sponsored %}sponsored {% endif %}nofollow noopener"
@@ -35,6 +39,7 @@
       </a>
     {% endif %}
 
+    <!-- Google site: search (no backend) -->
     {% assign sitehost = site.url | replace: 'https://','' | replace: 'http://','' | split:'/' | first %}
     <form class="site-search" action="https://www.google.com/search" method="get" role="search">
       <label class="sr-only" for="q">Search site</label>
@@ -63,12 +68,14 @@
       document.addEventListener('keydown', e=>{ if(e.key==='Escape' && header.classList.contains('is-open')) setOpen(false); });
       document.addEventListener('click', e=>{ if(header.classList.contains('is-open') && !header.contains(e.target)) setOpen(false); });
 
+      // site: scope
       const form=header.querySelector('.site-search');
       if(form){ form.addEventListener('submit', function(){
         const q=form.querySelector('#q'); const scope=form.querySelector('#siteScope').value||'';
         if(q && scope && !q.value.trim().startsWith('site:')) q.value = scope + ' ' + q.value.trim();
       }); }
 
+      // affiliate UTM + GA
       const affDomains=["writesonic.com"];
       function decorateURL(href){
         const u=new URL(href, location.href);
@@ -95,6 +102,7 @@
   })();
   </script>
 
+  <!-- Optional SiteNavigationElement -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -110,8 +118,5 @@
       "{{ site.url }}{{ site.baseurl }}/consulting.html"
     ]
   }
-  </script>
-</header>
-
   </script>
 </header>
