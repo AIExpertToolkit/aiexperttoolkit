@@ -1,0 +1,56 @@
+{%- comment -%}
+Reusable Buy button for paid guides (Gumroad overlay).
+Usage (example):
+  {% include buy_button.html
+      product="https://aiexperttoolkit.gumroad.com/l/your-slug"
+      label="Buy guide — $4.99"
+  %}
+Requirements:
+- Works on GitHub Pages (no backend).
+- Loads Gumroad overlay script once per page.
+- Fires GA4 event `click_buy_guide` on click.
+{%- endcomment -%}
+
+{%- assign _product = include.product | default: '' -%}
+{%- assign _label   = include.label   | default: 'Buy guide — $4.99' -%}
+
+{%- if _product == '' -%}
+  {%- comment -%} Safety: no placeholder links. Render a disabled button if product URL missing. {%- endcomment -%}
+  <button class="btn buy-guide" type="button" disabled aria-disabled="true" title="Product link not configured">
+    {{ _label }}
+  </button>
+{%- else -%}
+  <a class="btn buy-guide"
+     href="{{ _product }}"
+     data-gumroad-overlay="true"
+     rel="nofollow noopener"
+     role="button"
+     aria-label="{{ _label | escape }}">
+     {{ _label }}
+  </a>
+{%- endif -%}
+
+<script>
+(function(){
+  try{
+    // Load Gumroad overlay once
+    if(!document.getElementById('gumroad-js')){
+      var s=document.createElement('script');
+      s.src='https://gumroad.com/js/gumroad.js';
+      s.id='gumroad-js';
+      s.async=true;
+      document.head.appendChild(s);
+    }
+    // GA4 event for buy clicks
+    document.addEventListener('click', function(e){
+      var a=e.target.closest && e.target.closest('a[data-gumroad-overlay="true"]');
+      if(!a) return;
+      try{
+        if(typeof gtag==='function'){
+          gtag('event','click_buy_guide',{product_url:a.href});
+        }
+      }catch(_){}
+    }, true);
+  }catch(_){}
+})();
+</script>
