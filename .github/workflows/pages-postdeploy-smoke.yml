@@ -1,76 +1,25 @@
-﻿name: Post-deploy smoke tests (Pages)
+﻿name: Pages post-deploy smoke
 
 on:
   workflow_run:
-    workflows:
-      - Deploy site to GitHub Pages (static)
-      - Deploy site to GitHub Pages (Jekyll)
+    workflows: ["Deploy site to GitHub Pages (static)"]
     types: [completed]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-concurrency:
-  group: "pages-smoke-tests"
-  cancel-in-progress: true
 
 jobs:
   smoke:
-    # Run on manual dispatch OR when the referenced workflow finished successfully
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success') }}
-    name: Probe key URLs
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ vars.SITE_BASE_URL || 'https://aiexpertoolkit.com' }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Probe site roots and key pages
+      - name: Probe core endpoints (/, hello-bats, sitemap, robots)
         shell: bash
         run: |
           set -euo pipefail
-
-          OWNER_REPO="${GITHUB_REPOSITORY}"
-          OWNER="${OWNER_REPO%%/*}"
-          REPO="${OWNER_REPO##*/}"
-
-          # Custom domain from repo file if present
-          DOM=""
-          if [ -f "pages/csv/CNAME" ]; then
-            DOM="$(tr -d '\r' < pages/csv/CNAME | head -n1 | xargs || true)"
-          fi
-
-          ROOTS=()
-          if [ -n "$DOM" ]; then ROOTS+=("https://${DOM}/"); fi
-          ROOTS+=("https://${OWNER}.github.io/${REPO}/")
-
-          URLS=()
-          for R in "${ROOTS[@]}"; do
-            URLS+=("${R}")
-            URLS+=("${R}hello-bats.html")
-            URLS+=("${R}sitemap.xml")
+          urls=("$BASE_URL/" "$BASE_URL/hello-bats.html" "$BASE_URL/sitemap.xml" "$BASE_URL/robots.txt")
+          for u in "${urls[@]}"; do
+            code="$(curl -s -o /dev/null -w "%{http_code}" "$u")"
+            echo "$code  $u"
+            [ "$code" = "200" ] || { echo "Expected 200 for $u, got $code" >&2; exit 1; }
           done
-
-          echo "### Pages Post-deploy Smoke (auto)" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "|URL|Status|Bytes|HelloBats|" >> "$GITHUB_STEP_SUMMARY"
-          echo "|---|---:|---:|:---:|" >> "$GITHUB_STEP_SUMMARY"
-
-          FAIL=0
-          for U in "${URLS[@]}"; do
-            CB="$(date +%s)"
-            BODY="$(mktemp)"
-            CODE="$(curl -sS -L -m 25 -o "$BODY" -w '%{http_code}' -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' "${U}?cb=${CB}" || echo 000)"
-            BYTES="$(wc -c < "$BODY" | tr -d ' ')"
-            HELLO="false"
-            if echo "$U" | grep -qi 'hello-bats.html'; then
-              if grep -qi 'Hello[[:space:]]*Bats' "$BODY"; then HELLO="true"; fi
-            fi
-            rm -f "$BODY"
-            echo "|${U}|${CODE}|${BYTES}|${HELLO}|" >> "$GITHUB_STEP_SUMMARY"
-            if [ "$CODE" != "200" ] || [ "$BYTES" -le 0 ]; then FAIL=$((FAIL+1)); fi
-          done
-
-          if [ "$FAIL" -gt 0 ]; then
-            echo "Some probes failed ($FAIL). Failing job." >&2
-            exit 1
-          fi
+          curl -s "$BASE_URL/hello-bats.html" | grep -i "Hello Bats" >/dev/null
