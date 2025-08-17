@@ -73,30 +73,8 @@
         const q=form.querySelector('#q'); const scope=form.querySelector('#siteScope').value||'';
         if(q && scope && !q.value.trim().startsWith('site:')) q.value = scope + ' ' + q.value.trim();
       }); }
-
-      // affiliate UTM + GA
-      const affDomains=["writesonic.com"];
-      function decorateURL(href){
-        const u=new URL(href, location.href);
-        const isAff=affDomains.some(d=>u.hostname.endsWith(d));
-        if(!isAff) return u.toString();
-        if(!u.searchParams.has('utm_source')) u.searchParams.set('utm_source','aiexperttoolkit');
-        if(!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium','affiliate');
-        if(!u.searchParams.has('utm_campaign')) u.searchParams.set('utm_campaign',(document.title||'site').toLowerCase().replace(/\s+/g,'-').slice(0,60));
-        if(!u.searchParams.has('utm_content')){
-          const linkText=(document.activeElement && document.activeElement.textContent || 'link').trim().toLowerCase().replace(/\s+/g,'-').slice(0,40);
-          const pageSlug=location.pathname.replace(/\/+$/,'').split('/').pop()||'home';
-          u.searchParams.set('utm_content', pageSlug + '--' + linkText);
-        }
-        return u.toString();
-      }
-      header.addEventListener('click', function(e){
-        const a=e.target.closest('a[href]'); if(!a || !a.hasAttribute('data-aff')) return;
-        try{
-          a.href=decorateURL(a.href);
-          if(typeof gtag==='function'){ const host=(new URL(a.href)).hostname; gtag('event','click_affiliate',{event_category:'affiliate',event_label:host,value:1}); }
-        }catch(_){}
-      }, true);
+      // NOTE: affiliate UTM + GA handling has been removed from header.
+      // Sitewide handling is provided by /assets/js/affiliates.js (loaded in the layout).
     }catch(_){}
   })();
   </script>
