@@ -16,45 +16,15 @@ concurrency:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    env:
-      BASE_URL: ${{ vars.SITE_BASE_URL || 'https://aiexpertoolkit.com' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v4
-      - name: Prepare static site (copy, sitemap, robots, canonical)
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p _site
-          rsync -av --delete pages/csv/ _site/
-          # Sitemap
-          now="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          base="${BASE_URL%/}"
-          printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' > _site/sitemap.xml
-          find _site -maxdepth 1 -name '*.html' -printf '%P\n' | while read -r p; do
-            printf '  <url><loc>%s/%s</loc><lastmod>%s</lastmod></url>\n' "$base" "$p" "$now" >> _site/sitemap.xml
-          done
-          echo '</urlset>' >> _site/sitemap.xml
-          # Robots
-          printf "User-agent: *\nAllow: /\nSitemap: %s/sitemap.xml\n" "$base" > _site/robots.txt
-          # Ensure an index exists
-          if [ ! -f _site/index.html ]; then
-            cat > _site/index.html <<'HTML'
-<!doctype html><html><head><meta charset="utf-8"><title>AI Expert Toolkit</title></head>
-<body><h1>AI Expert Toolkit</h1><p>Welcome.</p><p><a href="/hello-bats.html">Hello Bats</a></p></body></html>
-HTML
-          fi
-          # Canonical tags
-          for f in _site/*.html; do
-            n="$(basename "$f")"
-            perl -0777 -pe "s@</head>@<link rel=\"canonical\" href=\"${base}/${n}\" />\n</head>@i" -i "$f" || true
-          done
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: ./pages/csv
       - id: deployment
         uses: actions/deploy-pages@v4
-        environment:
-          name: github-pages
-          url: ${{ steps.deployment.outputs.page_url }}
