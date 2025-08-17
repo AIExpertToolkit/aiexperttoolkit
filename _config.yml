@@ -1,12 +1,12 @@
-# ┌───────────────────────────────────────────────────────────────┐
-# │ AI Expert Toolkit — Jekyll site config (custom domain)       │
-# └───────────────────────────────────────────────────────────────┘
+# ┌───────────────────────────────────────────────┐
+# │ AI Expert Toolkit — Jekyll site config       │
+# └───────────────────────────────────────────────┘
 title: AI Expert Toolkit
 description: Expert reviews, comparisons, and tutorials to help you choose the right AI faster and work smarter.
 
-# Live domain and no baseurl for custom domain
+# Live domain
 url: https://aiexperttoolkit.com
-baseurl: "" # important: empty string
+baseurl: ""
 
 # Build settings
 permalink: /:title.html
@@ -16,14 +16,14 @@ timezone: Etc/UTC
 # Analytics & verification
 analytics:
   ga4: G-6E56LGF5M5
-  gtm: "" # optional later
+  gtm: ""   # optional
 
 verification:
   google: Q2zwZybZQFSXqMBM_ESNzndVqjHGmjyJ3l5ZLu0F2F0
   bing:
   pinterest:
 
-# Icons / manifest
+# Icons / manifest (optional paths)
 logo:
 manifest:
 apple_touch_icon:
@@ -57,9 +57,7 @@ plugins:
 kramdown:
   input: GFM
 
-# --- Analytics ---
+# GA defaults
 ga4_measurement_id: G-6E56LGF5M5
-
-# Only exclude the internal checks dashboard from GA
 ga_exclude:
   - "/checks.html"

@@ -41,15 +41,6 @@ layout: nil
   <!-- Sitewide affiliates/UTM helper -->
   <script defer src="{{ site.baseurl }}/assets/js/affiliates.js"></script>
 
-  {% assign ga = site.analytics.ga4 | default: site.ga4_measurement_id %}
-  {% if ga and ga != "" %}
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', '{{ ga }}');
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga }}"></script>
-  {% endif %}
+  {% include ga4.html %}
 </body>
 </html>
