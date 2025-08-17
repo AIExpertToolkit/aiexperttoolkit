@@ -1,17 +1,47 @@
-<section class="prose" aria-labelledby="teaser-sprint-playbook" style="border:1px solid #e5e7eb;border-radius:12px;padding:1rem;margin:1.5rem 0;">
-  <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center">
-    <div style="flex:1 1 320px;min-width:280px">
-      <p class="eyebrow">New guide</p>
-      <h2 id="teaser-sprint-playbook" style="margin-top:.2rem">AI Website Sprint Playbook</h2>
-      <p>Ship a fast, accessible, SEO-ready page in 7 days. Includes Lighthouse/GA4 triage, a printable Sprint Card, and launch QA.</p>
-      <p><a class="btn" href="{{ site.baseurl }}/sprint-playbook.html">View guide — $4.99</a></p>
-      <p class="muted" style="margin:.3rem 0 0">14-day money-back guarantee.</p>
+<section class="teaser-playbook" aria-labelledby="playbook-title">
+  <div class="wrap teaser-grid">
+    <div class="teaser-copy">
+      <h2 id="playbook-title">AI Website Sprint Playbook</h2>
+      <p class="kicker">Launch a money page in 7 days (with metrics you can brag about)</p>
+      <ul>
+        <li>Step-by-step: plan → write → QA → publish in one week</li>
+        <li>Built-in Lighthouse/GA4 targets so you ship fast <em>and</em> clean</li>
+        <li>Printable “Sprint Card” checklist + quick-triage cheats</li>
+      </ul>
+
+      <a class="btn buy-playbook"
+         href="https://eliahtoolkit.gumroad.com/l/aetk-sprint-playbook"
+         target="_blank" rel="noopener nofollow"
+         aria-label="Get the AI Website Sprint Playbook for $4.99">
+        Get the Playbook — $4.99
+      </a>
+      <p class="tiny trusted" style="margin:.5rem 0 0; opacity:.8">
+        14-day money-back guarantee
+      </p>
     </div>
-    <figure style="flex:1 1 260px;min-width:240px;margin:0">
-      <img src="{{ site.baseurl }}/assets/img/guides/sprint-playbook-cover.jpg"
-           alt="Cover of the AI Website Sprint Playbook"
-           width="800" height="534" decoding="async" loading="lazy"
-           style="max-width:100%;height:auto;border-radius:10px">
-    </figure>
+
+    <div class="teaser-media">
+      <img
+        src="{{ site.baseurl }}/assets/img/guides/sprint-playbook-thumb.jpg"
+        width="640" height="400"
+        alt="Cover art: AI Website Sprint Playbook">
+    </div>
   </div>
 </section>
+
+<script>
+(function(){
+  try {
+    var btn = document.querySelector('.teaser-playbook .buy-playbook');
+    if (btn && typeof gtag === 'function') {
+      btn.addEventListener('click', function(){
+        gtag('event','purchase_click',{
+          event_category:'gumroad',
+          event_label:'sprint_playbook_teaser',
+          value:4.99
+        });
+      }, {once:true});
+    }
+  } catch(_) {}
+})();
+</script>

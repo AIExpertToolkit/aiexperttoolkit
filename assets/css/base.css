@@ -47,4 +47,27 @@ img{max-width:100%;height:auto}
 .breadcrumbs li{display:flex;align-items:center;gap:.35rem;color:#cfe9ff}
 .breadcrumbs li+li::before{content:"›";opacity:.6}
 .breadcrumbs [aria-current="page"]{color:#fff;font-weight:600;text-decoration:none}
-
+/* --- Teaser: Sprint Playbook --- */
+.teaser-playbook{
+  background: var(--surface, #0e1726);
+  color: var(--text, #eef2f7);
+  border-radius: 1rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  margin: 2rem 0;
+}
+.teaser-playbook .teaser-grid{
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 1rem;
+  align-items: center;
+}
+.teaser-playbook h2{ margin: 0 0 .25rem; font-size: clamp(1.35rem, 2.6vw, 1.8rem); }
+.teaser-playbook .kicker{ margin: 0 0 .5rem; font-weight: 600; opacity: .9; }
+.teaser-playbook ul{ margin: .5rem 0 1rem; padding-left: 1.1rem; }
+.teaser-playbook li{ margin: .2rem 0; }
+.teaser-playbook .btn{ display: inline-block; padding: .6rem 1rem; border-radius: .75rem; font-weight: 700; }
+.teaser-playbook .teaser-media img{ width: 100%; height: auto; border-radius: .75rem; }
+@media (max-width: 800px){
+  .teaser-playbook .teaser-grid{ grid-template-columns: 1fr; }
+  .teaser-playbook .teaser-media{ order: -1; margin-bottom: .5rem; }
+}
