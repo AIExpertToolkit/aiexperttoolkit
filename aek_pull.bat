@@ -1,7 +1,4 @@
 @echo off
-setlocal enabledelayedexpansion
-echo > Pulling latest main...
-git checkout main && git pull --ff-only
-echo.
+cd /d C:\AIExpertToolkit\aiexperttoolkit
+git pull --ff-only
 git status
-endlocal
