@@ -91,10 +91,7 @@
       } catch (e) {}
     }
 
-    // Consult click (CTA or /book.html link) → GA4 event
     var href = a.getAttribute('href') || '';
-    if ((a.hasAttribute('data-consult') || /\/book\.html?$/.test(href)) && typeof window.gtag === 'function') {
-      window.gtag('event', 'click_consult', { link_url: a.href });
     }
   }
 
