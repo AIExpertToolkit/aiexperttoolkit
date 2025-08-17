@@ -1,69 +1,65 @@
 {%- comment -%}
-Reusable Gumroad buy button with GA4 begin_checkout event + lazy-loaded overlay JS.
-Usage example:
-{% include buy_button.html
-   id:"aetk-sprint-playbook",
-   label:"Get the Sprint Playbook",
-   price:"4.99",
-   url:"https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook",
-   campaign:"sprint-playbook"
-%}
+Reusable Gumroad “Buy” button include.
+Usage:
+  {% include buy_button.html
+     href="https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook"
+     label="Buy the Sprint Playbook – $4.99"
+     amount="4.99"
+     slug="sprint-playbook"
+     component="teaser" %}
+Params:
+  - href:      required product URL (Gumroad)
+  - label:     button text (default shown below)
+  - amount:    numeric string for GA value (default 4.99)
+  - slug:      id suffix (default: 'sprint-playbook')
+  - component: where it’s placed (e.g., 'teaser', 'hero')
 {%- endcomment -%}
 
-{%- assign _id = include.id | default: "aetk-sprint-playbook" -%}
-{%- assign _label = include.label | default: "Get the Playbook" -%}
-{%- assign _price = include.price | default: "4.99" -%}
-{%- assign _campaign = include.campaign | default: "sprint-playbook" -%}
-{%- assign _url = include.url | default: "" -%}
+{%- assign _href = include.href
+  | default: 'https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook' -%}
+{%- assign _label = include.label
+  | default: 'Buy the Sprint Playbook – $4.99' -%}
+{%- assign _id = include.id
+  | default: 'buy-' | append: (include.slug | default: 'sprint-playbook') -%}
+{%- assign _class = include.class
+  | default: 'btn buy-btn' -%}
+{%- assign _amount = include.amount
+  | default: '4.99' -%}
+{%- assign _component = include.component
+  | default: 'teaser' -%}
 
-{%- comment -%} Build URL with overlay + UTM {%- endcomment -%}
-{%- assign q = "?wanted=true&utm_source=aiexperttoolkit&utm_medium=gumroad&utm_campaign=" | append: _campaign -%}
-{%- assign href = _url | append: q -%}
-
-<div class="buy-cta">
-  <a id="buy-{{ _id }}"
-     class="btn"
-     href="{{ href }}"
-     data-id="{{ _id }}"
-     data-price="{{ _price }}"
-     target="_blank"
-     rel="nofollow noopener sponsored"
-     aria-label="{{ _label | escape }}">
-     {{ _label }}
-  </a>
-</div>
+<a id="{{ _id }}"
+   class="{{ _class }}"
+   href="{{ _href }}"
+   target="_blank"
+   rel="noopener"
+   data-product="{{ include.slug | default: 'sprint-playbook' }}"
+   data-amount="{{ _amount }}"
+   data-source="{{ page.url | default: '/' }}"
+   data-component="{{ _component }}">
+  {{ _label }}
+</a>
 
 <script>
 (function(){
   try{
-    var a = document.getElementById('buy-{{ _id }}');
-    if(!a) return;
-
-    // Fire GA4 begin_checkout on click
+    var a = document.currentScript && document.currentScript.previousElementSibling;
+    if(!a || a.tagName !== 'A') return;
     a.addEventListener('click', function(){
-      try {
+      try{
         if (typeof gtag === 'function') {
+          var val = parseFloat(a.getAttribute('data-amount')) || 4.99;
+          var prod = a.getAttribute('data-product') || 'sprint-playbook';
+          var comp = a.getAttribute('data-component') || 'teaser';
+          var src  = a.getAttribute('data-source') || '';
           gtag('event','begin_checkout',{
             currency: 'USD',
-            value: parseFloat(a.dataset.price)||4.99,
-            items: [{
-              item_id: a.dataset.id,
-              item_name: '{{ _label | escape }}',
-              price: parseFloat(a.dataset.price)||4.99,
-              quantity: 1
-            }]
+            value: val,
+            items: [{ item_name: prod }],
+            event_label: comp + '|' + src
           });
         }
-      } catch(_) {}
-
-      // Lazy-load Gumroad overlay script only when needed
-      if (!window.GumroadOverlay && !document.getElementById('gumroad-js')) {
-        var s = document.createElement('script');
-        s.id = 'gumroad-js';
-        s.src = 'https://gumroad.com/js/gumroad.js';
-        s.async = true;
-        document.head.appendChild(s);
-      }
+      }catch(_){}
     }, {passive:true});
   }catch(_){}
 })();
