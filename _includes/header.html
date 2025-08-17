@@ -27,7 +27,6 @@
       <a href="{{ site.baseurl }}/pricing.html" {% if here contains '/pricing' %}aria-current="page"{% endif %}>Pricing</a>
       <a href="{{ site.baseurl }}/about.html" {% if here contains '/about' %}aria-current="page"{% endif %}>About</a>
       <a href="{{ site.baseurl }}/contact.html" {% if here contains '/contact' %}aria-current="page"{% endif %}>Contact</a>
-      <a href="{{ site.baseurl }}/consulting.html" {% if here == '/consulting.html' %}aria-current="page"{% endif %}>Consulting</a>
     </nav>
 
     <!-- CTA -->
@@ -85,15 +84,14 @@
   {
     "@context":"https://schema.org",
     "@type":"SiteNavigationElement",
-    "name":["Comparisons","Jasper vs Writesonic","Writesonic Review","Pricing","About","Contact","Consulting"],
+    "name":["Comparisons","Jasper vs Writesonic","Writesonic Review","Pricing","About","Contact"],
     "url":[
       "{{ site.url }}{{ site.baseurl }}/comparisons.html",
       "{{ site.url }}{{ site.baseurl }}/jasper-vs-writesonic.html",
       "{{ site.url }}{{ site.baseurl }}/writesonic-review.html",
       "{{ site.url }}{{ site.baseurl }}/pricing.html",
       "{{ site.url }}{{ site.baseurl }}/about.html",
-      "{{ site.url }}{{ site.baseurl }}/contact.html",
-      "{{ site.url }}{{ site.baseurl }}/consulting.html"
+      "{{ site.url }}{{ site.baseurl }}/contact.html"
     ]
   }
   </script>

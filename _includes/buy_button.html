@@ -1,66 +1,26 @@
 {%- comment -%}
-Reusable Gumroad “Buy” button include.
+Reusable Buy button include
 Usage:
   {% include buy_button.html
-     href="https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook"
-     label="Buy the Sprint Playbook – $4.99"
-     amount="4.99"
-     slug="sprint-playbook"
-     component="teaser" %}
-Params:
-  - href:      required product URL (Gumroad)
-  - label:     button text (default shown below)
-  - amount:    numeric string for GA value (default 4.99)
-  - slug:      id suffix (default: 'sprint-playbook')
-  - component: where it’s placed (e.g., 'teaser', 'hero')
+      url="https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook"
+      label="Get the Sprint Playbook — $4.99"
+      sub="Instant PDF download • 7-day plan + templates"
+  %}
 {%- endcomment -%}
 
-{%- assign _href = include.href
-  | default: 'https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook' -%}
-{%- assign _label = include.label
-  | default: 'Buy the Sprint Playbook – $4.99' -%}
-{%- assign _id = include.id
-  | default: 'buy-' | append: (include.slug | default: 'sprint-playbook') -%}
-{%- assign _class = include.class
-  | default: 'btn buy-btn' -%}
-{%- assign _amount = include.amount
-  | default: '4.99' -%}
-{%- assign _component = include.component
-  | default: 'teaser' -%}
+{%- assign gum_url = include.url
+    | default: "https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook" -%}
+{%- assign text = include.label
+    | default: "Get the Sprint Playbook — $4.99" -%}
 
-<a id="{{ _id }}"
-   class="{{ _class }}"
-   href="{{ _href }}"
-   target="_blank"
+<a class="btn"
+   href="{{ gum_url }}"
    rel="noopener"
-   data-product="{{ include.slug | default: 'sprint-playbook' }}"
-   data-amount="{{ _amount }}"
-   data-source="{{ page.url | default: '/' }}"
-   data-component="{{ _component }}">
-  {{ _label }}
+   data-gtag="buy_click"
+   onclick="try{gtag('event','buy_click',{item:'sprint_playbook',path:location.pathname});}catch(e){}">
+  {{ text }}
 </a>
 
-<script>
-(function(){
-  try{
-    var a = document.currentScript && document.currentScript.previousElementSibling;
-    if(!a || a.tagName !== 'A') return;
-    a.addEventListener('click', function(){
-      try{
-        if (typeof gtag === 'function') {
-          var val = parseFloat(a.getAttribute('data-amount')) || 4.99;
-          var prod = a.getAttribute('data-product') || 'sprint-playbook';
-          var comp = a.getAttribute('data-component') || 'teaser';
-          var src  = a.getAttribute('data-source') || '';
-          gtag('event','begin_checkout',{
-            currency: 'USD',
-            value: val,
-            items: [{ item_name: prod }],
-            event_label: comp + '|' + src
-          });
-        }
-      }catch(_){}
-    }, {passive:true});
-  }catch(_){}
-})();
-</script>
+{%- if include.sub -%}
+  <p class="muted" style="margin-top:.25rem">{{ include.sub }}</p>
+{%- endif -%}
