@@ -7,17 +7,14 @@
 
   <div class="wrap header-row">
     <!-- Brand -->
-    <a class="brand" href="{{ site.baseurl }}/" aria-label="AI Expert Toolkit — Home">
+    <a class="brand" href="{{ site.baseurl }}/" aria-label="{{ site.title | default:'AI Expert Toolkit' }} — Home">
       {% if site.logo and site.logo != '' %}
-        <img src="{{ site.baseurl }}{{ site.logo }}" alt="AI Expert Toolkit" width="112" height="28" decoding="async">
-      {% else %}
-        AI Expert Toolkit
-      {% endif %}
+        <img src="{{ site.baseurl }}{{ site.logo }}" alt="{{ site.title | default:'AI Expert Toolkit' }}" width="112" height="28" decoding="async">
+      {% else %}{{ site.title | default:'AI Expert Toolkit' }}{% endif %}
     </a>
 
     <!-- Mobile menu toggle -->
-    <button class="menu-toggle" type="button"
-            aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">
+    <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="primary-nav" aria-expanded="false">
       <span class="menu-icon" aria-hidden="true"></span><span class="menu-text">Menu</span>
     </button>
 
@@ -32,18 +29,21 @@
       <a href="{{ site.baseurl }}/contact.html" {% if here contains '/contact' %}aria-current="page"{% endif %}>Contact</a>
     </nav>
 
-    <!-- CTA (visible on desktop) -->
+    <!-- CTA -->
     {% if site.header_cta_url %}
-    <a class="btn header-cta" href="{{ site.header_cta_url }}" target="_blank" rel="{% if site.header_cta_sponsored %}sponsored {% endif %}nofollow noopener" data-aff="true" aria-label="Get started">
-      {{ site.header_cta_label | default: 'Start Free' }}
-    </a>
+      <a class="btn header-cta" href="{{ site.header_cta_url }}" target="_blank"
+         rel="{% if site.header_cta_sponsored %}sponsored {% endif %}nofollow noopener"
+         data-aff="true" aria-label="{{ site.header_cta_label | default:'Start Free' }}">
+        {{ site.header_cta_label | default:'Start Free' }}
+      </a>
     {% endif %}
 
-    <!-- Site search (Google site: scope; no backend) -->
+    <!-- Google site: search (no backend) -->
     {% assign sitehost = site.url | replace: 'https://','' | replace: 'http://','' | split:'/' | first %}
     <form class="site-search" action="https://www.google.com/search" method="get" role="search">
       <label class="sr-only" for="q">Search site</label>
-      <input id="q" name="q" type="search" placeholder="Search articles & comparisons" autocomplete="off" aria-label="Search AI Expert Toolkit">
+      <input id="q" name="q" type="search" placeholder="Search articles & comparisons"
+             autocomplete="off" aria-label="Search {{ site.title | default:'AI Expert Toolkit' }}">
       <button class="btn search-btn" type="submit" aria-label="Search">Search</button>
       <input type="hidden" name="hl" value="en">
       <input type="hidden" id="siteScope" value="site:{{ sitehost }}">
@@ -51,82 +51,35 @@
   </div>
 
   <script>
-    (function(){
-      try{
-        const header = document.querySelector('.site-header');
-        const btn = header.querySelector('.menu-toggle');
-        const nav = header.querySelector('#primary-nav');
-        let lastFocus = null;
+  (function(){
+    try{
+      const header=document.querySelector('.site-header');
+      const btn=header.querySelector('.menu-toggle');
+      const nav=header.querySelector('#primary-nav');
+      let lastFocus=null;
+      function setOpen(state){
+        header.classList.toggle('is-open', !!state);
+        btn.setAttribute('aria-expanded', !!state);
+        if(state){ const first=nav.querySelector('a'); first && first.focus({preventScroll:true}); }
+        else if(lastFocus){ lastFocus.focus({preventScroll:true}); }
+      }
+      btn.addEventListener('click', function(){ lastFocus=document.activeElement; setOpen(!header.classList.contains('is-open')); });
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape' && header.classList.contains('is-open')) setOpen(false); });
+      document.addEventListener('click', e=>{ if(header.classList.contains('is-open') && !header.contains(e.target)) setOpen(false); });
 
-        function setOpen(state){
-          header.classList.toggle('is-open', !!state);
-          btn.setAttribute('aria-expanded', !!state);
-          if (state) {
-            nav.querySelector('a') && nav.querySelector('a').focus({preventScroll:true});
-          } else if (lastFocus) {
-            lastFocus.focus({preventScroll:true});
-          }
-        }
-
-        btn.addEventListener('click', function(){
-          lastFocus = document.activeElement;
-          setOpen(!header.classList.contains('is-open'));
-        });
-
-        document.addEventListener('keydown', function(e){
-          if (e.key === 'Escape' && header.classList.contains('is-open')) setOpen(false);
-        });
-
-        document.addEventListener('click', function(e){
-          if (!header.classList.contains('is-open')) return;
-          if (!header.contains(e.target)) setOpen(false);
-        });
-
-        // Site: scope for Google search
-        const form = header.querySelector('.site-search');
-        if (form){
-          form.addEventListener('submit', function(){
-            const q = form.querySelector('#q');
-            const scope = form.querySelector('#siteScope').value || '';
-            if (q && scope && !q.value.trim().startsWith('site:')){
-              q.value = scope + ' ' + q.value.trim();
-            }
-          });
-        }
-
-        // Affiliate decoration + GA4 event
-        const affDomains = ["writesonic.com"]; // extend as needed
-        function decorateURL(href){
-          const u = new URL(href, location.href);
-          const isAff = affDomains.some(d => u.hostname.endsWith(d));
-          if (!isAff) return u.toString();
-          if (!u.searchParams.has('utm_source')) u.searchParams.set('utm_source', 'aiexperttoolkit');
-          if (!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium', 'affiliate');
-          if (!u.searchParams.has('utm_campaign')) u.searchParams.set('utm_campaign', (document.title||'site').toLowerCase().replace(/\s+/g,'-').slice(0,60));
-          if (!u.searchParams.has('utm_content')){
-            const linkText = (document.activeElement && document.activeElement.textContent || 'link').trim().toLowerCase().replace(/\s+/g,'-').slice(0,40);
-            const pageSlug = location.pathname.replace(/\/+$/,'').split('/').pop() || 'home';
-            u.searchParams.set('utm_content', pageSlug + '--' + linkText);
-          }
-          return u.toString();
-        }
-        header.addEventListener('click', function(e){
-          const a = e.target.closest('a[href]');
-          if (!a) return;
-          if (!a.hasAttribute('data-aff')) return;
-          try{
-            a.href = decorateURL(a.href);
-            if (typeof gtag === 'function'){
-              const host = (new URL(a.href)).hostname;
-              gtag('event', 'click_affiliate', {event_category:'affiliate', event_label: host, value: 1});
-            }
-          }catch(_){}
-        }, true);
-      }catch(_){}
-    })();
+      // site: scope
+      const form=header.querySelector('.site-search');
+      if(form){ form.addEventListener('submit', function(){
+        const q=form.querySelector('#q'); const scope=form.querySelector('#siteScope').value||'';
+        if(q && scope && !q.value.trim().startsWith('site:')) q.value = scope + ' ' + q.value.trim();
+      }); }
+      // NOTE: affiliate UTM + GA handling has been removed from header.
+      // Sitewide handling is provided by /assets/js/affiliates.js (loaded in the layout).
+    }catch(_){}
+  })();
   </script>
 
-  <!-- SiteNavigationElement (optional) -->
+  <!-- Optional SiteNavigationElement -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",

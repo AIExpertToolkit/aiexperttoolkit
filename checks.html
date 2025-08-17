@@ -1,240 +1,43 @@
 ---
 layout: default
-title: Site Checks
+title: Site Self-Audit (Release Checklist)
+description: Internal pre-merge and post-deploy checklist for AI Expert Toolkit.
 permalink: /checks.html
 ---
 
-<div class="wrap" style="max-width:1100px;margin:auto;padding:18px">
-  <header class="section" style="padding-top:8px">
-    <h1>AI Expert Toolkit — Self-Audit</h1>
-    <p class="muted">One-click checks for status, canonicals, robots, schema, breadcrumbs, GA4, affiliate CTAs, and basic a11y. Runs entirely in your browser against the live site.</p>
-    <p><button id="run" class="btn">Run checks →</button> <span id="status" class="muted"></span></p>
-  </header>
+<section class="section" aria-labelledby="checks-title">
+  <div class="wrap">
 
-  <section class="section">
-    <h2>Results</h2>
-    <div id="summary" class="muted">Click “Run checks”.</div>
-    <div style="overflow:auto">
-      <table id="results" role="table" aria-label="Checks" style="width:100%; border-collapse:collapse">
-        <thead>
-          <tr>
-            <th style="text-align:left;padding:8px;border-bottom:1px solid rgba(255,255,255,.15)">URL</th>
-            <th style="text-align:left;padding:8px;border-bottom:1px solid rgba(255,255,255,.15)">Check</th>
-            <th style="text-align:left;padding:8px;border-bottom:1px solid rgba(255,255,255,.15)">Outcome</th>
-            <th style="text-align:left;padding:8px;border-bottom:1px solid rgba(255,255,255,.15)">Details</th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-  </section>
+    <h1 id="checks-title" style="margin-bottom:.5rem">Site Self-Audit (Release Checklist)</h1>
+    <p class="muted" style="margin-top:0">Use this page before merging and right after deploys. (Analytics is disabled for this page.)</p>
 
-  <section class="section">
-    <h2>What “pass” looks like</h2>
-    <ul class="muted">
-      <li><strong>Canonical:</strong> exactly one, pointing to the live absolute URL for that page.</li>
-      <li><strong>Robots meta:</strong> includes <code>index</code> and <code>follow</code>; not <code>noindex</code>.</li>
-      <li><strong>Breadcrumbs:</strong> visible <code>&lt;nav class="breadcrumbs"&gt;</code> and JSON-LD <code>BreadcrumbList</code>.</li>
-      <li><strong>Schema:</strong> <em>Article</em> on review/comparison pages; <em>FAQPage</em> when FAQs exist; <em>Service</em> on consulting.</li>
-      <li><strong>GA4:</strong> a <code>gtag</code> snippet or a <code>googletagmanager</code> script tag is present.</li>
-      <li><strong>Affiliate CTAs:</strong> at least one link with <code>data-aff="true"</code>.</li>
-      <li><strong>Alt text:</strong> no images missing <code>alt</code> (or only decorative with <code>alt=""</code>).</li>
-      <li><strong>robots.txt / sitemap.xml:</strong> 200 OK; robots lists the sitemap; sitemap parses as XML and contains &lt;loc&gt; entries.</li>
+    <hr style="margin:1rem 0 1.25rem 0">
+
+    <h2 style="margin:.5rem 0">Pull Request Acceptance</h2>
+    <ul style="list-style:none;padding-left:0;line-height:1.7">
+      <li><label><input type="checkbox"> Page builds on GitHub Pages / preview without errors</label></li>
+      <li><label><input type="checkbox"> No console errors in devtools on changed pages</label></li>
+      <li><label><input type="checkbox"> Header / footer consistent across pages</label></li>
+      <li><label><input type="checkbox"> Base-URL safe links (use <code>{{ '{{ site.baseurl }}' }}</code>), no broken links</label></li>
+      <li><label><input type="checkbox"> Exactly one H1 per page; good meta title &amp; description</label></li>
+      <li><label><input type="checkbox"> Alt text present for any new images</label></li>
+      <li><label><input type="checkbox"> GA4 present on public pages (not on this checks page)</label></li>
     </ul>
-  </section>
-</div>
 
-<style>
-  .btn{display:inline-block;background:#22d3ee;color:#072635;padding:.6rem .9rem;font-size:1.05rem;border-radius:10px;font-weight:700;text-decoration:none;border:0;cursor:pointer}
-  .muted{color:#9fb6d1}
-  .ok{color:#22d3ee;font-weight:700}
-  .warn{color:#eab308;font-weight:700}
-  .fail{color:#f87171;font-weight:700}
-  td, th{padding:8px; vertical-align:top}
-  tr:nth-child(even){background:rgba(255,255,255,.03)}
-  code{background:rgba(255,255,255,.06); padding:0 .25rem; border-radius:.25rem}
-</style>
+    <h2 style="margin:1.25rem 0 .5rem">Post-Deploy Smoke Test</h2>
+    <ul style="list-style:none;padding-left:0;line-height:1.7">
+      <li><label><input type="checkbox"> Home, top nav links, and footer links work</label></li>
+      <li><label><input type="checkbox"> LCP image loads fast; no layout shift (CLS ≤ 0.02)</label></li>
+      <li><label><input type="checkbox"> Images have width/height set; no late-loading banners</label></li>
+      <li><label><input type="checkbox"> No 404s; no mixed-content warnings (HTTPS only)</label></li>
+    </ul>
 
-<script>
-(function(){
-  const ORIGIN = location.origin;
-  const PAGES = [
-    {path:'/', type:'html', expect:{breadcrumbs:false, article:false, faq:false}},
-    {path:'/comparisons.html', type:'html', expect:{breadcrumbs:true}},
-    {path:'/jasper-vs-writesonic.html', type:'html', expect:{breadcrumbs:true, article:true, faq:true, affiliate:true}},
-    {path:'/writesonic-review.html', type:'html', expect:{breadcrumbs:true, article:true, faq:true, affiliate:true}},
-    {path:'/pricing.html', type:'html', expect:{breadcrumbs:true}},
-    {path:'/consulting.html', type:'html', expect:{breadcrumbs:true, service:true}},
-    {path:'/robots.txt', type:'text'},
-    {path:'/sitemap.xml', type:'xml'}
-  ];
+    <h2 style="margin:1.25rem 0 .5rem">Rollback</h2>
+    <ul style="list-style:none;padding-left:0;line-height:1.7">
+      <li><label><input type="checkbox"> If needed, revert to the previous tag/release and re-deploy</label></li>
+    </ul>
 
-  const $ = sel => document.querySelector(sel);
-  const tbody = $('#tbody');
-  const statusEl = $('#status');
-  const summaryEl = $('#summary');
-
-  function addRow(url, check, outcome, details){
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td><a href="${url}" target="_blank" rel="noopener">${url}</a></td>
-                    <td>${check}</td>
-                    <td class="${outcome.toLowerCase()}">${outcome}</td>
-                    <td><div style="white-space:pre-wrap">${details||''}</div></td>`;
-    tbody.appendChild(tr);
-  }
-
-  function onlyOneCanonical(doc, absoluteUrl){
-    const links = [...doc.querySelectorAll('link[rel="canonical"]')];
-    if(links.length !== 1) return { pass:false, details:`Found ${links.length}` };
-    const href = links[0].getAttribute('href') || '';
-    const norm = (u)=>u.replace(/\/+$/,'')+'/';
-    const ok = norm(href) === norm(absoluteUrl);
-    return { pass: ok, details: ok ? href : `Expected ${absoluteUrl} but saw ${href}` };
-  }
-
-  function robotsMetaOK(doc){
-    const tag = doc.querySelector('meta[name="robots"]');
-    if(!tag) return { pass:false, details:'No <meta name="robots">' };
-    const c = (tag.getAttribute('content')||'').toLowerCase();
-    const hasIndex = /(^|[\s,;])index([\s,;]|$)/.test(c);
-    const hasFollow = /(^|[\s,;])follow([\s,;]|$)/.test(c);
-    const noindex = /noindex/.test(c);
-    return { pass: hasIndex && hasFollow && !noindex, details: c };
-  }
-
-  function ga4Present(html){
-    const hasTag = /googletagmanager\.com\/gtag\/js\?id=/i.test(html);
-    const hasGtag = /gtag\(['"]config['"]\s*,\s*['"]G-[A-Z0-9]+['"]\)/i.test(html);
-    return hasTag || hasGtag;
-  }
-
-  function findJSONLDTypes(doc){
-    const types = [];
-    [...doc.querySelectorAll('script[type="application/ld+json"]')].forEach(s=>{
-      try{
-        const json = JSON.parse(s.textContent.trim());
-        const arr = Array.isArray(json) ? json : [json];
-        arr.forEach(obj=>{
-          if(obj && typeof obj === 'object'){
-            if(typeof obj['@type'] === 'string'){ types.push(obj['@type']); }
-            else if(Array.isArray(obj['@type'])){ obj['@type'].forEach(t=>types.push(t)); }
-          }
-        });
-      }catch(e){}
-    });
-    return types;
-  }
-
-  function imgAltAudit(doc){
-    const imgs = [...doc.querySelectorAll('img')];
-    const missing = imgs.filter(img=>!img.hasAttribute('alt'));
-    return { total: imgs.length, missing: missing.length };
-  }
-
-  async function checkHTML(fullURL, expect){
-    const res = await fetch(fullURL, {cache:'no-store'});
-    addRow(fullURL, 'HTTP status', res.ok?'OK':'FAIL', `status ${res.status}`);
-    if(!res.ok) return;
-
-    const text = await res.text();
-    const doc = new DOMParser().parseFromString(text, 'text/html');
-
-    // Canonical
-    const canonical = onlyOneCanonical(doc, fullURL);
-    addRow(fullURL, 'Canonical (single & correct)', canonical.pass?'OK':'FAIL', canonical.details);
-
-    // Robots meta
-    const robots = robotsMetaOK(doc);
-    addRow(fullURL, 'Robots meta', robots.pass?'OK':'FAIL', robots.details);
-
-    // Breadcrumbs UI
-    if(expect && expect.breadcrumbs){
-      const hasCrumbs = !!doc.querySelector('nav.breadcrumbs');
-      addRow(fullURL, 'Breadcrumbs UI', hasCrumbs?'OK':'FAIL', hasCrumbs?'Found .breadcrumbs':'Not found');
-    }
-
-    // Affiliate CTA presence
-    if(expect && expect.affiliate){
-      const aff = !!doc.querySelector('a[data-aff="true"]');
-      addRow(fullURL, 'Affiliate CTA(s)', aff?'OK':'WARN', aff?'Found data-aff="true"':'None found');
-    }
-
-    // GA4 snippet presence
-    const hasGA = ga4Present(text);
-    addRow(fullURL, 'GA4 snippet present', hasGA?'OK':'WARN', hasGA?'Detected gtag':'No gtag snippet pattern found');
-
-    // JSON-LD types
-    const types = findJSONLDTypes(doc);
-    addRow(fullURL, 'JSON-LD types found', types.length?'OK':'WARN', types.join(', ') || 'none');
-
-    // Expected schema types
-    if(expect && expect.article){
-      const ok = types.includes('Article') || types.includes('BlogPosting');
-      addRow(fullURL, 'Article schema', ok?'OK':'WARN', ok?'Present':'Not detected');
-    }
-    if(expect && expect.faq){
-      const ok = types.includes('FAQPage');
-      addRow(fullURL, 'FAQPage schema', ok?'OK':'WARN', ok?'Present':'Not detected');
-    }
-    if(expect && expect.service){
-      const ok = types.includes('Service');
-      addRow(fullURL, 'Service schema', ok?'OK':'WARN', ok?'Present':'Not detected');
-    }
-    if(expect && (expect.breadcrumbs)){
-      const ok = types.includes('BreadcrumbList');
-      addRow(fullURL, 'BreadcrumbList schema', ok?'OK':'WARN', ok?'Present':'Not detected');
-    }
-
-    // Basic a11y: <img> alt
-    const altAudit = imgAltAudit(doc);
-    const a11yOk = altAudit.missing === 0;
-    addRow(fullURL, 'Images with missing alt', a11yOk?'OK':'WARN', `${altAudit.missing} / ${altAudit.total} missing alt`);
-  }
-
-  async function checkRobots(fullURL){
-    const res = await fetch(fullURL, {cache:'no-store'});
-    addRow(fullURL, 'HTTP status', res.ok?'OK':'FAIL', `status ${res.status}`);
-    if(!res.ok) return;
-    const txt = await res.text();
-    const hasSitemap = /Sitemap:\s*https?:\/\/[^ \r\n]+\/sitemap\.xml/i.test(txt);
-    const allowAll = /Allow:\s*\/\s*$/mi.test(txt);
-    addRow(fullURL, 'robots.txt has Sitemap', hasSitemap?'OK':'FAIL', hasSitemap?'Found':'Missing');
-    addRow(fullURL, 'robots.txt allows /', allowAll?'OK':'WARN', allowAll?'Allow: /':'Different policy');
-  }
-
-  async function checkSitemap(fullURL){
-    const res = await fetch(fullURL, {cache:'no-store'});
-    addRow(fullURL, 'HTTP status', res.ok?'OK':'FAIL', `status ${res.status}`);
-    if(!res.ok) return;
-    const txt = await res.text();
-    const hasLoc = /<loc>https?:\/\/[^<]+<\/loc>/i.test(txt);
-    const isIndex = /<sitemapindex/i.test(txt);
-    const isUrlset = /<urlset/i.test(txt);
-    addRow(fullURL, 'Sitemap has <loc>', hasLoc?'OK':'FAIL', hasLoc?'Found':'No <loc> entries');
-    addRow(fullURL, 'Sitemap type', (isIndex||isUrlset)?'OK':'WARN', isIndex?'sitemapindex':(isUrlset?'urlset':'unknown'));
-  }
-
-  async function run(){
-    tbody.innerHTML = '';
-    summaryEl.textContent = 'Running…';
-    const started = performance.now();
-    for(const p of PAGES){
-      const url = ORIGIN + p.path.replace(/\/{2,}/g,'/');
-      try{
-        if(p.type==='html') await checkHTML(url, p.expect||{});
-        else if(p.type==='text') await checkRobots(url);
-        else if(p.type==='xml') await checkSitemap(url);
-      }catch(err){
-        addRow(url, 'Fetch', 'FAIL', String(err));
-      }
-    }
-    const ms = Math.round(performance.now() - started);
-    const passes = [...tbody.querySelectorAll('.ok')].length;
-    const warns = [...tbody.querySelectorAll('.warn')].length;
-    const fails = [...tbody.querySelectorAll('.fail')].length;
-    summaryEl.textContent = `Done in ${ms}ms — Pass: ${passes}, Warn: ${warns}, Fail: ${fails}.`;
-  }
-
-  document.getElementById('run').addEventListener('click', run);
-})();
-</script>
+    <hr style="margin:1.25rem 0">
+    <p class="muted" style="font-size:.95rem">Tip: keep this page internal; it is excluded from GA.</p>
+  </div>
+</section>

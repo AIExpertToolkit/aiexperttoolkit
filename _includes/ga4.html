@@ -1,0 +1,13 @@
+{% assign ga = site.analytics.ga4 | default: site.ga4_measurement_id %}
+{% assign block = false %}
+{% if page.path == 'checks.html' %}{% assign block = true %}{% endif %}
+{% if ga and ga != '' and block == false %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', '{{ ga }}', { 'anonymize_ip': true });
+  </script>
+{% endif %}
+

@@ -1,0 +1,26 @@
+{%- comment -%}
+Reusable Buy button include
+Usage:
+  {% include buy_button.html
+      url="https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook"
+      label="Get the Sprint Playbook — $4.99"
+      sub="Instant PDF download • 7-day plan + templates"
+  %}
+{%- endcomment -%}
+
+{%- assign gum_url = include.url
+    | default: "https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook" -%}
+{%- assign text = include.label
+    | default: "Get the Sprint Playbook — $4.99" -%}
+
+<a class="btn"
+   href="{{ gum_url }}"
+   rel="noopener"
+   data-gtag="buy_click"
+   onclick="try{gtag('event','buy_click',{item:'sprint_playbook',path:location.pathname});}catch(e){}">
+  {{ text }}
+</a>
+
+{%- if include.sub -%}
+  <p class="muted" style="margin-top:.25rem">{{ include.sub }}</p>
+{%- endif -%}
