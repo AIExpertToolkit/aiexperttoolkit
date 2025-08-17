@@ -1,56 +1,66 @@
 {%- comment -%}
-Reusable Buy button for paid guides (Gumroad overlay).
-Usage (example):
+Reusable Gumroad “Buy” button include.
+Usage:
   {% include buy_button.html
-      product="https://aiexperttoolkit.gumroad.com/l/your-slug"
-      label="Buy guide — $4.99"
-  %}
-Requirements:
-- Works on GitHub Pages (no backend).
-- Loads Gumroad overlay script once per page.
-- Fires GA4 event `click_buy_guide` on click.
+     href="https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook"
+     label="Buy the Sprint Playbook – $4.99"
+     amount="4.99"
+     slug="sprint-playbook"
+     component="teaser" %}
+Params:
+  - href:      required product URL (Gumroad)
+  - label:     button text (default shown below)
+  - amount:    numeric string for GA value (default 4.99)
+  - slug:      id suffix (default: 'sprint-playbook')
+  - component: where it’s placed (e.g., 'teaser', 'hero')
 {%- endcomment -%}
 
-{%- assign _product = include.product | default: '' -%}
-{%- assign _label   = include.label   | default: 'Buy guide — $4.99' -%}
+{%- assign _href = include.href
+  | default: 'https://elijahtoolkit.gumroad.com/l/aetk-sprint-playbook' -%}
+{%- assign _label = include.label
+  | default: 'Buy the Sprint Playbook – $4.99' -%}
+{%- assign _id = include.id
+  | default: 'buy-' | append: (include.slug | default: 'sprint-playbook') -%}
+{%- assign _class = include.class
+  | default: 'btn buy-btn' -%}
+{%- assign _amount = include.amount
+  | default: '4.99' -%}
+{%- assign _component = include.component
+  | default: 'teaser' -%}
 
-{%- if _product == '' -%}
-  {%- comment -%} Safety: no placeholder links. Render a disabled button if product URL missing. {%- endcomment -%}
-  <button class="btn buy-guide" type="button" disabled aria-disabled="true" title="Product link not configured">
-    {{ _label }}
-  </button>
-{%- else -%}
-  <a class="btn buy-guide"
-     href="{{ _product }}"
-     data-gumroad-overlay="true"
-     rel="nofollow noopener"
-     role="button"
-     aria-label="{{ _label | escape }}">
-     {{ _label }}
-  </a>
-{%- endif -%}
+<a id="{{ _id }}"
+   class="{{ _class }}"
+   href="{{ _href }}"
+   target="_blank"
+   rel="noopener"
+   data-product="{{ include.slug | default: 'sprint-playbook' }}"
+   data-amount="{{ _amount }}"
+   data-source="{{ page.url | default: '/' }}"
+   data-component="{{ _component }}">
+  {{ _label }}
+</a>
 
 <script>
 (function(){
   try{
-    // Load Gumroad overlay once
-    if(!document.getElementById('gumroad-js')){
-      var s=document.createElement('script');
-      s.src='https://gumroad.com/js/gumroad.js';
-      s.id='gumroad-js';
-      s.async=true;
-      document.head.appendChild(s);
-    }
-    // GA4 event for buy clicks
-    document.addEventListener('click', function(e){
-      var a=e.target.closest && e.target.closest('a[data-gumroad-overlay="true"]');
-      if(!a) return;
+    var a = document.currentScript && document.currentScript.previousElementSibling;
+    if(!a || a.tagName !== 'A') return;
+    a.addEventListener('click', function(){
       try{
-        if(typeof gtag==='function'){
-          gtag('event','click_buy_guide',{product_url:a.href});
+        if (typeof gtag === 'function') {
+          var val = parseFloat(a.getAttribute('data-amount')) || 4.99;
+          var prod = a.getAttribute('data-product') || 'sprint-playbook';
+          var comp = a.getAttribute('data-component') || 'teaser';
+          var src  = a.getAttribute('data-source') || '';
+          gtag('event','begin_checkout',{
+            currency: 'USD',
+            value: val,
+            items: [{ item_name: prod }],
+            event_label: comp + '|' + src
+          });
         }
       }catch(_){}
-    }, true);
+    }, {passive:true});
   }catch(_){}
 })();
 </script>
