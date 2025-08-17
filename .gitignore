@@ -12,3 +12,5 @@ _site/
 *.zip 
 *.7z 
 *.rar
+.aetk/
+.aetk/out/
