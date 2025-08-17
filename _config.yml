@@ -59,6 +59,7 @@ kramdown:
 
 # --- Analytics ---
 ga4_measurement_id: G-6E56LGF5M5
+
+# Only exclude the internal checks dashboard from GA
 ga_exclude:
   - "/checks.html"
-  - "/consulting-terms.html"

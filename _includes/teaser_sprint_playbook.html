@@ -1,0 +1,47 @@
+<section class="teaser-playbook" aria-labelledby="playbook-title">
+  <div class="wrap teaser-grid">
+    <div class="teaser-copy">
+      <h2 id="playbook-title">AI Website Sprint Playbook</h2>
+      <p class="kicker">Launch a money page in 7 days (with metrics you can brag about)</p>
+      <ul>
+        <li>Step-by-step: plan → write → QA → publish in one week</li>
+        <li>Built-in Lighthouse/GA4 targets so you ship fast <em>and</em> clean</li>
+        <li>Printable “Sprint Card” checklist + quick-triage cheats</li>
+      </ul>
+
+      <a class="btn buy-playbook"
+         href="https://eliahtoolkit.gumroad.com/l/aetk-sprint-playbook"
+         target="_blank" rel="noopener nofollow"
+         aria-label="Get the AI Website Sprint Playbook for $4.99">
+        Get the Playbook — $4.99
+      </a>
+      <p class="tiny trusted" style="margin:.5rem 0 0; opacity:.8">
+        14-day money-back guarantee
+      </p>
+    </div>
+
+    <div class="teaser-media">
+      <img
+        src="{{ site.baseurl }}/assets/img/guides/sprint-playbook-thumb.jpg"
+        width="640" height="400"
+        alt="Cover art: AI Website Sprint Playbook">
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  try {
+    var btn = document.querySelector('.teaser-playbook .buy-playbook');
+    if (btn && typeof gtag === 'function') {
+      btn.addEventListener('click', function(){
+        gtag('event','purchase_click',{
+          event_category:'gumroad',
+          event_label:'sprint_playbook_teaser',
+          value:4.99
+        });
+      }, {once:true});
+    }
+  } catch(_) {}
+})();
+</script>
