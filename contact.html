@@ -1,40 +1,10 @@
 ---
 layout: default
-title: Contact
-description: Get in touch about product questions, consulting, or corrections.
+title: "Contact — AI Expert Toolkit"
 permalink: /contact.html
-breadcrumbs:
-  - { name: "Contact", url: "/contact.html" }
-article: false
 ---
-
-<div class="wrap">
-  {% include breadcrumbs.html %}
-
-  <header class="section" style="padding-top:8px">
-    <h1>Contact</h1>
-    <p class="muted">Questions, corrections, or a project you want us to build with you? We read every note.</p>
-  </header>
-
-  <section class="section">
-    <p><a class="btn" href="mailto:{{ site.email | default: 'hello@aiexperttoolkit.com' }}?subject=Hello%20AI%20Expert%20Toolkit"
-          aria-label="Email us">Email us</a></p>
-    <p class="muted small">We reply within 1–2 business days.</p>
-  </section>
-</div>
-
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"{{ site.title | default: 'AI Expert Toolkit' }}",
-  "url":"{{ '/' | absolute_url }}",
-  "contactPoint":[{
-    "@type":"ContactPoint",
-    "contactType":"customer support",
-    "email":"{{ site.email | default: 'hello@aiexperttoolkit.com' }}",
-    "areaServed":"US",
-    "availableLanguage":["en"]
-  }]
-}
-</script>
+<article class="prose">
+  <h1>Contact</h1>
+  <p>Email us at <a href="mailto:hello@aiexperttoolkit.com">hello@aiexperttoolkit.com</a>.</p>
+  <p>If an embedded form is blocked, use the email above.</p>
+</article>
