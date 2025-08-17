@@ -1,26 +1,25 @@
 @echo off
 setlocal
-set "slug=%%~1"
-set "title=%%~2"
-if "%%slug%%"=="" set /p slug=Enter slug (no spaces): 
-if "%%title%%"=="" set /p title=Enter title: 
-set "fname=%%slug%%.html"
-( 
---- 
-layout: default
-title: %%title%%
-description: TODO
-permalink: /%%slug%%.html
----
-ECHO is off.
-<section class="section">
-  <div class="wrap">
-    <h1>%%title%%</h1>
-    <p class="muted">Coming soon.</p>
-  </div>
-</section>
-echo Wrote %%fname%%
-git add "%%fname%%"
-git commit -m "feat(page): add %%slug%%"
+if "%~1"=="" (
+  echo Usage: %~nx0 slug "Title"
+  exit /b 1
+)
+set "slug=%~1"
+set "title=%~2"
+if "%title%"=="" set "title=%slug%"
+set "fname=%slug%.html"
+> "%fname%" echo ---
+>>"%fname%" echo layout: default
+>>"%fname%" echo title: %title%
+>>"%fname%" echo permalink: /%slug%.html
+>>"%fname%" echo ---
+>>"%fname%" echo ^<section class="section"^>
+>>"%fname%" echo   ^<div class="wrap"^>
+>>"%fname%" echo     ^<h1^>%title%^</h1^>
+>>"%fname%" echo     ^<p class="muted"^>Coming soon.^</p^>
+>>"%fname%" echo   ^</div^>
+>>"%fname%" echo ^</section^>
+git add "%fname%"
+git commit -m "feat(page): add %slug%"
 git push
 endlocal
