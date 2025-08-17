@@ -49,8 +49,18 @@ HTML
           for f in _site/*.html; do
             n="$(basename "$f")"
             perl -0777 -pe "s@</head>@<link rel=\"canonical\" href=\"${base}/${n}\" />\n</head>@i" -i "$f" || true
+          done      - name: Inject GA4 (optional)
+        if: env.GA_ID != ''
+        shell: bash
+        env:
+          GA_ID: ${{ vars.GA4_MEASUREMENT_ID || secrets.GA4_MEASUREMENT_ID }}
+        run: |
+          set -euo pipefail
+          SNIP="<!-- GA4 --><script async src=\"https://www.googletagmanager.com/gtag/js?id=${GA_ID}\"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','${GA_ID}');</script><script>(function(){try{var p=new URLSearchParams(window.location.search).toString();if(!p)return;document.querySelectorAll('a[href^=\"/\"]').forEach(a=>{var h=a.getAttribute('href');if(h.indexOf('?')===-1){a.setAttribute('href',h+'?'+p)}})}catch(e){}})();</script>"
+          for f in _site/*.html; do
+            perl -0777 -pe "s@</head>@${SNIP}</head>@i" -i "$f" || true
           done
-      - uses: actions/upload-pages-artifact@v3
+
         with:
           path: _site
       - id: deployment
@@ -58,3 +68,4 @@ HTML
         environment:
           name: github-pages
           url: ${{ steps.deployment.outputs.page_url }}
+
