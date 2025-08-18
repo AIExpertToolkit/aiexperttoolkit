@@ -1,0 +1,4 @@
+﻿:root{--fg:#111;--muted:#666;--bg:#fff;--link:#0a58ca}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--fg);background:var(--bg);line-height:1.6}
+.main{max-width:780px;margin:6rem auto;padding:0 1rem}
+h1{font-size:2.25rem;margin:0 0 .5rem}p.muted{color:var(--muted)}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
