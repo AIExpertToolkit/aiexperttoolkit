@@ -6,20 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Send photos → choose Free or $9.99 Premium. Premium pays first, then uploads. We deliver a website-ready image pack fast.">
   <link rel="canonical" href="https://aiexperttoolkit.com/">
+
+  <!-- GA4 (lightweight) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6E56LGF5M5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-6E56LGF5M5", { anonymize_ip: true });
+
+    // tiny helper so we can call before GA loads without errors
+    function gaEvent(name, params){ try { gtag("event", name, params || {}); } catch(e){} }
+  </script>
+
   <style>
-    :root{--fg:#111;--muted:#666;--bg:#fff;--b:#e5e7eb;--accent:#0d6efd;--ok:#10b981}
+    :root{--fg:#111;--muted:#666;--bg:#fff;--b:#e5e7eb;--accent:#0d6efd;--ok:#10b981;--okbg:#e8f9f0;--okb:#b7f3d9}
     *{box-sizing:border-box} html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
     .wrap{max-width:980px;margin:28px auto;padding:0 16px}
     h1{font-size:28px;margin:0 0 8px}
     p.lead{color:var(--muted);margin:0 0 16px}
     .card{border:1px solid var(--b);border-radius:12px;padding:18px;margin:16px 0}
     .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    .btn{display:inline-block;border:1px solid var(--fg);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--fg);background:#fff}
+    .btn{display:inline-block;border:1px solid var(--fg);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--fg);background:#fff;cursor:pointer}
     .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
     .eyebrow{font-size:12px;color:#555;text-transform:uppercase;letter-spacing:.08em}
     ul{margin:10px 0 0 18px} li{margin:4px 0}
     footer{margin:36px 0 14px;color:var(--muted);font-size:14px}
     .badge{display:inline-block;margin-left:8px;padding:4px 8px;border-radius:999px;background:var(--ok);color:#fff;font-size:12px}
+    .banner{display:none;margin-bottom:12px;border:1px solid var(--okb);background:var(--okbg);color:#065f46;padding:10px 12px;border-radius:10px}
     /* Modal */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:1000}
     .modal[open]{display:flex}
@@ -36,6 +50,12 @@
   <main class="wrap">
     <span class="eyebrow">Service</span>
     <h1>Photo Splitter — Done-For-You Website Image Pack</h1>
+
+    <!-- Post-payment banner appears after Stripe redirect -->
+    <div id="paidBanner" class="banner" role="status" aria-live="polite">
+      Payment received. Click <strong>Upload (Premium Dropbox)</strong> to send your photos.
+    </div>
+
     <p class="lead">Click <strong>Upload Photos</strong> to choose <em>Free</em> or <em>Premium ($9.99)</em>. If you choose Premium, you’ll pay first via Stripe, then upload your photos.</p>
 
     <div class="card">
@@ -66,14 +86,18 @@
       <details>
         <summary>Accepted formats & limits</summary>
         <ul>
+          <li><strong>No Dropbox account needed.</strong></li>
           <li>Accepted: JPG, PNG, HEIC, WebP, TIFF (RAW/PSD also okay—we'll convert).</li>
-          <li>Large files welcome. If Dropbox limits you, email us and we’ll provide an alternate upload method.</li>
+          <li><strong>Free:</strong> up to 3 images, ≤10&nbsp;MB each.</li>
+          <li><strong>Premium:</strong> up to 25 images, ≤250&nbsp;MB total.</li>
+          <li>Hit a size limit? Email us and we’ll provide an alternate upload method.</li>
         </ul>
       </details>
       <details>
         <summary>Restrictions</summary>
         <ul>
           <li>Only upload content you own or have rights to use.</li>
+          <li>For Premium, fulfillment requires that the Dropbox uploader email matches your Stripe email.</li>
           <li>No illegal or harmful content. We may refuse/return any order that violates these terms.</li>
         </ul>
       </details>
@@ -95,7 +119,7 @@
         <a class="btn primary" id="premiumAction" rel="nofollow noopener sponsored"
            href="https://buy.stripe.com/00wdR9e8f6S1434cAe8k800">Pay $9.99 (Stripe)</a>
       </div>
-      <p class="small" id="premiumHint" style="margin-top:8px">Already paid? You’ll be returned here automatically—then click <em>Upload (Premium Dropbox)</em>.</p>
+      <p class="small" id="premiumHint" style="margin-top:8px">Already paid? After Stripe sends you back here, this button will switch to <em>Upload (Premium Dropbox)</em>.</p>
     </div>
   </div>
 
@@ -107,6 +131,9 @@
 
     const qs = new URLSearchParams(location.search);
     let premiumPaid = false;
+
+    // Page view event
+    gaEvent("view_service", { page: "website_image_pack" });
 
     // If Stripe redirected back with ?premium_upload=1 → persist soft "paid" flag locally and clean URL
     if (qs.get("premium_upload") === "1") {
@@ -124,6 +151,8 @@
     const premiumAction = document.getElementById("premiumAction");
     const premiumHint = document.getElementById("premiumHint");
     const paidBadge = document.getElementById("paidBadge");
+    const paidBanner = document.getElementById("paidBanner");
+    const freeUpload = document.getElementById("freeUpload");
 
     function setPremiumUI(paid){
       if (paid) {
@@ -133,20 +162,24 @@
         premiumAction.classList.add("primary");
         premiumHint.textContent = "Payment received. Click Upload (Premium Dropbox) to send your photos.";
         paidBadge.style.display = "inline-block";
+        paidBanner.style.display = "block";
       } else {
         premiumAction.textContent = "Pay $9.99 (Stripe)";
         premiumAction.href = STRIPE_LINK;
         premiumAction.rel = "nofollow noopener sponsored";
         premiumHint.textContent = "Already paid? After Stripe sends you back here, this button will switch to 'Upload (Premium Dropbox)'.";
         paidBadge.style.display = "none";
+        paidBanner.style.display = "none";
       }
     }
     setPremiumUI(premiumPaid);
+    if (premiumPaid) { gaEvent("premium_ready", {}); }
 
     function openModal(){
       modal.setAttribute("open", "");
       setPremiumUI(premiumPaid);
       premiumAction.focus();
+      gaEvent("open_chooser", { from: "button" });
     }
     function closeModal(){
       modal.removeAttribute("open");
@@ -157,6 +190,16 @@
     closeBtn.addEventListener("click", closeModal);
     modal.addEventListener("click", (e)=>{ if(e.target === modal) closeModal(); });
     document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && modal.hasAttribute("open")) closeModal(); });
+
+    // Click events for analytics
+    freeUpload.addEventListener("click", ()=> gaEvent("click_free_upload", {}));
+    premiumAction.addEventListener("click", ()=>{
+      if (premiumPaid) {
+        gaEvent("click_premium_upload", {});
+      } else {
+        gaEvent("click_premium_pay", {});
+      }
+    });
 
     // Auto-open after Stripe return
     if (premiumPaid) { setTimeout(openModal, 200); }
