@@ -41,8 +41,6 @@
     <div class="card">
       <div class="row" style="margin-bottom:8px">
         <button id="openChooser" class="btn primary" aria-haspopup="dialog" aria-controls="chooser">Upload Photos</button>
-        <a id="payDirect" class="btn" rel="nofollow noopener sponsored"
-           href="https://buy.stripe.com/00wdR9e8f6S1434cAe8k800">Pay $9.99 (Stripe)</a>
         <span id="paidBadge" class="badge" style="display:none">Premium upload ready</span>
       </div>
       <p><strong>What you'll get (Website Image Pack):</strong></p>
@@ -133,7 +131,7 @@
         premiumAction.href = PREMIUM_DBX;
         premiumAction.rel = "noopener";
         premiumAction.classList.add("primary");
-        premiumHint.textContent = "Premium confirmed (soft). Click Upload (Premium Dropbox) to send your photos.";
+        premiumHint.textContent = "Payment received. Click Upload (Premium Dropbox) to send your photos.";
         paidBadge.style.display = "inline-block";
       } else {
         premiumAction.textContent = "Pay $9.99 (Stripe)";
@@ -148,7 +146,6 @@
     function openModal(){
       modal.setAttribute("open", "");
       setPremiumUI(premiumPaid);
-      // basic focus management
       premiumAction.focus();
     }
     function closeModal(){
@@ -162,10 +159,7 @@
     document.addEventListener("keydown", (e)=>{ if(e.key === "Escape" && modal.hasAttribute("open")) closeModal(); });
 
     // Auto-open after Stripe return
-    if (premiumPaid) {
-      // brief delay to let layout paint
-      setTimeout(openModal, 200);
-    }
+    if (premiumPaid) { setTimeout(openModal, 200); }
   })();
   </script>
 </body>
