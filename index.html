@@ -2,206 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Photo Splitter — AI Expert Toolkit</title>
+  <title>Photo Splitter — Website Image Pack Service</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Upload one photo and split it into a grid. Free 2×2. Premium unlocks up to 10×10 plus ZIP download.">
+  <meta name="description" content="Send us your photos via Dropbox. We return a web-ready Website Image Pack in 1 business day. Simple, fast, done-for-you.">
   <link rel="canonical" href="https://aiexperttoolkit.com/">
   <style>
     :root{--fg:#111;--muted:#666;--bg:#fff;--b:#e5e7eb;--accent:#0d6efd}
     *{box-sizing:border-box} html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
-    .wrap{max-width:980px;margin:24px auto;padding:0 16px}
+    .wrap{max-width:980px;margin:28px auto;padding:0 16px}
     h1{font-size:28px;margin:0 0 8px}
     p.lead{color:var(--muted);margin:0 0 16px}
-    .card{border:1px solid var(--b);border-radius:10px;padding:14px}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    input[type=file]{padding:8px}
-    button,.btn{appearance:none;border:1px solid var(--fg);background:#fff;border-radius:8px;padding:9px 12px;cursor:pointer}
-    button[disabled]{opacity:.5;cursor:not-allowed}
-    .btn{display:inline-block;text-decoration:none;color:var(--fg)}
+    .card{border:1px solid var(--b);border-radius:12px;padding:18px;margin:16px 0}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{display:inline-block;border:1px solid var(--fg);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--fg);background:#fff}
     .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-    .hint{min-height:22px;color:#444}
-    #output{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:16px}
-    #output a.tile{display:block;border:1px solid var(--b);border-radius:8px;overflow:hidden}
-    #output img{width:100%;height:120px;object-fit:cover;display:block}
-    .badge{display:inline-block;margin-left:8px;padding:4px 8px;border-radius:999px;background:#10b981;color:#fff;font-size:12px}
-    footer{margin:40px 0 12px;color:var(--muted);font-size:14px}
-    @media (prefers-reduced-motion:no-preference){button,.btn{transition:transform .02s ease}button:active,.btn:active{transform:translateY(1px)}}
+    .eyebrow{font-size:12px;color:#555;text-transform:uppercase;letter-spacing:.08em}
+    ul{margin:10px 0 0 18px}
+    li{margin:4px 0}
+    details{margin-top:8px}
+    footer{margin:36px 0 14px;color:var(--muted);font-size:14px}
+    @media (prefers-reduced-motion:no-preference){.btn{transition:transform .02s ease}.btn:active{transform:translateY(1px)}}
   </style>
 </head>
 <body>
   <main class="wrap">
-    <h1>Photo Splitter</h1>
-    <p class="lead">Upload one photo → get multiple sizes instantly. Free 2×2. Premium unlocks 10×10 + ZIP.</p>
+    <span class="eyebrow">Service</span>
+    <h1>Photo Splitter — Done-For-You Website Image Pack</h1>
+    <p class="lead">Send your photos → we deliver a clean, optimized set of website images in <strong>1 business day</strong>.</p>
 
     <div class="card">
       <div class="row" style="margin-bottom:8px">
-        <input id="fileInput" type="file" accept="image/*" aria-label="Choose photo">
+        <a class="btn primary" target="_blank" rel="noopener"
+           href="https://www.dropbox.com/request/qJCBzxmMJfIZtnjWWVRe">Send Photos (Dropbox)</a>
+        <a class="btn" rel="nofollow noopener sponsored"
+           href="https://buy.stripe.com/00wdR9e8f6S1434cAe8k800">Pay $9.99 (Stripe)</a>
       </div>
+      <p><strong>What you'll get (Website Image Pack):</strong></p>
+      <ul>
+        <li><code>hero-1200x675.jpg</code> (16:9, for top-of-page hero)</li>
+        <li><code>og-1200x630.jpg</code> (Open Graph / link previews)</li>
+        <li><code>square-1200x1200.jpg</code> (profiles/cards)</li>
+        <li><code>icon-512.png</code> and <code>icon-192.png</code> (PWA/icons)</li>
+        <li><code>apple-touch-icon-180.png</code></li>
+        <li><code>favicon-32.png</code> and <code>favicon-16.png</code></li>
+      </ul>
+      <p style="margin-top:10px">We handle smart cropping (center-weighted), export JPGs ~90% quality, and PNG for icons. Delivery is a single ZIP via email (and Dropbox link backup).</p>
+    </div>
 
-      <div class="row" style="margin-bottom:8px">
-        <button id="splitBtn" aria-live="polite" disabled>
-          <span id="splitLabelFree">Split into 2×2 (Free)</span>
-          <span id="splitLabelPremium" style="display:none">Split (Premium)</span>
-        </button>
-
-        <button id="zipBtn" disabled>Download ZIP</button>
-
-        <a id="premiumBtn" class="btn" rel="nofollow noopener sponsored"
-           href="https://buy.stripe.com/00wdR9e8f6S1434cAe8k800">Go Premium ($9.99)</a>
-
-        <span id="premiumBadge" class="badge" style="display:none" aria-live="polite">Premium active</span>
-      </div>
-
-      <div id="premiumControls" class="row" style="display:none;margin-bottom:8px">
-        <label for="gridSel">Grid size:</label>
-        <select id="gridSel" name="gridSel" aria-label="Grid size (premium)">
-          <!-- populated by JS: 2..10 -->
-        </select>
-      </div>
-
-      <div id="hint" class="hint" role="status" aria-live="polite"></div>
-      <div id="output"></div>
+    <div class="card">
+      <h2 style="margin:0 0 6px">How it works</h2>
+      <ol style="margin:6px 0 0 20px">
+        <li>Click <em>Send Photos (Dropbox)</em> and upload your images.</li>
+        <li>Click <em>Pay $9.99 (Stripe)</em>.</li>
+        <li>We process and email your ZIP within <strong>1 business day</strong>.</li>
+      </ol>
+      <details>
+        <summary>Accepted formats & limits</summary>
+        <ul>
+          <li>Accepted: JPG, PNG, HEIC, WebP, TIFF (RAW/PSD also okay—we'll convert).</li>
+          <li>Large files welcome. Dropbox may enforce size limits on some accounts; if you hit a limit, email us and we’ll provide an alternate upload method.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Restrictions</summary>
+        <ul>
+          <li>Only upload content you own or have rights to use.</li>
+          <li>No illegal or harmful content. We may refuse/return any order that violates these terms.</li>
+        </ul>
+      </details>
+      <p style="margin-top:8px">Questions? <a href="mailto:hello@aiexperttoolkit.com">hello@aiexperttoolkit.com</a></p>
     </div>
 
     <footer>© AI Expert Toolkit</footer>
   </main>
-
-  <!-- JSZip for premium ZIP download -->
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" crossorigin="anonymous"></script>
-
-  <script>
-  (() => {
-    // --- Premium detection & persistence ---
-    const qs = new URLSearchParams(location.search);
-    let premium = false;
-    if (qs.get("premium") === "1") {
-      try { localStorage.setItem("aetk_premium", "1"); } catch(e){}
-      premium = true;
-      // clean the URL
-      history.replaceState({}, "", location.pathname);
-    } else {
-      premium = (localStorage.getItem("aetk_premium") === "1");
-    }
-
-    // --- Elements ---
-    const fileInput = document.getElementById("fileInput");
-    const splitBtn = document.getElementById("splitBtn");
-    const zipBtn = document.getElementById("zipBtn");
-    const premiumControls = document.getElementById("premiumControls");
-    const gridSel = document.getElementById("gridSel");
-    const hint = document.getElementById("hint");
-    const output = document.getElementById("output");
-    const badge = document.getElementById("premiumBadge");
-
-    // Populate grid options 2..10
-    for (let i = 2; i <= 10; i++) {
-      const o = document.createElement("option");
-      o.value = String(i);
-      o.textContent = i + " × " + i;
-      if (i === 2) o.selected = true;
-      gridSel.appendChild(o);
-    }
-
-    function setPremiumUI(on) {
-      premium = !!on;
-      if (on) {
-        premiumControls.style.display = "flex";
-        document.getElementById("splitLabelFree").style.display = "none";
-        document.getElementById("splitLabelPremium").style.display = "inline";
-        zipBtn.disabled = true; // will enable after generating
-        badge.style.display = "inline-block";
-      } else {
-        premiumControls.style.display = "none";
-        document.getElementById("splitLabelFree").style.display = "inline";
-        document.getElementById("splitLabelPremium").style.display = "none";
-        zipBtn.disabled = true;
-        badge.style.display = "none";
-      }
-    }
-    setPremiumUI(premium);
-
-    // UX: enable split only when a file is chosen
-    fileInput.addEventListener("change", () => {
-      hint.textContent = "";
-      splitBtn.disabled = !(fileInput.files && fileInput.files.length);
-    });
-
-    let lastTiles = []; // [{blob, filename}]
-    splitBtn.addEventListener("click", () => {
-      if (!(fileInput.files && fileInput.files.length)) {
-        hint.textContent = "Choose a photo first.";
-        splitBtn.disabled = true;
-        return;
-      }
-      const grid = premium ? (parseInt(gridSel.value, 10) || 2) : 2;
-      processImage(fileInput.files[0], grid);
-    });
-
-    zipBtn.addEventListener("click", async () => {
-      if (!lastTiles.length) return;
-      const zip = new JSZip();
-      const folder = zip.folder("tiles");
-      for (const t of lastTiles) folder.file(t.filename, t.blob);
-      const blob = await zip.generateAsync({ type: "blob" });
-      const url = URL.createObjectURL(blob);
-      triggerDownload(url, "photo-splitter-tiles.zip");
-      setTimeout(() => URL.revokeObjectURL(url), 10000);
-    });
-
-    function triggerDownload(url, name) {
-      const a = document.createElement("a");
-      a.href = url; a.download = name;
-      document.body.appendChild(a); a.click(); a.remove();
-    }
-
-    function processImage(fileObj, grid) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const img = new Image();
-        img.onload = () => splitImage(img, grid);
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(fileObj);
-    }
-
-    function splitImage(img, grid) {
-      output.innerHTML = "";
-      lastTiles = [];
-
-      const cw = Math.floor(img.width / grid);
-      const ch = Math.floor(img.height / grid);
-      const canvas = document.createElement("canvas");
-      canvas.width = cw; canvas.height = ch;
-      const ctx = canvas.getContext("2d");
-
-      // Draw each tile and create a download link
-      for (let r = 0; r < grid; r++) {
-        for (let c = 0; c < grid; c++) {
-          ctx.clearRect(0, 0, cw, ch);
-          ctx.drawImage(img, c*cw, r*ch, cw, ch, 0, 0, cw, ch);
-          canvas.toBlob((blob) => {
-            if (!blob) return;
-            const fn = `tile-${r+1}x${c+1}.png`;
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement("a");
-            a.href = url; a.download = fn; a.className = "tile"; a.title = "Download tile";
-
-            const thumb = new Image();
-            thumb.src = url; thumb.alt = `Tile ${r+1}×${c+1}`;
-            a.appendChild(thumb);
-            output.appendChild(a);
-
-            lastTiles.push({ blob, filename: fn });
-            setTimeout(() => URL.revokeObjectURL(url), 30000);
-          }, "image/png");
-        }
-      }
-
-      hint.textContent = premium ? `Generated ${grid}×${grid} tiles.` : "Generated 2×2 tiles (Free).";
-      zipBtn.disabled = !premium;
-    }
-  })();
-  </script>
 </body>
 </html>
