@@ -1,108 +1,207 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
   <title>Photo Splitter — AI Expert Toolkit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Upload one photo and split it into a grid. Free 2×2. Premium unlocks up to 10×10 plus ZIP download.">
+  <link rel="canonical" href="https://aiexperttoolkit.com/">
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;margin:0;padding:32px;line-height:1.45;color:#111}
+    :root{--fg:#111;--muted:#666;--bg:#fff;--b:#e5e7eb;--accent:#0d6efd}
+    *{box-sizing:border-box} html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial}
+    .wrap{max-width:980px;margin:24px auto;padding:0 16px}
     h1{font-size:28px;margin:0 0 8px}
-    p.note{color:#555;margin:0 0 16px}
-    .card{border:1px solid #e5e7eb;border-radius:12px;padding:16px;max-width:920px}
-    .row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
-    .col{flex:1 1 280px}
-    .btn{display:inline-block;border:1px solid #111;border-radius:10px;padding:10px 14px;text-decoration:none;color:#111;background:#fff;cursor:pointer}
-    .btn.primary{background:#111;color:#fff;border-color:#111}
-    .stack{display:flex;gap:8px;flex-wrap:wrap}
-    canvas, img{max-width:100%;height:auto;border:1px solid #eee;border-radius:8px}
-    .tiles{display:flex;gap:8px;flex-wrap:wrap}
-    footer{margin-top:24px;color:#666;font-size:13px}
+    p.lead{color:var(--muted);margin:0 0 16px}
+    .card{border:1px solid var(--b);border-radius:10px;padding:14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    input[type=file]{padding:8px}
+    button,.btn{appearance:none;border:1px solid var(--fg);background:#fff;border-radius:8px;padding:9px 12px;cursor:pointer}
+    button[disabled]{opacity:.5;cursor:not-allowed}
+    .btn{display:inline-block;text-decoration:none;color:var(--fg)}
+    .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+    .hint{min-height:22px;color:#444}
+    #output{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:16px}
+    #output a.tile{display:block;border:1px solid var(--b);border-radius:8px;overflow:hidden}
+    #output img{width:100%;height:120px;object-fit:cover;display:block}
+    .badge{display:inline-block;margin-left:8px;padding:4px 8px;border-radius:999px;background:#10b981;color:#fff;font-size:12px}
+    footer{margin:40px 0 12px;color:var(--muted);font-size:14px}
+    @media (prefers-reduced-motion:no-preference){button,.btn{transition:transform .02s ease}button:active,.btn:active{transform:translateY(1px)}}
   </style>
 </head>
 <body>
-  <h1>Photo Splitter</h1>
-  <p class="note">Upload one photo → get multiple sizes instantly. Free 2x2. Premium unlocks 10×10 + ZIP.</p>
+  <main class="wrap">
+    <h1>Photo Splitter</h1>
+    <p class="lead">Upload one photo → get multiple sizes instantly. Free 2×2. Premium unlocks 10×10 + ZIP.</p>
 
-  <div class="card">
-    <div class="row">
-      <div class="col">
-        <input id="file" type="file" accept="image/*" class="btn" />
-        <div style="margin-top:12px">
-          <button id="splitBtn" class="btn primary">Split into 2×2 (Free)</button>
-          <button id="zipBtn" class="btn" disabled>Download ZIP</button>
-        </div>
-        <div style="margin-top:12px" class="stack">
-          <a id="buyBtn" class="btn" href="https://buy.stripe.com/00wdR9e8f6S1434cAe8k800" target="_blank" rel="noopener">Go Premium (.99)</a>
-        </div>
+    <div class="card">
+      <div class="row" style="margin-bottom:8px">
+        <input id="fileInput" type="file" accept="image/*" aria-label="Choose photo">
       </div>
-      <div class="col">
-        <img id="preview" alt="preview" style="display:none" />
-        <div id="tiles" class="tiles" style="margin-top:12px"></div>
+
+      <div class="row" style="margin-bottom:8px">
+        <button id="splitBtn" aria-live="polite" disabled>
+          <span id="splitLabelFree">Split into 2×2 (Free)</span>
+          <span id="splitLabelPremium" style="display:none">Split (Premium)</span>
+        </button>
+
+        <button id="zipBtn" disabled>Download ZIP</button>
+
+        <a id="premiumBtn" class="btn" rel="nofollow noopener sponsored"
+           href="https://buy.stripe.com/00wdR9e8f6S1434cAe8k800">Go Premium ($9.99)</a>
+
+        <span id="premiumBadge" class="badge" style="display:none" aria-live="polite">Premium active</span>
       </div>
+
+      <div id="premiumControls" class="row" style="display:none;margin-bottom:8px">
+        <label for="gridSel">Grid size:</label>
+        <select id="gridSel" name="gridSel" aria-label="Grid size (premium)">
+          <!-- populated by JS: 2..10 -->
+        </select>
+      </div>
+
+      <div id="hint" class="hint" role="status" aria-live="polite"></div>
+      <div id="output"></div>
     </div>
-  </div>
 
-  <footer>© AI Expert Toolkit</footer>
+    <footer>© AI Expert Toolkit</footer>
+  </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <!-- JSZip for premium ZIP download -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js" crossorigin="anonymous"></script>
+
   <script>
-    const file = document.getElementById('file');
-    const preview = document.getElementById('preview');
-    const tilesEl = document.getElementById('tiles');
-    const splitBtn = document.getElementById('splitBtn');
-    const zipBtn = document.getElementById('zipBtn');
+  (() => {
+    // --- Premium detection & persistence ---
+    const qs = new URLSearchParams(location.search);
+    let premium = false;
+    if (qs.get("premium") === "1") {
+      try { localStorage.setItem("aetk_premium", "1"); } catch(e){}
+      premium = true;
+      // clean the URL
+      history.replaceState({}, "", location.pathname);
+    } else {
+      premium = (localStorage.getItem("aetk_premium") === "1");
+    }
 
-    let sourceImg = null;
-    let canvases = [];
+    // --- Elements ---
+    const fileInput = document.getElementById("fileInput");
+    const splitBtn = document.getElementById("splitBtn");
+    const zipBtn = document.getElementById("zipBtn");
+    const premiumControls = document.getElementById("premiumControls");
+    const gridSel = document.getElementById("gridSel");
+    const hint = document.getElementById("hint");
+    const output = document.getElementById("output");
+    const badge = document.getElementById("premiumBadge");
 
-    file.addEventListener('change', e=>{
-      const f = e.target.files && e.target.files[0];
-      if(!f) return;
-      const url = URL.createObjectURL(f);
-      preview.src = url;
-      preview.style.display = 'block';
-      sourceImg = new Image();
-      sourceImg.onload = ()=> URL.revokeObjectURL(url);
-      sourceImg.src = url;
-      tilesEl.innerHTML = '';
-      canvases = [];
-      zipBtn.disabled = true;
+    // Populate grid options 2..10
+    for (let i = 2; i <= 10; i++) {
+      const o = document.createElement("option");
+      o.value = String(i);
+      o.textContent = i + " × " + i;
+      if (i === 2) o.selected = true;
+      gridSel.appendChild(o);
+    }
+
+    function setPremiumUI(on) {
+      premium = !!on;
+      if (on) {
+        premiumControls.style.display = "flex";
+        document.getElementById("splitLabelFree").style.display = "none";
+        document.getElementById("splitLabelPremium").style.display = "inline";
+        zipBtn.disabled = true; // will enable after generating
+        badge.style.display = "inline-block";
+      } else {
+        premiumControls.style.display = "none";
+        document.getElementById("splitLabelFree").style.display = "inline";
+        document.getElementById("splitLabelPremium").style.display = "none";
+        zipBtn.disabled = true;
+        badge.style.display = "none";
+      }
+    }
+    setPremiumUI(premium);
+
+    // UX: enable split only when a file is chosen
+    fileInput.addEventListener("change", () => {
+      hint.textContent = "";
+      splitBtn.disabled = !(fileInput.files && fileInput.files.length);
     });
 
-    splitBtn.addEventListener('click', ()=>{
-      if(!sourceImg){ alert('Choose a photo first'); return; }
-      const cols = 2, rows = 2; // free tier
-      const w = Math.floor(sourceImg.naturalWidth / cols);
-      const h = Math.floor(sourceImg.naturalHeight / rows);
-      tilesEl.innerHTML = '';
-      canvases = [];
-      for(let r=0;r<rows;r++){
-        for(let c=0;c<cols;c++){
-          const cv = document.createElement('canvas');
-          cv.width = w; cv.height = h;
-          const ctx = cv.getContext('2d');
-          ctx.drawImage(sourceImg, c*w, r*h, w, h, 0, 0, w, h);
-          canvases.push(cv);
-          tilesEl.appendChild(cv);
+    let lastTiles = []; // [{blob, filename}]
+    splitBtn.addEventListener("click", () => {
+      if (!(fileInput.files && fileInput.files.length)) {
+        hint.textContent = "Choose a photo first.";
+        splitBtn.disabled = true;
+        return;
+      }
+      const grid = premium ? (parseInt(gridSel.value, 10) || 2) : 2;
+      processImage(fileInput.files[0], grid);
+    });
+
+    zipBtn.addEventListener("click", async () => {
+      if (!lastTiles.length) return;
+      const zip = new JSZip();
+      const folder = zip.folder("tiles");
+      for (const t of lastTiles) folder.file(t.filename, t.blob);
+      const blob = await zip.generateAsync({ type: "blob" });
+      const url = URL.createObjectURL(blob);
+      triggerDownload(url, "photo-splitter-tiles.zip");
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    });
+
+    function triggerDownload(url, name) {
+      const a = document.createElement("a");
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    function processImage(fileObj, grid) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => splitImage(img, grid);
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(fileObj);
+    }
+
+    function splitImage(img, grid) {
+      output.innerHTML = "";
+      lastTiles = [];
+
+      const cw = Math.floor(img.width / grid);
+      const ch = Math.floor(img.height / grid);
+      const canvas = document.createElement("canvas");
+      canvas.width = cw; canvas.height = ch;
+      const ctx = canvas.getContext("2d");
+
+      // Draw each tile and create a download link
+      for (let r = 0; r < grid; r++) {
+        for (let c = 0; c < grid; c++) {
+          ctx.clearRect(0, 0, cw, ch);
+          ctx.drawImage(img, c*cw, r*ch, cw, ch, 0, 0, cw, ch);
+          canvas.toBlob((blob) => {
+            if (!blob) return;
+            const fn = `tile-${r+1}x${c+1}.png`;
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url; a.download = fn; a.className = "tile"; a.title = "Download tile";
+
+            const thumb = new Image();
+            thumb.src = url; thumb.alt = `Tile ${r+1}×${c+1}`;
+            a.appendChild(thumb);
+            output.appendChild(a);
+
+            lastTiles.push({ blob, filename: fn });
+            setTimeout(() => URL.revokeObjectURL(url), 30000);
+          }, "image/png");
         }
       }
-      zipBtn.disabled = false;
-    });
 
-    zipBtn.addEventListener('click', async ()=>{
-      if(!canvases.length) return;
-      const zip = new JSZip();
-      let i=1;
-      for(const cv of canvases){
-        const blob = await new Promise(res=> cv.toBlob(res, 'image/png'));
-        zip.file(\	ile_\.png\, blob);
-      }
-      const out = await zip.generateAsync({type:'blob'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(out);
-      a.download = 'photo-splitter-2x2.zip';
-      a.click();
-    });
+      hint.textContent = premium ? `Generated ${grid}×${grid} tiles.` : "Generated 2×2 tiles (Free).";
+      zipBtn.disabled = !premium;
+    }
+  })();
   </script>
 </body>
 </html>
