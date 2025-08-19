@@ -1,5 +1,0 @@
-# _data/affiliates.yml
-writesonic:
-  base: "https://writesonic.com"
-  via:  "AIExpertToolkit"
-  utm:  "utm_source=aetk&utm_medium=site&utm_campaign=sitewide"
